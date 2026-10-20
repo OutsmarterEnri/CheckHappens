@@ -20,3 +20,16 @@ The verifier reuses the production resolver, so deterministic replay alone canno
 In this execution environment, requests to unused loopback ports could stall the Playwright readiness probe. The test servers were started directly on separate ports to avoid interfering with the user’s server. A temporary test configuration used port 5188 for development and `PW_PRODUCTION_URL=http://127.0.0.1:4188/` for offline production checks. `PW_REUSE_SERVER=1` is also supported when intentionally reusing default-port test servers. Normal CI starts its own servers with reuse disabled. Locally stop a running server before using the default test command, or opt into that variable when intentionally reusing your own servers.
 
 Publication preparation: the manual-only Pages YAML and local documentation links were validated. A separate Chromium smoke test served the build under `/CheckHappens/` with `Vary: Origin`, checked the scoped service worker, public third-party notices and offline play. This did not activate or deploy GitHub Pages.
+
+### iOS 27 installed-app header blur
+
+The user reproduced a blurred game header on iOS 27.2 only when launched from
+Home Screen; Safari renders the same controls sharply. An iOS standalone-only
+CSS workaround transfers the existing top inset into an opaque sticky header,
+so the header reaches the viewport edge without moving its controls or changing
+the game table's available height. Normal browser layout remains unchanged.
+This follows the safe-area header experiment reported by
+[OJapp](https://tips.ojapp.app/en/ios-27-pwa-top-blur-workaround-2/), not a documented
+Apple API. Chromium checks cannot reproduce or prove removal of the system blur;
+confirmation on the affected iPhone is pending. The service-worker cache is
+bumped so an installed app can receive the updated shell after its windows close.

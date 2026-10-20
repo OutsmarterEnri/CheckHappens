@@ -138,11 +138,12 @@ h2 {
   overflow: hidden;
 }
 .game-header {
+  --header-height: 44px;
   background: var(--app-background);
   position: relative;
   z-index: 1;
   isolation: isolate;
-  height: 44px;
+  height: var(--header-height);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -1251,7 +1252,7 @@ h2 {
     padding: 7px 9px;
   }
   .game-header {
-    height: 42px;
+    --header-height: 42px;
   }
   .turn-banner {
     padding: 5px 8px;
@@ -1281,7 +1282,7 @@ h2 {
     font-size: 17px;
   }
   .game-header {
-    height: 48px;
+    --header-height: 48px;
   }
   .move-summary h2 {
     font-size: 16px;
@@ -1571,5 +1572,23 @@ h2 {
   }
   .portrait-hint {
     visibility: visible;
+  }
+}
+
+/* iOS 27 home-screen blur workaround: the opaque header itself must touch
+   the viewport edge and include the safe area. Transfer the existing inset
+   from its parent so controls keep their original position and touch area.
+   Physical-device confirmation is required; desktop emulation has no OS blur. */
+@media (display-mode: standalone) {
+  @supports (-webkit-touch-callout: none) {
+    .game-screen {
+      padding-top: 0;
+    }
+    .game-header {
+      position: sticky;
+      top: 0;
+      height: calc(var(--header-height) + max(6px, env(safe-area-inset-top)));
+      padding-top: max(6px, env(safe-area-inset-top));
+    }
   }
 }
