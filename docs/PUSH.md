@@ -1,30 +1,37 @@
 # First push
 
-Run commands from the project folder containing `package.json`.
+Destination: https://github.com/OutsmarterEnri/CheckHappens.git
+
+The local working copy has branch `main` and `origin` configured. The remote was checked on 20 October 2026 and had no refs. No push or deployment was performed during preparation.
+
+From the project directory:
 
 ```sh
 npm ci
 npm run check
 npx playwright install chromium
 npx playwright test --workers=2
+git status
+git remote -v
 ```
 
-If you extracted a ZIP instead of using the prepared working copy, initialize it first with `git init -b main`.
-
-Create an empty GitHub repository (do not initialize it with another README). Then, if no initial commit exists:
+When ready to publish the prepared commits:
 
 ```sh
-git add .
-git commit -m "Build Check Happens 2.0 with reproducible match logs"
-```
-
-If Git requests your identity, configure your own `user.name` and `user.email` before committing. No identity is invented by the project.
-
-Add the URL of your chosen repository and push:
-
-```sh
-git remote add origin YOUR_GITHUB_REPOSITORY_URL
 git push -u origin main
 ```
 
-Review `git diff --cached --stat` before the commit. Dependencies, builds, generated browser results, credentials and personal match logs are ignored. CI checks TypeScript, rule tests, build, browser interactions and the synthetic JSON example. No publishing/deployment workflow runs automatically.
+If using an extracted ZIP instead of this working copy, initialize Git first and commit the source:
+
+```sh
+git init -b main
+git add .
+git diff --cached --stat
+git commit -m "Build Check Happens with verified compact match logs"
+git remote add origin https://github.com/OutsmarterEnri/CheckHappens.git
+git push -u origin main
+```
+
+Configure your own Git identity if Git requests it. Authenticate through your existing GitHub credential manager or SSH setup; do not place tokens in commands or project files. A readable public remote does not prove write permission. If GitHub contains changes by the time you push, fetch and review them before proceeding; do not force-push over remote work.
+
+Dependencies, builds, generated test traces, environment files, and personal match logs are ignored. CI verifies TypeScript, domain tests, build, browser interactions and both synthetic log schemas. It uploads browser failure details when tests fail. There is no automatic deployment workflow.

@@ -2,11 +2,12 @@ import { readFile, stat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { build } from "vite";
+import { getBuildInfo } from "./build-info.mjs";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const args = process.argv.slice(2);
 if (!args.length) {
   console.error(
-    "Usage: npm run analyze:match -- match.json\n       npm run analyze:match -- --example example.json",
+    "Usage: npm run analyze:match -- match.json\n       npm run analyze:match -- --example example.json\n       npm run analyze:match -- --compact INPUT.json OUTPUT.json",
   );
   process.exit(2);
 }
@@ -14,6 +15,7 @@ try {
   const result = await build({
     root,
     configFile: false,
+    define: { __APP_BUILD__: JSON.stringify(getBuildInfo(root)) },
     logLevel: "silent",
     build: {
       write: false,
@@ -28,11 +30,37 @@ try {
   const api = await import(
     `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
   );
-  if (args[0] === "--example") {
+  if (args[0] === "--compact") {
+    if (!args[1] || !args[2] || resolve(args[1]) === resolve(args[2]))
+      throw new Error(
+        "Use --compact INPUT.json OUTPUT.json with different paths.",
+      );
+    if ((await stat(args[1])).size > 20_000_000)
+      throw new Error("Match log exceeds 20 MB.");
+    const original = JSON.parse(await readFile(args[1], "utf8"));
+    const state = api.stateFromLog(original),
+      log = api.exportMatch(state),
+      report = api.verifyMatch(log);
+    if (!report.valid) throw new Error(report.message);
+    const text = JSON.stringify(log, null, 2) + "\n";
+    await writeFile(args[2], text, { flag: "wx" });
+    console.log(
+      JSON.stringify(
+        {
+          ...report,
+          inputBytes: (await stat(args[1])).size,
+          outputBytes: Buffer.byteLength(text),
+        },
+        null,
+        2,
+      ),
+    );
+  } else if (args[0] === "--example") {
     // A deliberately rejected move followed by flag fall: both must reproduce.
     const core = await build({
       root,
       configFile: false,
+      define: { __APP_BUILD__: JSON.stringify(getBuildInfo(root)) },
       logLevel: "silent",
       build: {
         write: false,
@@ -61,14 +89,17 @@ try {
     ).state;
     s = engine.dispatch(s, { type: "AdvanceTime" }, 500000, "clock").state;
     await writeFile(
-      args[1] ?? "example.json",
+      args[1] ??
+        "example.json\n       npm run analyze:match -- --compact INPUT.json OUTPUT.json",
       JSON.stringify(api.exportMatch(s), null, 2) + "\n",
     );
     console.log("Example match written.");
   } else {
     if ((await stat(args[0])).size > 20_000_000)
       throw new Error("Match log exceeds 20 MB.");
-    const report = api.verifyMatch(JSON.parse(await readFile(args[0], "utf8")));
+    const report = api.analyzeMatch(
+      JSON.parse(await readFile(args[0], "utf8")),
+    );
     console.log(JSON.stringify(report, null, 2));
     process.exitCode = report.valid ? 0 : 1;
   }

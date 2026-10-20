@@ -2,7 +2,7 @@
 
 Keep gameplay and exported diagnostics in English. Preserve the iPhone portrait viewport and existing game rules.
 
-For domain changes, read the relevant regression tests and caller phases before editing. All human, bot, clock and resume commands go through `dispatch`; `resolveCommand` is the pure replay path. Journal/checkpoint snapshots must never include a nested journal. Preserve replay compatibility or bump the rules/schema version explicitly.
+For domain changes, read the relevant regression tests and caller phases before editing. All human, bot, clock and resume commands go through `dispatch`; `resolveCommand` is the pure replay path. Journal/checkpoint snapshots must never include a nested journal. Preserve replay compatibility or bump the rules/schema version explicitly. Schema 2 packs clock samples without discarding their durations/fingerprints; keep schema-1 fixtures and legacy saves readable. Recording context belongs to journal sessions, not the domain fingerprint.
 
 Run `npm run check` and relevant Playwright tests. A verified log proves deterministic agreement with this resolver, not rule correctness. Add an independent regression test for a reproduced rule bug.
 

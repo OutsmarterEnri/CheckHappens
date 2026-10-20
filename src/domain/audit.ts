@@ -1,3 +1,13 @@
+import {
+  packJournal,
+  unpackJournal,
+  withoutEvents,
+  validateMetadata,
+  type CompactMatchLog,
+  type RecordingSession,
+  type DecodedEntry,
+} from "./logCodec";
+import { BUILD_INFO } from "./build";
 import type { Command, DomainError, GameEvent, Result, State } from "./types";
 import { resolveCommand } from "./turnResolver";
 import { assertInvariants } from "./rules";
@@ -20,8 +30,9 @@ export interface JournalEntry {
 export interface Journal {
   initial: Snapshot;
   entries: JournalEntry[];
+  sessions?: RecordingSession[];
 }
-export interface MatchLog {
+export interface LegacyMatchLog {
   format: "check-happens-match";
   version: 1;
   rulesVersion: "2.0.0";
@@ -87,20 +98,31 @@ export function record(
     state: {
       ...result.state,
       journal: {
+        ...journal,
         initial: journal?.initial ?? snapshot(input),
         entries: [...(journal?.entries ?? []), entry],
       },
     },
   };
 }
-export function exportMatch(s: State): MatchLog {
+export type MatchLog = LegacyMatchLog | CompactMatchLog;
+export function exportMatch(s: State): CompactMatchLog {
+  const journal = s.journal ?? { initial: snapshot(s), entries: [] };
   return {
     format: "check-happens-match",
-    version: 1,
+    version: 2,
     rulesVersion: "2.0.0",
     exportedAt: new Date().toISOString(),
-    journal: s.journal ?? { initial: snapshot(s), entries: [] },
-    final: snapshot(s),
+    metadata: {
+      exporter: BUILD_INFO,
+      timeControlMinutes: s.initialMinutes ?? null,
+      sessions: structuredClone(journal.sessions ?? []),
+    },
+    journal: {
+      initial: structuredClone(journal.initial),
+      entries: packJournal(journal),
+    },
+    final: withoutEvents(s),
   };
 }
 function validCommand(c: Command): boolean {
@@ -136,7 +158,10 @@ function validCommand(c: Command): boolean {
       return false;
   }
 }
-export function verifyMatch(value: unknown): Verification {
+function inspectMatch(
+  value: unknown,
+  success?: (state: State) => void,
+): Verification {
   let checked = 0,
     rejected = 0;
   const bad = (message: string, firstDivergence = checked): Verification => ({
@@ -151,7 +176,7 @@ export function verifyMatch(value: unknown): Verification {
     if (
       !log ||
       log.format !== "check-happens-match" ||
-      log.version !== 1 ||
+      ![1, 2].includes(log.version) ||
       log.rulesVersion !== "2.0.0"
     )
       return bad("Unsupported match log format or rules version.");
@@ -165,7 +190,19 @@ export function verifyMatch(value: unknown): Verification {
     assertInvariants(state);
     if ("journal" in state || "journal" in log.final)
       return bad("Nested journals are not allowed.");
-    for (const e of log.journal.entries) {
+    const compact = log.version === 2;
+    const entries: DecodedEntry[] =
+      log.version === 2
+        ? unpackJournal(log.journal.entries)
+        : log.journal.entries;
+    if (log.version === 2) {
+      validateMetadata(log, entries.length);
+      if (
+        log.metadata.timeControlMinutes !== (log.final.initialMinutes ?? null)
+      )
+        return bad("Time control differs from the final state.");
+    }
+    for (const e of entries) {
       if (
         e.seq !== checked ||
         !Number.isFinite(e.elapsedMs) ||
@@ -193,9 +230,14 @@ export function verifyMatch(value: unknown): Verification {
         canonical(result.ok ? undefined : result.error) !== canonical(e.error)
       )
         return bad("Acceptance or rejection differs from the resolver.");
-      if (
-        canonical(result.state.events.slice(state.events.length)) !==
-        canonical(e.events)
+      const emitted = result.state.events.slice(state.events.length);
+      if (compact && e.clockOnly) {
+        if (emitted.some((v) => v.type !== "ClockAdvanced"))
+          return bad("Clock run hides a game event.");
+      } else if (
+        canonical(
+          compact ? emitted.filter((v) => v.type !== "Checkpoint") : emitted,
+        ) !== canonical(e.events)
       )
         return bad("Emitted events differ from the resolver.");
       if (fingerprint(result.state) !== e.stateFingerprint)
@@ -204,9 +246,22 @@ export function verifyMatch(value: unknown): Verification {
       state = result.state;
       checked++;
     }
-    assertInvariants(log.final);
-    if (canonical(snapshot(state)) !== canonical(log.final))
+    assertInvariants({ ...log.final, events: [] });
+    if (
+      canonical(compact ? withoutEvents(state) : snapshot(state)) !==
+      canonical(log.final)
+    )
       return bad("Final snapshot differs from the replay.");
+    success?.({
+      ...state,
+      journal: {
+        initial: structuredClone(log.journal.initial),
+        entries: entries.map(({ clockOnly: _clockOnly, ...e }) => e),
+        ...(log.version === 2
+          ? { sessions: structuredClone(log.metadata.sessions) }
+          : {}),
+      },
+    });
     return {
       valid: true,
       checked,
@@ -229,9 +284,72 @@ export function importMatch(text: string): MatchLog {
     throw new Error(`Action ${report.firstDivergence}: ${report.message}`);
   return log as MatchLog;
 }
+export function verifyMatch(value: unknown): Verification {
+  return inspectMatch(value);
+}
 export function stateFromLog(log: MatchLog): State {
+  let state: State | undefined;
+  const report = inspectMatch(log, (s) => {
+    state = s;
+  });
+  if (!report.valid || !state)
+    throw new Error(`Action ${report.firstDivergence}: ${report.message}`);
+  return state;
+}
+export interface MatchSummary {
+  turns: number;
+  moves: number;
+  captures: number;
+  cards: number;
+  reverses: number;
+  resets: number;
+  defenses: number;
+  emergencyDraws: number;
+  resurrections: number;
+  riskRolls: number;
+  breaks: number;
+  elapsedPlayMs: number;
+  outcome: State["outcome"];
+  remainingMs: State["clock"]["remaining"];
+  recordingSessions: RecordingSession[];
+}
+export function analyzeMatch(
+  value: unknown,
+): Verification & { summary?: MatchSummary } {
+  let summary: MatchSummary | undefined;
+  const verification = inspectMatch(value, (s) => {
+    const count = (type: string) =>
+      s.events.filter((e) => e.type === type).length;
+    summary = {
+      turns: s.turn,
+      moves: count("MoveCompleted"),
+      captures: s.events.filter(
+        (e) =>
+          e.type === "MoveCompleted" &&
+          !!(e.data.move as { captureId?: string }).captureId,
+      ).length,
+      cards: count("CardDrawn"),
+      reverses: count("ArmiesSwapped"),
+      resets: count("ResetApplied"),
+      defenses: s.events.filter(
+        (e) => e.type === "MoveCompleted" && e.data.defense === true,
+      ).length,
+      emergencyDraws: count("EmergencyDrawStarted"),
+      resurrections: count("PieceResurrected"),
+      riskRolls: count("RiskResolved"),
+      breaks: count("PieceDestroyed"),
+      elapsedPlayMs: s
+        .journal!.entries.filter(
+          (e) => !["READY", "GAME_OVER"].includes(e.phase) && e.elapsedMs >= 0,
+        )
+        .reduce((total, e) => total + e.elapsedMs, 0),
+      outcome: s.outcome,
+      remainingMs: { ...s.clock.remaining },
+      recordingSessions: structuredClone(s.journal!.sessions ?? []),
+    };
+  });
   return {
-    ...structuredClone(log.final),
-    journal: structuredClone(log.journal),
+    ...verification,
+    ...(verification.valid && summary ? { summary } : {}),
   };
 }

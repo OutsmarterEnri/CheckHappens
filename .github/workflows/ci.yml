@@ -20,6 +20,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test --workers=2
       - run: npm run analyze:match -- docs/examples/verified-match.json
+      - run: npm run analyze:match -- docs/examples/verified-match-v2.json
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

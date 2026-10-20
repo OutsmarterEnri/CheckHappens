@@ -1,3 +1,4 @@
+import { exportMatch, stateFromLog } from "../domain/audit";
 import { assertInvariants } from "../domain/rules";
 import { dispatch } from "../domain/turnResolver";
 import type { State } from "../domain/types";
@@ -7,7 +8,7 @@ export function saveGame(state: State): void {
     localStorage.setItem(
       SAVE_KEY,
       JSON.stringify({
-        state,
+        log: exportMatch(state),
         savedAt:
           Date.now() -
           (state.phase === "READY" || state.outcome
@@ -43,7 +44,7 @@ export function restoreGame(): State | null {
     if (!raw) return null;
     const data = JSON.parse(raw);
     return restoreSnapshot(
-      data.state,
+      data.log ? stateFromLog(data.log) : data.state,
       data.savedAt,
       Date.now(),
       performance.now(),

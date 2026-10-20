@@ -11,6 +11,7 @@
   color: #322546;
   background: #fff8ed;
   line-height: 1.35;
+  --app-background: #fff8ed;
   --ink: #322546;
   --paper: #fffdf6;
   --purple: #7753bc;
@@ -30,6 +31,7 @@ body,
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: var(--app-background);
 }
 body {
   overscroll-behavior: none;
@@ -123,6 +125,7 @@ h2 {
   background: #fff8ed;
 }
 .game-screen {
+  background: var(--app-background);
   height: 100svh;
   height: 100dvh;
   max-width: 480px;
@@ -135,6 +138,10 @@ h2 {
   overflow: hidden;
 }
 .game-header {
+  background: var(--app-background);
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
   height: 44px;
   flex-shrink: 0;
   display: flex;
@@ -182,7 +189,6 @@ h2 {
   background: var(--yellow);
   min-height: 36px;
   box-shadow: 0 3px 0 var(--ink);
-  animation: turn-pop 0.2s ease-out;
 }
 .turn-banner strong {
   font-size: 12px;
@@ -1153,16 +1159,6 @@ h2 {
   }
   to {
     transform: rotate(-7deg) scale(1);
-  }
-}
-@keyframes turn-pop {
-  from {
-    transform: translateY(-4px);
-    opacity: 0.6;
-  }
-  to {
-    transform: none;
-    opacity: 1;
   }
 }
 @keyframes comic-pop {

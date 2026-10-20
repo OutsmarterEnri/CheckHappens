@@ -1,0 +1,3096 @@
+{
+  "format": "check-happens-match",
+  "version": 2,
+  "rulesVersion": "2.0.0",
+  "exportedAt": "2026-10-20T21:04:18.573Z",
+  "metadata": {
+    "exporter": {
+      "appVersion": "2.0.1",
+      "revision": "eeba8898679f884d4434962ce7bbc91bf3618cec",
+      "dirty": true,
+      "id": "bd5a98c2bfd2d287cfbb"
+    },
+    "timeControlMinutes": 7,
+    "sessions": []
+  },
+  "journal": {
+    "initial": {
+      "version": 1,
+      "initialMinutes": 7,
+      "pieces": [
+        {
+          "id": "w-0",
+          "army": "w",
+          "original": "r",
+          "type": "r",
+          "home": 0,
+          "square": 0,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-8",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 8,
+          "square": 8,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-1",
+          "army": "w",
+          "original": "n",
+          "type": "n",
+          "home": 1,
+          "square": 1,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-9",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 9,
+          "square": 9,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-2",
+          "army": "w",
+          "original": "b",
+          "type": "b",
+          "home": 2,
+          "square": 2,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-10",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 10,
+          "square": 10,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-3",
+          "army": "w",
+          "original": "q",
+          "type": "q",
+          "home": 3,
+          "square": 3,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-11",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 11,
+          "square": 11,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-4",
+          "army": "w",
+          "original": "k",
+          "type": "k",
+          "home": 4,
+          "square": 4,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-12",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 12,
+          "square": 12,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-5",
+          "army": "w",
+          "original": "b",
+          "type": "b",
+          "home": 5,
+          "square": 5,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-13",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 13,
+          "square": 13,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-6",
+          "army": "w",
+          "original": "n",
+          "type": "n",
+          "home": 6,
+          "square": 6,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-14",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 14,
+          "square": 14,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-7",
+          "army": "w",
+          "original": "r",
+          "type": "r",
+          "home": 7,
+          "square": 7,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "w-15",
+          "army": "w",
+          "original": "p",
+          "type": "p",
+          "home": 15,
+          "square": 15,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-56",
+          "army": "b",
+          "original": "r",
+          "type": "r",
+          "home": 56,
+          "square": 56,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-48",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 48,
+          "square": 48,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-57",
+          "army": "b",
+          "original": "n",
+          "type": "n",
+          "home": 57,
+          "square": 57,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-49",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 49,
+          "square": 49,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-58",
+          "army": "b",
+          "original": "b",
+          "type": "b",
+          "home": 58,
+          "square": 58,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-50",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 50,
+          "square": 50,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-59",
+          "army": "b",
+          "original": "q",
+          "type": "q",
+          "home": 59,
+          "square": 59,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-51",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 51,
+          "square": 51,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-60",
+          "army": "b",
+          "original": "k",
+          "type": "k",
+          "home": 60,
+          "square": 60,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-52",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 52,
+          "square": 52,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-61",
+          "army": "b",
+          "original": "b",
+          "type": "b",
+          "home": 61,
+          "square": 61,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-53",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 53,
+          "square": 53,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-62",
+          "army": "b",
+          "original": "n",
+          "type": "n",
+          "home": 62,
+          "square": 62,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-54",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 54,
+          "square": 54,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-63",
+          "army": "b",
+          "original": "r",
+          "type": "r",
+          "home": 63,
+          "square": 63,
+          "moved": false,
+          "blocked": false
+        },
+        {
+          "id": "b-55",
+          "army": "b",
+          "original": "p",
+          "type": "p",
+          "home": 55,
+          "square": 55,
+          "moved": false,
+          "blocked": false
+        }
+      ],
+      "control": {
+        "P1": "w",
+        "P2": "b"
+      },
+      "active": "P1",
+      "orientation": "w",
+      "mode": "uno",
+      "phase": "READY",
+      "turn": 0,
+      "deck": [
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 2,
+          "id": "card-29"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 9,
+          "id": "card-43"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 8,
+          "id": "card-16"
+        },
+        {
+          "kind": "skip",
+          "color": "yellow",
+          "id": "card-95"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 2,
+          "id": "card-28"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 7,
+          "id": "card-13"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 4,
+          "id": "card-58"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 3,
+          "id": "card-81"
+        },
+        {
+          "kind": "wild",
+          "color": null,
+          "id": "card-100"
+        },
+        {
+          "kind": "skip",
+          "color": "green",
+          "id": "card-44"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 6,
+          "id": "card-87"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 9,
+          "id": "card-17"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 8,
+          "id": "card-90"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 6,
+          "id": "card-86"
+        },
+        {
+          "kind": "skip",
+          "color": "red",
+          "id": "card-20"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 9,
+          "id": "card-92"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 1,
+          "id": "card-52"
+        },
+        {
+          "kind": "reverse",
+          "color": "blue",
+          "id": "card-71"
+        },
+        {
+          "kind": "wild",
+          "color": null,
+          "id": "card-102"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 3,
+          "id": "card-55"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 8,
+          "id": "card-65"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 5,
+          "id": "card-10"
+        },
+        {
+          "kind": "reset",
+          "color": "green",
+          "value": 0,
+          "id": "card-25"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 5,
+          "id": "card-59"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 6,
+          "id": "card-12"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 7,
+          "id": "card-14"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 1,
+          "id": "card-27"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 4,
+          "id": "card-32"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 4,
+          "id": "card-83"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 3,
+          "id": "card-5"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 3,
+          "id": "card-80"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 5,
+          "id": "card-9"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 6,
+          "id": "card-62"
+        },
+        {
+          "kind": "wild",
+          "color": null,
+          "id": "card-106"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 1,
+          "id": "card-2"
+        },
+        {
+          "kind": "draw4",
+          "color": null,
+          "id": "card-101"
+        },
+        {
+          "kind": "draw2",
+          "color": "blue",
+          "id": "card-74"
+        },
+        {
+          "kind": "reset",
+          "color": "yellow",
+          "value": 0,
+          "id": "card-75"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 7,
+          "id": "card-64"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 4,
+          "id": "card-33"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 1,
+          "id": "card-1"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 2,
+          "id": "card-79"
+        },
+        {
+          "kind": "reverse",
+          "color": "green",
+          "id": "card-46"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 2,
+          "id": "card-3"
+        },
+        {
+          "kind": "reverse",
+          "color": "red",
+          "id": "card-22"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 5,
+          "id": "card-84"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 6,
+          "id": "card-37"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 1,
+          "id": "card-51"
+        },
+        {
+          "kind": "reset",
+          "color": "blue",
+          "value": 0,
+          "id": "card-50"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 9,
+          "id": "card-67"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 4,
+          "id": "card-8"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 5,
+          "id": "card-35"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 7,
+          "id": "card-39"
+        },
+        {
+          "kind": "draw2",
+          "color": "yellow",
+          "id": "card-99"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 9,
+          "id": "card-18"
+        },
+        {
+          "kind": "skip",
+          "color": "red",
+          "id": "card-19"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 9,
+          "id": "card-93"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 3,
+          "id": "card-6"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 3,
+          "id": "card-31"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 7,
+          "id": "card-63"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 2,
+          "id": "card-53"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 2,
+          "id": "card-4"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 4,
+          "id": "card-82"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 1,
+          "id": "card-77"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 6,
+          "id": "card-36"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 3,
+          "id": "card-30"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 5,
+          "id": "card-60"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 2,
+          "id": "card-78"
+        },
+        {
+          "kind": "skip",
+          "color": "yellow",
+          "id": "card-94"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 2,
+          "id": "card-54"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 8,
+          "id": "card-15"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 8,
+          "id": "card-40"
+        },
+        {
+          "kind": "wild",
+          "color": null,
+          "id": "card-104"
+        },
+        {
+          "kind": "reverse",
+          "color": "green",
+          "id": "card-47"
+        },
+        {
+          "kind": "reverse",
+          "color": "yellow",
+          "id": "card-96"
+        },
+        {
+          "kind": "skip",
+          "color": "blue",
+          "id": "card-69"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 1,
+          "id": "card-26"
+        },
+        {
+          "kind": "draw4",
+          "color": null,
+          "id": "card-103"
+        },
+        {
+          "kind": "reverse",
+          "color": "red",
+          "id": "card-21"
+        },
+        {
+          "kind": "skip",
+          "color": "green",
+          "id": "card-45"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 8,
+          "id": "card-41"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 6,
+          "id": "card-61"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 4,
+          "id": "card-7"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 7,
+          "id": "card-38"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 5,
+          "id": "card-85"
+        },
+        {
+          "kind": "draw2",
+          "color": "green",
+          "id": "card-48"
+        },
+        {
+          "kind": "draw2",
+          "color": "green",
+          "id": "card-49"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 8,
+          "id": "card-66"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 3,
+          "id": "card-56"
+        },
+        {
+          "kind": "draw2",
+          "color": "blue",
+          "id": "card-73"
+        },
+        {
+          "kind": "draw4",
+          "color": null,
+          "id": "card-107"
+        },
+        {
+          "kind": "draw4",
+          "color": null,
+          "id": "card-105"
+        },
+        {
+          "kind": "draw2",
+          "color": "red",
+          "id": "card-23"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 9,
+          "id": "card-42"
+        },
+        {
+          "kind": "draw2",
+          "color": "yellow",
+          "id": "card-98"
+        },
+        {
+          "kind": "reverse",
+          "color": "yellow",
+          "id": "card-97"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 1,
+          "id": "card-76"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 9,
+          "id": "card-68"
+        },
+        {
+          "kind": "draw2",
+          "color": "red",
+          "id": "card-24"
+        },
+        {
+          "kind": "reverse",
+          "color": "blue",
+          "id": "card-72"
+        },
+        {
+          "kind": "number",
+          "color": "blue",
+          "value": 4,
+          "id": "card-57"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 7,
+          "id": "card-88"
+        },
+        {
+          "kind": "number",
+          "color": "green",
+          "value": 5,
+          "id": "card-34"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 8,
+          "id": "card-91"
+        },
+        {
+          "kind": "number",
+          "color": "yellow",
+          "value": 7,
+          "id": "card-89"
+        },
+        {
+          "kind": "number",
+          "color": "red",
+          "value": 6,
+          "id": "card-11"
+        },
+        {
+          "kind": "skip",
+          "color": "blue",
+          "id": "card-70"
+        },
+        {
+          "kind": "reset",
+          "color": "red",
+          "value": 0,
+          "id": "card-0"
+        }
+      ],
+      "deckIndex": 0,
+      "discards": [],
+      "rng": 63279223,
+      "seed": 42,
+      "color": null,
+      "current": null,
+      "used": [],
+      "preDefense": false,
+      "specialConsumed": false,
+      "budget": 0,
+      "optionalSpecial": false,
+      "moveIndex": 0,
+      "yellow": 0,
+      "rescue": null,
+      "transitionPending": false,
+      "ep": [],
+      "clock": {
+        "remaining": {
+          "P1": 420000,
+          "P2": 420000
+        },
+        "lastAt": 0
+      },
+      "outcome": null,
+      "events": [
+        {
+          "seq": 0,
+          "type": "Checkpoint",
+          "text": "State verified",
+          "data": {
+            "snapshot": {
+              "version": 1,
+              "initialMinutes": 7,
+              "pieces": [
+                {
+                  "id": "w-0",
+                  "army": "w",
+                  "original": "r",
+                  "type": "r",
+                  "home": 0,
+                  "square": 0,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-8",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 8,
+                  "square": 8,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-1",
+                  "army": "w",
+                  "original": "n",
+                  "type": "n",
+                  "home": 1,
+                  "square": 1,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-9",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 9,
+                  "square": 9,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-2",
+                  "army": "w",
+                  "original": "b",
+                  "type": "b",
+                  "home": 2,
+                  "square": 2,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-10",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 10,
+                  "square": 10,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-3",
+                  "army": "w",
+                  "original": "q",
+                  "type": "q",
+                  "home": 3,
+                  "square": 3,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-11",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 11,
+                  "square": 11,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-4",
+                  "army": "w",
+                  "original": "k",
+                  "type": "k",
+                  "home": 4,
+                  "square": 4,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-12",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 12,
+                  "square": 12,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-5",
+                  "army": "w",
+                  "original": "b",
+                  "type": "b",
+                  "home": 5,
+                  "square": 5,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-13",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 13,
+                  "square": 13,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-6",
+                  "army": "w",
+                  "original": "n",
+                  "type": "n",
+                  "home": 6,
+                  "square": 6,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-14",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 14,
+                  "square": 14,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-7",
+                  "army": "w",
+                  "original": "r",
+                  "type": "r",
+                  "home": 7,
+                  "square": 7,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "w-15",
+                  "army": "w",
+                  "original": "p",
+                  "type": "p",
+                  "home": 15,
+                  "square": 15,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-56",
+                  "army": "b",
+                  "original": "r",
+                  "type": "r",
+                  "home": 56,
+                  "square": 56,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-48",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 48,
+                  "square": 48,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-57",
+                  "army": "b",
+                  "original": "n",
+                  "type": "n",
+                  "home": 57,
+                  "square": 57,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-49",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 49,
+                  "square": 49,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-58",
+                  "army": "b",
+                  "original": "b",
+                  "type": "b",
+                  "home": 58,
+                  "square": 58,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-50",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 50,
+                  "square": 50,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-59",
+                  "army": "b",
+                  "original": "q",
+                  "type": "q",
+                  "home": 59,
+                  "square": 59,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-51",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 51,
+                  "square": 51,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-60",
+                  "army": "b",
+                  "original": "k",
+                  "type": "k",
+                  "home": 60,
+                  "square": 60,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-52",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 52,
+                  "square": 52,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-61",
+                  "army": "b",
+                  "original": "b",
+                  "type": "b",
+                  "home": 61,
+                  "square": 61,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-53",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 53,
+                  "square": 53,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-62",
+                  "army": "b",
+                  "original": "n",
+                  "type": "n",
+                  "home": 62,
+                  "square": 62,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-54",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 54,
+                  "square": 54,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-63",
+                  "army": "b",
+                  "original": "r",
+                  "type": "r",
+                  "home": 63,
+                  "square": 63,
+                  "moved": false,
+                  "blocked": false
+                },
+                {
+                  "id": "b-55",
+                  "army": "b",
+                  "original": "p",
+                  "type": "p",
+                  "home": 55,
+                  "square": 55,
+                  "moved": false,
+                  "blocked": false
+                }
+              ],
+              "control": {
+                "P1": "w",
+                "P2": "b"
+              },
+              "active": "P1",
+              "orientation": "w",
+              "mode": "uno",
+              "phase": "READY",
+              "turn": 0,
+              "deck": [
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 2,
+                  "id": "card-29"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 9,
+                  "id": "card-43"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 8,
+                  "id": "card-16"
+                },
+                {
+                  "kind": "skip",
+                  "color": "yellow",
+                  "id": "card-95"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 2,
+                  "id": "card-28"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 7,
+                  "id": "card-13"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 4,
+                  "id": "card-58"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 3,
+                  "id": "card-81"
+                },
+                {
+                  "kind": "wild",
+                  "color": null,
+                  "id": "card-100"
+                },
+                {
+                  "kind": "skip",
+                  "color": "green",
+                  "id": "card-44"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 6,
+                  "id": "card-87"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 9,
+                  "id": "card-17"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 8,
+                  "id": "card-90"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 6,
+                  "id": "card-86"
+                },
+                {
+                  "kind": "skip",
+                  "color": "red",
+                  "id": "card-20"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 9,
+                  "id": "card-92"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 1,
+                  "id": "card-52"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "blue",
+                  "id": "card-71"
+                },
+                {
+                  "kind": "wild",
+                  "color": null,
+                  "id": "card-102"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 3,
+                  "id": "card-55"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 8,
+                  "id": "card-65"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 5,
+                  "id": "card-10"
+                },
+                {
+                  "kind": "reset",
+                  "color": "green",
+                  "value": 0,
+                  "id": "card-25"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 5,
+                  "id": "card-59"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 6,
+                  "id": "card-12"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 7,
+                  "id": "card-14"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 1,
+                  "id": "card-27"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 4,
+                  "id": "card-32"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 4,
+                  "id": "card-83"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 3,
+                  "id": "card-5"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 3,
+                  "id": "card-80"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 5,
+                  "id": "card-9"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 6,
+                  "id": "card-62"
+                },
+                {
+                  "kind": "wild",
+                  "color": null,
+                  "id": "card-106"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 1,
+                  "id": "card-2"
+                },
+                {
+                  "kind": "draw4",
+                  "color": null,
+                  "id": "card-101"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "blue",
+                  "id": "card-74"
+                },
+                {
+                  "kind": "reset",
+                  "color": "yellow",
+                  "value": 0,
+                  "id": "card-75"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 7,
+                  "id": "card-64"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 4,
+                  "id": "card-33"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 1,
+                  "id": "card-1"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 2,
+                  "id": "card-79"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "green",
+                  "id": "card-46"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 2,
+                  "id": "card-3"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "red",
+                  "id": "card-22"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 5,
+                  "id": "card-84"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 6,
+                  "id": "card-37"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 1,
+                  "id": "card-51"
+                },
+                {
+                  "kind": "reset",
+                  "color": "blue",
+                  "value": 0,
+                  "id": "card-50"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 9,
+                  "id": "card-67"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 4,
+                  "id": "card-8"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 5,
+                  "id": "card-35"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 7,
+                  "id": "card-39"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "yellow",
+                  "id": "card-99"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 9,
+                  "id": "card-18"
+                },
+                {
+                  "kind": "skip",
+                  "color": "red",
+                  "id": "card-19"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 9,
+                  "id": "card-93"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 3,
+                  "id": "card-6"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 3,
+                  "id": "card-31"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 7,
+                  "id": "card-63"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 2,
+                  "id": "card-53"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 2,
+                  "id": "card-4"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 4,
+                  "id": "card-82"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 1,
+                  "id": "card-77"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 6,
+                  "id": "card-36"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 3,
+                  "id": "card-30"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 5,
+                  "id": "card-60"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 2,
+                  "id": "card-78"
+                },
+                {
+                  "kind": "skip",
+                  "color": "yellow",
+                  "id": "card-94"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 2,
+                  "id": "card-54"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 8,
+                  "id": "card-15"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 8,
+                  "id": "card-40"
+                },
+                {
+                  "kind": "wild",
+                  "color": null,
+                  "id": "card-104"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "green",
+                  "id": "card-47"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "yellow",
+                  "id": "card-96"
+                },
+                {
+                  "kind": "skip",
+                  "color": "blue",
+                  "id": "card-69"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 1,
+                  "id": "card-26"
+                },
+                {
+                  "kind": "draw4",
+                  "color": null,
+                  "id": "card-103"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "red",
+                  "id": "card-21"
+                },
+                {
+                  "kind": "skip",
+                  "color": "green",
+                  "id": "card-45"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 8,
+                  "id": "card-41"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 6,
+                  "id": "card-61"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 4,
+                  "id": "card-7"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 7,
+                  "id": "card-38"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 5,
+                  "id": "card-85"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "green",
+                  "id": "card-48"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "green",
+                  "id": "card-49"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 8,
+                  "id": "card-66"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 3,
+                  "id": "card-56"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "blue",
+                  "id": "card-73"
+                },
+                {
+                  "kind": "draw4",
+                  "color": null,
+                  "id": "card-107"
+                },
+                {
+                  "kind": "draw4",
+                  "color": null,
+                  "id": "card-105"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "red",
+                  "id": "card-23"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 9,
+                  "id": "card-42"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "yellow",
+                  "id": "card-98"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "yellow",
+                  "id": "card-97"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 1,
+                  "id": "card-76"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 9,
+                  "id": "card-68"
+                },
+                {
+                  "kind": "draw2",
+                  "color": "red",
+                  "id": "card-24"
+                },
+                {
+                  "kind": "reverse",
+                  "color": "blue",
+                  "id": "card-72"
+                },
+                {
+                  "kind": "number",
+                  "color": "blue",
+                  "value": 4,
+                  "id": "card-57"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 7,
+                  "id": "card-88"
+                },
+                {
+                  "kind": "number",
+                  "color": "green",
+                  "value": 5,
+                  "id": "card-34"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 8,
+                  "id": "card-91"
+                },
+                {
+                  "kind": "number",
+                  "color": "yellow",
+                  "value": 7,
+                  "id": "card-89"
+                },
+                {
+                  "kind": "number",
+                  "color": "red",
+                  "value": 6,
+                  "id": "card-11"
+                },
+                {
+                  "kind": "skip",
+                  "color": "blue",
+                  "id": "card-70"
+                },
+                {
+                  "kind": "reset",
+                  "color": "red",
+                  "value": 0,
+                  "id": "card-0"
+                }
+              ],
+              "deckIndex": 0,
+              "discards": [],
+              "rng": 63279223,
+              "seed": 42,
+              "color": null,
+              "current": null,
+              "used": [],
+              "preDefense": false,
+              "specialConsumed": false,
+              "budget": 0,
+              "optionalSpecial": false,
+              "moveIndex": 0,
+              "yellow": 0,
+              "rescue": null,
+              "transitionPending": false,
+              "ep": [],
+              "clock": {
+                "remaining": {
+                  "P1": 420000,
+                  "P2": 420000
+                },
+                "lastAt": 0
+              },
+              "outcome": null,
+              "halfmoves": 0,
+              "repetitions": {}
+            }
+          }
+        }
+      ],
+      "halfmoves": 0,
+      "repetitions": {}
+    },
+    "entries": [
+      {
+        "kind": "action",
+        "seq": 0,
+        "elapsedMs": 0,
+        "source": "human",
+        "player": "P1",
+        "turn": 0,
+        "phase": "READY",
+        "command": {
+          "type": "StartGame"
+        },
+        "accepted": true,
+        "events": [
+          {
+            "seq": 1,
+            "type": "TurnStarted",
+            "text": "Turn 1 · P1",
+            "data": {
+              "player": "P1",
+              "army": "w"
+            }
+          },
+          {
+            "seq": 2,
+            "type": "CardDrawn",
+            "text": "P1 draws 2",
+            "data": {
+              "card": {
+                "kind": "number",
+                "color": "green",
+                "value": 2,
+                "id": "card-29"
+              },
+              "emergency": null
+            }
+          },
+          {
+            "seq": 3,
+            "type": "UnoColorChanged",
+            "text": "Color: Green",
+            "data": {
+              "color": "green"
+            }
+          }
+        ],
+        "stateFingerprint": "efd73aba"
+      },
+      {
+        "kind": "action",
+        "seq": 1,
+        "elapsedMs": 500,
+        "source": "human",
+        "player": "P1",
+        "turn": 1,
+        "phase": "RESOLVE_MOVES",
+        "command": {
+          "type": "SubmitMove",
+          "from": 0,
+          "to": 63
+        },
+        "accepted": false,
+        "error": {
+          "code": "ILLEGAL_MOVE",
+          "message": "Move not allowed in this phase."
+        },
+        "events": [
+          {
+            "seq": 5,
+            "type": "ClockAdvanced",
+            "text": "Clock updated",
+            "data": {
+              "clock": {
+                "remaining": {
+                  "P1": 419500,
+                  "P2": 420000
+                },
+                "lastAt": 500
+              }
+            }
+          }
+        ],
+        "stateFingerprint": "574bd38d"
+      },
+      {
+        "kind": "action",
+        "seq": 2,
+        "elapsedMs": 499500,
+        "source": "clock",
+        "player": "P1",
+        "turn": 1,
+        "phase": "RESOLVE_MOVES",
+        "command": {
+          "type": "AdvanceTime"
+        },
+        "accepted": true,
+        "events": [
+          {
+            "seq": 6,
+            "type": "GameEnded",
+            "text": "P2 wins: Time expired",
+            "data": {
+              "winner": "P2",
+              "reason": "Time expired"
+            }
+          },
+          {
+            "seq": 7,
+            "type": "ClockAdvanced",
+            "text": "Clock updated",
+            "data": {
+              "clock": {
+                "remaining": {
+                  "P1": 0,
+                  "P2": 420000
+                },
+                "lastAt": 500000
+              }
+            }
+          }
+        ],
+        "stateFingerprint": "20c60908"
+      }
+    ]
+  },
+  "final": {
+    "version": 1,
+    "initialMinutes": 7,
+    "pieces": [
+      {
+        "id": "w-0",
+        "army": "w",
+        "original": "r",
+        "type": "r",
+        "home": 0,
+        "square": 0,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-8",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 8,
+        "square": 8,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-1",
+        "army": "w",
+        "original": "n",
+        "type": "n",
+        "home": 1,
+        "square": 1,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-9",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 9,
+        "square": 9,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-2",
+        "army": "w",
+        "original": "b",
+        "type": "b",
+        "home": 2,
+        "square": 2,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-10",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 10,
+        "square": 10,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-3",
+        "army": "w",
+        "original": "q",
+        "type": "q",
+        "home": 3,
+        "square": 3,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-11",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 11,
+        "square": 11,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-4",
+        "army": "w",
+        "original": "k",
+        "type": "k",
+        "home": 4,
+        "square": 4,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-12",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 12,
+        "square": 12,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-5",
+        "army": "w",
+        "original": "b",
+        "type": "b",
+        "home": 5,
+        "square": 5,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-13",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 13,
+        "square": 13,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-6",
+        "army": "w",
+        "original": "n",
+        "type": "n",
+        "home": 6,
+        "square": 6,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-14",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 14,
+        "square": 14,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-7",
+        "army": "w",
+        "original": "r",
+        "type": "r",
+        "home": 7,
+        "square": 7,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "w-15",
+        "army": "w",
+        "original": "p",
+        "type": "p",
+        "home": 15,
+        "square": 15,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-56",
+        "army": "b",
+        "original": "r",
+        "type": "r",
+        "home": 56,
+        "square": 56,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-48",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 48,
+        "square": 48,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-57",
+        "army": "b",
+        "original": "n",
+        "type": "n",
+        "home": 57,
+        "square": 57,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-49",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 49,
+        "square": 49,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-58",
+        "army": "b",
+        "original": "b",
+        "type": "b",
+        "home": 58,
+        "square": 58,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-50",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 50,
+        "square": 50,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-59",
+        "army": "b",
+        "original": "q",
+        "type": "q",
+        "home": 59,
+        "square": 59,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-51",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 51,
+        "square": 51,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-60",
+        "army": "b",
+        "original": "k",
+        "type": "k",
+        "home": 60,
+        "square": 60,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-52",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 52,
+        "square": 52,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-61",
+        "army": "b",
+        "original": "b",
+        "type": "b",
+        "home": 61,
+        "square": 61,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-53",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 53,
+        "square": 53,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-62",
+        "army": "b",
+        "original": "n",
+        "type": "n",
+        "home": 62,
+        "square": 62,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-54",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 54,
+        "square": 54,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-63",
+        "army": "b",
+        "original": "r",
+        "type": "r",
+        "home": 63,
+        "square": 63,
+        "moved": false,
+        "blocked": false
+      },
+      {
+        "id": "b-55",
+        "army": "b",
+        "original": "p",
+        "type": "p",
+        "home": 55,
+        "square": 55,
+        "moved": false,
+        "blocked": false
+      }
+    ],
+    "control": {
+      "P1": "w",
+      "P2": "b"
+    },
+    "active": "P1",
+    "orientation": "w",
+    "mode": "uno",
+    "phase": "GAME_OVER",
+    "turn": 1,
+    "deck": [
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 2,
+        "id": "card-29"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 9,
+        "id": "card-43"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 8,
+        "id": "card-16"
+      },
+      {
+        "kind": "skip",
+        "color": "yellow",
+        "id": "card-95"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 2,
+        "id": "card-28"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 7,
+        "id": "card-13"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 4,
+        "id": "card-58"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 3,
+        "id": "card-81"
+      },
+      {
+        "kind": "wild",
+        "color": null,
+        "id": "card-100"
+      },
+      {
+        "kind": "skip",
+        "color": "green",
+        "id": "card-44"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 6,
+        "id": "card-87"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 9,
+        "id": "card-17"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 8,
+        "id": "card-90"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 6,
+        "id": "card-86"
+      },
+      {
+        "kind": "skip",
+        "color": "red",
+        "id": "card-20"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 9,
+        "id": "card-92"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 1,
+        "id": "card-52"
+      },
+      {
+        "kind": "reverse",
+        "color": "blue",
+        "id": "card-71"
+      },
+      {
+        "kind": "wild",
+        "color": null,
+        "id": "card-102"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 3,
+        "id": "card-55"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 8,
+        "id": "card-65"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 5,
+        "id": "card-10"
+      },
+      {
+        "kind": "reset",
+        "color": "green",
+        "value": 0,
+        "id": "card-25"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 5,
+        "id": "card-59"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 6,
+        "id": "card-12"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 7,
+        "id": "card-14"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 1,
+        "id": "card-27"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 4,
+        "id": "card-32"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 4,
+        "id": "card-83"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 3,
+        "id": "card-5"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 3,
+        "id": "card-80"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 5,
+        "id": "card-9"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 6,
+        "id": "card-62"
+      },
+      {
+        "kind": "wild",
+        "color": null,
+        "id": "card-106"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 1,
+        "id": "card-2"
+      },
+      {
+        "kind": "draw4",
+        "color": null,
+        "id": "card-101"
+      },
+      {
+        "kind": "draw2",
+        "color": "blue",
+        "id": "card-74"
+      },
+      {
+        "kind": "reset",
+        "color": "yellow",
+        "value": 0,
+        "id": "card-75"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 7,
+        "id": "card-64"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 4,
+        "id": "card-33"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 1,
+        "id": "card-1"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 2,
+        "id": "card-79"
+      },
+      {
+        "kind": "reverse",
+        "color": "green",
+        "id": "card-46"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 2,
+        "id": "card-3"
+      },
+      {
+        "kind": "reverse",
+        "color": "red",
+        "id": "card-22"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 5,
+        "id": "card-84"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 6,
+        "id": "card-37"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 1,
+        "id": "card-51"
+      },
+      {
+        "kind": "reset",
+        "color": "blue",
+        "value": 0,
+        "id": "card-50"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 9,
+        "id": "card-67"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 4,
+        "id": "card-8"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 5,
+        "id": "card-35"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 7,
+        "id": "card-39"
+      },
+      {
+        "kind": "draw2",
+        "color": "yellow",
+        "id": "card-99"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 9,
+        "id": "card-18"
+      },
+      {
+        "kind": "skip",
+        "color": "red",
+        "id": "card-19"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 9,
+        "id": "card-93"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 3,
+        "id": "card-6"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 3,
+        "id": "card-31"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 7,
+        "id": "card-63"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 2,
+        "id": "card-53"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 2,
+        "id": "card-4"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 4,
+        "id": "card-82"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 1,
+        "id": "card-77"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 6,
+        "id": "card-36"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 3,
+        "id": "card-30"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 5,
+        "id": "card-60"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 2,
+        "id": "card-78"
+      },
+      {
+        "kind": "skip",
+        "color": "yellow",
+        "id": "card-94"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 2,
+        "id": "card-54"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 8,
+        "id": "card-15"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 8,
+        "id": "card-40"
+      },
+      {
+        "kind": "wild",
+        "color": null,
+        "id": "card-104"
+      },
+      {
+        "kind": "reverse",
+        "color": "green",
+        "id": "card-47"
+      },
+      {
+        "kind": "reverse",
+        "color": "yellow",
+        "id": "card-96"
+      },
+      {
+        "kind": "skip",
+        "color": "blue",
+        "id": "card-69"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 1,
+        "id": "card-26"
+      },
+      {
+        "kind": "draw4",
+        "color": null,
+        "id": "card-103"
+      },
+      {
+        "kind": "reverse",
+        "color": "red",
+        "id": "card-21"
+      },
+      {
+        "kind": "skip",
+        "color": "green",
+        "id": "card-45"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 8,
+        "id": "card-41"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 6,
+        "id": "card-61"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 4,
+        "id": "card-7"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 7,
+        "id": "card-38"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 5,
+        "id": "card-85"
+      },
+      {
+        "kind": "draw2",
+        "color": "green",
+        "id": "card-48"
+      },
+      {
+        "kind": "draw2",
+        "color": "green",
+        "id": "card-49"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 8,
+        "id": "card-66"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 3,
+        "id": "card-56"
+      },
+      {
+        "kind": "draw2",
+        "color": "blue",
+        "id": "card-73"
+      },
+      {
+        "kind": "draw4",
+        "color": null,
+        "id": "card-107"
+      },
+      {
+        "kind": "draw4",
+        "color": null,
+        "id": "card-105"
+      },
+      {
+        "kind": "draw2",
+        "color": "red",
+        "id": "card-23"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 9,
+        "id": "card-42"
+      },
+      {
+        "kind": "draw2",
+        "color": "yellow",
+        "id": "card-98"
+      },
+      {
+        "kind": "reverse",
+        "color": "yellow",
+        "id": "card-97"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 1,
+        "id": "card-76"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 9,
+        "id": "card-68"
+      },
+      {
+        "kind": "draw2",
+        "color": "red",
+        "id": "card-24"
+      },
+      {
+        "kind": "reverse",
+        "color": "blue",
+        "id": "card-72"
+      },
+      {
+        "kind": "number",
+        "color": "blue",
+        "value": 4,
+        "id": "card-57"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 7,
+        "id": "card-88"
+      },
+      {
+        "kind": "number",
+        "color": "green",
+        "value": 5,
+        "id": "card-34"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 8,
+        "id": "card-91"
+      },
+      {
+        "kind": "number",
+        "color": "yellow",
+        "value": 7,
+        "id": "card-89"
+      },
+      {
+        "kind": "number",
+        "color": "red",
+        "value": 6,
+        "id": "card-11"
+      },
+      {
+        "kind": "skip",
+        "color": "blue",
+        "id": "card-70"
+      },
+      {
+        "kind": "reset",
+        "color": "red",
+        "value": 0,
+        "id": "card-0"
+      }
+    ],
+    "deckIndex": 1,
+    "discards": [],
+    "rng": 63279223,
+    "seed": 42,
+    "color": "green",
+    "current": {
+      "kind": "number",
+      "color": "green",
+      "value": 2,
+      "id": "card-29"
+    },
+    "used": [],
+    "preDefense": false,
+    "specialConsumed": false,
+    "budget": 2,
+    "optionalSpecial": false,
+    "moveIndex": 0,
+    "yellow": 0,
+    "rescue": null,
+    "transitionPending": false,
+    "ep": [],
+    "clock": {
+      "remaining": {
+        "P1": 0,
+        "P2": 420000
+      },
+      "lastAt": 500000
+    },
+    "outcome": {
+      "winner": "P2",
+      "reason": "Time expired"
+    },
+    "halfmoves": 0,
+    "repetitions": {}
+  }
+}

@@ -44,7 +44,7 @@ for (const [width, height] of [
     await page.mouse.wheel(0, 800);
     expect(await page.evaluate(() => scrollY)).toBe(0);
     if (width === 393) {
-      await expect(page.locator('.comic-fx')).toHaveCount(0);
+      await expect(page.locator(".comic-fx")).toHaveCount(0);
       await page.screenshot({ path: "docs/v2-game-iphone.png" });
     }
   });
@@ -69,7 +69,7 @@ test("built app works offline after service worker installation", async ({
   page,
   context,
 }) => {
-  await page.goto("http://127.0.0.1:4173/");
+  await page.goto(process.env.PW_PRODUCTION_URL ?? "http://127.0.0.1:4173/");
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
   });

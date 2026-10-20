@@ -1,5 +1,5 @@
-// Versione della shell: nessun aggiornamento forzato durante una partita.
-const CACHE = "check-happens-v2-1";
+// Shell updates wait for open games to close; no forced activation.
+const CACHE = "check-happens-v2-4";
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -33,7 +33,11 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       for (const key of await caches.keys())
-        if ((key.startsWith("scacchi-uno-pocket-") || key.startsWith("check-happens-")) && key !== CACHE)
+        if (
+          (key.startsWith("scacchi-uno-pocket-") ||
+            key.startsWith("check-happens-")) &&
+          key !== CACHE
+        )
           await caches.delete(key);
       await self.clients.claim();
     })(),
@@ -59,7 +63,11 @@ self.addEventListener("fetch", (event) => {
           Response.error()
         );
       }
-      return (await cache.match(request)) || fetch(request);
+      // Only public same-origin shell assets are precached. Preview/static hosts may
+      // add Vary: Origin; module requests include Origin while precache requests do not.
+      return (
+        (await cache.match(request, { ignoreVary: true })) || fetch(request)
+      );
     })(),
   );
 });

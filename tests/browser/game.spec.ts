@@ -119,6 +119,20 @@ test("full JSON exports, verifies after reload, and detects altered content", as
   const fs = await import("node:fs/promises");
   const log = JSON.parse(await fs.readFile(path, "utf8"));
   expect(log.format).toBe("check-happens-match");
+  expect(log.version).toBe(2);
+  expect(log.metadata.exporter.id).toMatch(/^[a-f0-9]{20}$/);
+  expect(log.metadata.sessions[0]).toMatchObject({
+    opponentMode: "local",
+    botLevel: null,
+  });
+  expect(
+    log.journal.entries.some((e: { kind: string }) => e.kind === "clock-run"),
+  ).toBe(true);
+  const save = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("scacchi-uno-pocket-v1")!),
+  );
+  expect(save.log.version).toBe(2);
+  expect(save.state).toBeUndefined();
   expect(log.journal.entries.length).toBeGreaterThan(1);
   log.journal.entries[0].accepted = false;
   await page.getByTestId("analyze-file").setInputFiles({

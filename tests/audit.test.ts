@@ -80,16 +80,36 @@ describe("Match JSON auditing", () => {
     const log = exportMatch(s);
     for (const corrupt of [
       (x: typeof log) => {
-        x.journal.entries[0].command = { type: "AdvanceTime" };
+        (
+          x.journal.entries[0] as Extract<
+            (typeof x.journal.entries)[number],
+            { kind: "action" }
+          >
+        ).command = { type: "AdvanceTime" };
       },
       (x: typeof log) => {
-        x.journal.entries[0].events = [];
+        (
+          x.journal.entries[0] as Extract<
+            (typeof x.journal.entries)[number],
+            { kind: "action" }
+          >
+        ).events = [];
       },
       (x: typeof log) => {
-        x.journal.entries[0].stateFingerprint = "00000000";
+        (
+          x.journal.entries[0] as Extract<
+            (typeof x.journal.entries)[number],
+            { kind: "action" }
+          >
+        ).stateFingerprint = "00000000";
       },
       (x: typeof log) => {
-        x.journal.entries[0].elapsedMs = -1;
+        (
+          x.journal.entries[0] as Extract<
+            (typeof x.journal.entries)[number],
+            { kind: "action" }
+          >
+        ).elapsedMs = -1;
       },
       (x: typeof log) => {
         x.journal.entries[0].seq = 3;

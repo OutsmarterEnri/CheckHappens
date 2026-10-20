@@ -1,3 +1,4 @@
+import { startRecordingSession } from "../domain/logCodec";
 import { useEffect, useRef, useState } from "react";
 import { createGame, dispatch } from "../domain/turnResolver";
 import {
@@ -78,10 +79,13 @@ export function App({
   minutes?: Minutes;
   botLevel?: BotLevel;
 }) {
-  const [s, setS] = useState(
-    () =>
+  const [s, setS] = useState(() =>
+    startRecordingSession(
       restoreGame() ??
-      createGame(freshSeed(), performance.now(), undefined, minutes),
+        createGame(freshSeed(), performance.now(), undefined, minutes),
+      opponentMode,
+      botLevel,
+    ),
   );
   const ref = useRef(s);
   const [spin, setSpin] = useState(false);
@@ -218,7 +222,8 @@ export function App({
     }, 150);
     return () => clearInterval(timer);
   }, []);
-  const load = (state: State) => {
+  const load = (loaded: State) => {
+    const state = startRecordingSession(loaded, opponentMode, botLevel);
     ref.current = state;
     setS(state);
     setSeed(String(state.seed));
