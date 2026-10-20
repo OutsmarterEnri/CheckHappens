@@ -82,8 +82,12 @@ test("built app works offline after service worker installation", async ({
   await page.getByRole("button", { name: /^Play/ }).click();
   await page.getByRole("button", { name: /Local match/ }).click();
   await expect(
-    page.getByRole("button", { name: "Start match →", exact: true }),
+    page.getByRole("dialog", { name: "Starting match", exact: true }),
   ).toBeVisible();
+  await expect(page.locator(".game-screen")).not.toHaveAttribute(
+    "data-phase",
+    "READY",
+  );
 });
 
 test("landscape explains portrait mode and primary controls have touch targets", async ({

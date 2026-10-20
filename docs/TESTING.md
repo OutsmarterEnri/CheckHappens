@@ -3,8 +3,8 @@
 Latest UI and language verification: 21 October 2026.
 
 - Strict TypeScript and Vite production build pass.
-- 121 Vitest tests pass: 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
-- 27 Chromium browser tests pass. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
+- 126 Vitest tests pass: 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
+- 30 Chromium browser tests pass. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
 - Initial engine perft remains 20 / 400 / 8902 at depth 1 / 2 / 3.
@@ -44,3 +44,14 @@ exercise the persisted switch, tutorial, local game, +4 ghosts, Wild color and
 evolution choices, prominent Pass action, verifier and translated finale. Existing
 English browser scenarios continue to run. Card content precedes the board in DOM
 and visual order; clocks are larger and action animation respects reduced motion.
+
+### Starting side and automatic launch
+
+Five domain regressions cover White/Black/seeded Random, the bot opening with
+White while the human remains P1, no countdown clock charge, Reverse swaps and
+verified JSON replay from either starting configuration. Existing constructors
+still default to White, preserving saved-match and schema-1/2 fixture behavior.
+Browser coverage exercises 3–2–1, the missing extra Start button in normal play,
+first bot action, cancellation, persisted Random preference, direct resume and rematch countdown. Menu-launched
+matches and rematches count down; resumed matches retain their current state.
+Direct laboratory links retain a manual start for deterministic diagnostics.

@@ -15,6 +15,7 @@ import {
 import {
   timeControls,
   botProfiles,
+  type SidePreference,
   type Minutes,
   type BotLevel,
 } from "../domain/match";
@@ -32,7 +33,11 @@ export function Shell() {
         ? "local"
         : readPreference(MODE_KEY, "local"),
   );
-  const stored = readPreference<{ minutes: number; level: string }>(MATCH_KEY, {
+  const stored = readPreference<{
+    minutes: number;
+    level: string;
+    side?: string;
+  }>(MATCH_KEY, {
     minutes: 7,
     level: "easy",
   });
@@ -44,6 +49,10 @@ export function Shell() {
       ? (stored.level as BotLevel)
       : "easy",
   );
+  const [side, setSide] = useState<SidePreference>(
+    stored.side === "black" || stored.side === "random" ? stored.side : "white",
+  );
+  const [autoStart, setAutoStart] = useState(false);
   const [prefs, setPrefs] = useState<Preferences>(() => ({
     reduceMotion:
       readPreference<Preferences>(PREFS_KEY, { reduceMotion: false })
@@ -61,7 +70,8 @@ export function Shell() {
     } catch {}
     setMode(newMode);
     writePreference(MODE_KEY, newMode);
-    writePreference(MATCH_KEY, { minutes, level });
+    writePreference(MATCH_KEY, { minutes, level, side });
+    setAutoStart(true);
     setGameKey((n) => n + 1);
     setScreen("game");
   };
@@ -75,6 +85,8 @@ export function Shell() {
             onHome={home}
             minutes={minutes}
             botLevel={level}
+            sidePreference={side}
+            autoStart={autoStart}
           />
         ) : screen === "tutorial" ? (
           <Tutorial onHome={home} />
@@ -126,10 +138,41 @@ export function Shell() {
                     </button>
                   ))}
                 </div>
+                <div
+                  className="side-options"
+                  role="group"
+                  aria-label="Starting side"
+                >
+                  <span>Play as</span>
+                  {(["white", "random", "black"] as const).map((value) => (
+                    <button
+                      key={value}
+                      aria-pressed={side === value}
+                      onClick={() => setSide(value)}
+                    >
+                      <span aria-hidden="true">
+                        {value === "random" ? (
+                          "?"
+                        ) : (
+                          <PieceIcon
+                            type="p"
+                            army={value === "white" ? "w" : "b"}
+                          />
+                        )}
+                      </span>
+                      {value === "white"
+                        ? "White"
+                        : value === "black"
+                          ? "Black"
+                          : "Random"}
+                    </button>
+                  ))}
+                </div>
                 {saved && saved.phase !== "READY" && !saved.outcome && (
                   <button
                     className="resume-game"
                     onClick={() => {
+                      setAutoStart(false);
                       setMode(readPreference(MODE_KEY, "local"));
                       setGameKey((n) => n + 1);
                       setScreen("game");

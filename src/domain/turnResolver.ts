@@ -1,5 +1,6 @@
 import { record, type ActionSource } from "./audit";
 import type {
+  Army,
   Card,
   Command,
   DomainError,
@@ -28,6 +29,7 @@ export function createGame(
   now = 0,
   deck?: Card[],
   minutes: 4 | 7 | 10 = 7,
+  startingArmy: Army = "w",
 ): State {
   if (![4, 7, 10].includes(minutes))
     throw new Error("Unsupported time control");
@@ -36,9 +38,9 @@ export function createGame(
     version: 1,
     initialMinutes: minutes,
     pieces: initialPieces(),
-    control: { P1: "w", P2: "b" },
-    active: "P1",
-    orientation: "w",
+    control: { P1: startingArmy, P2: otherArmy(startingArmy) },
+    active: startingArmy === "w" ? "P1" : "P2",
+    orientation: startingArmy,
     mode: "uno",
     phase: "READY",
     turn: 0,
@@ -358,7 +360,7 @@ export function resolveCommand(
         if (s.phase !== "READY")
           fail("WRONG_PHASE", "The match has already started.");
         s.clock.lastAt = now;
-        begin(s, "P1");
+        begin(s, s.active);
         break;
       case "AdvanceTime":
         break;

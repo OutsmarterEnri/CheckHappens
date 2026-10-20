@@ -110,8 +110,11 @@ for (const [name, title] of [
       .getByRole("button", { name: "Play again →", exact: true })
       .click();
     await expect(
-      page.getByRole("button", { name: "Start match →", exact: true }),
+      page.getByRole("dialog", { name: "Starting match", exact: true }),
     ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Start match →", exact: true }),
+    ).toHaveCount(0);
   });
 }
 test("actual timeout opens finale and its JSON verifies", async ({ page }) => {
@@ -121,7 +124,9 @@ test("actual timeout opens finale and its JSON verifies", async ({ page }) => {
   // Simulate elapsed time without rendering all 2,800 polling intervals.
   // This also exercises catching up after a suspended/backgrounded tab.
   await page.clock.fastForward(419000);
-  await expect(page.getByRole("dialog", { name: "PLAYER 2 WINS!" })).toHaveCount(0);
+  await expect(
+    page.getByRole("dialog", { name: "PLAYER 2 WINS!" }),
+  ).toHaveCount(0);
   await page.clock.fastForward(2000);
   await expect(
     page.getByRole("dialog", { name: "PLAYER 2 WINS!" }),

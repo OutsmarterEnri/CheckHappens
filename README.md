@@ -124,7 +124,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **121 unit tests and 27 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **126 unit tests and 30 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
@@ -155,3 +155,11 @@ Match JSON diagnostics remain in English for reproducible analysis. The card pan
 sits above the board; larger clocks and highlighted Pass/List actions keep the
 board and turn controls within easier thumb reach. The installed iOS safe-area
 header workaround is preserved.
+
+Before starting, choose **White / Black / Random**. In a local game this sets
+Player 1's starting army; against a bot it sets your army. White always opens,
+so the bot goes first when you choose Black. Reverse still swaps armies and
+clocks during play. Random is resolved once per new match from its random seed.
+Selecting Local match or Train with a bot starts a **3–2–1 countdown** and then
+draws the first card automatically. The game clock starts after the countdown.
+Saved matches resume directly; the laboratory retains a manual start for scenarios.

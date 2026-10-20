@@ -38,8 +38,8 @@ import {
 import { MatchFinale } from "./MatchFinale";
 import { restoreGame, saveGame } from "./persistence";
 import { computerCommand } from "../domain/computer";
-import type { Minutes, BotLevel } from "../domain/match";
-import { botProfiles } from "../domain/match";
+import type { Minutes, BotLevel, SidePreference } from "../domain/match";
+import { botProfiles, startingArmy } from "../domain/match";
 import type { OpponentMode } from "./preferences";
 import { PieceIcon } from "./PieceIcon";
 const phaseLabel: Record<State["phase"], string> = {
@@ -74,16 +74,33 @@ export function App({
   onHome = () => {},
   minutes = 7,
   botLevel = "easy",
+  sidePreference = "white",
+  autoStart = false,
 }: {
   opponentMode?: OpponentMode;
   onHome?: () => void;
   minutes?: Minutes;
   botLevel?: BotLevel;
+  sidePreference?: SidePreference;
+  autoStart?: boolean;
 }) {
+  const freshMatch = () => {
+    const seed = freshSeed();
+    return createGame(
+      seed,
+      performance.now(),
+      undefined,
+      minutes,
+      startingArmy(sidePreference, seed),
+    );
+  };
+  const [automaticStart, setAutomaticStart] = useState(autoStart);
+  const [countdown, setCountdown] = useState<number | null>(
+    autoStart ? 3 : null,
+  );
   const [s, setS] = useState(() =>
     startRecordingSession(
-      restoreGame() ??
-        createGame(freshSeed(), performance.now(), undefined, minutes),
+      restoreGame() ?? freshMatch(),
       opponentMode,
       botLevel,
     ),
@@ -123,7 +140,10 @@ export function App({
   const [deckText, setDeckText] = useState("R4 VSkip BReverse G+2 J +4");
   const [confirmNew, setConfirmNew] = useState(false);
   const importInput = useRef<HTMLInputElement>(null);
-  const send = (command: Command, source: "human" | "computer" = "human") => {
+  const send = (
+    command: Command,
+    source: "human" | "computer" | "system" = "human",
+  ) => {
     if (
       source === "human" &&
       opponentMode === "computer" &&
@@ -178,6 +198,23 @@ export function App({
       setEvolutionTarget(null);
     }
   };
+  useEffect(() => {
+    if (!automaticStart || s.phase !== "READY") {
+      setCountdown(null);
+      return;
+    }
+    setCountdown(3);
+    const startedAt = performance.now();
+    const timer = setInterval(() => {
+      const left = 3 - Math.floor((performance.now() - startedAt) / 1000);
+      if (left <= 0) {
+        clearInterval(timer);
+        send({ type: "StartGame" }, "system");
+        setCountdown(null);
+      } else setCountdown(left);
+    }, 100);
+    return () => clearInterval(timer);
+  }, [automaticStart, s.phase]);
   useEffect(() => {
     if (!computerTurn) return;
     const timer = setTimeout(() => {
@@ -269,7 +306,8 @@ export function App({
       !colorPopup &&
       !evolutionTarget &&
       !drawer &&
-      !outcomePopup
+      !outcomePopup &&
+      countdown === null
     )
       return;
     const previous = document.activeElement as HTMLElement | null;
@@ -277,6 +315,10 @@ export function App({
     modal?.querySelector<HTMLElement>("button")?.focus();
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        if (countdown !== null) {
+          onHome();
+          return;
+        }
         setResultDismissed(true);
         setPromotion(null);
         setConfirmNew(false);
@@ -312,6 +354,7 @@ export function App({
     !!evolutionTarget,
     drawer,
     outcomePopup,
+    countdown !== null,
   ]);
   // Compute once per render, then share between board highlights and popups.
   const evolutions =
@@ -396,8 +439,10 @@ export function App({
     s.mode === "uno" && s.phase === "RESOLVE_MOVES"
       ? Math.round(risk(s.moveIndex + 1, s.color) * 100)
       : 0;
-  const newMatch = () =>
-    load(createGame(freshSeed(), performance.now(), undefined, minutes));
+  const newMatch = () => {
+    setAutomaticStart(true);
+    load(freshMatch());
+  };
   const playerName = (player: "P1" | "P2") =>
     opponentMode === "computer"
       ? player === "P1"
@@ -685,12 +730,14 @@ export function App({
                 Pass & play or train.
                 <small>{s.initialMinutes ?? minutes} minutes each.</small>
               </span>
-              <button
-                className="primary"
-                onClick={() => send({ type: "StartGame" })}
-              >
-                Start match →
-              </button>
+              {!automaticStart && (
+                <button
+                  className="primary"
+                  onClick={() => send({ type: "StartGame" })}
+                >
+                  Start match →
+                </button>
+              )}
             </>
           ) : computerTurn ? (
             <span>
@@ -737,6 +784,35 @@ export function App({
             </>
           )}
         </div>
+        {countdown !== null && s.phase === "READY" && (
+          <div className="modal-backdrop countdown-stage">
+            <section
+              className="modal countdown"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Starting match"
+            >
+              <h2>Get ready!</h2>
+              <strong
+                className="countdown-number"
+                key={countdown}
+                role="status"
+                aria-live="assertive"
+              >
+                {countdown}
+              </strong>
+              <p>
+                {s.control.P1 === "w"
+                  ? "You start with White"
+                  : "You start with Black"}
+              </p>
+              <small>The clock starts after the countdown.</small>
+              <button className="quiet" onClick={onHome}>
+                Cancel
+              </button>
+            </section>
+          </div>
+        )}
         {drawer && !outcomePopup && (
           <div className="modal-backdrop">
             <section

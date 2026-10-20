@@ -307,3 +307,15 @@ Object.assign(italian, {
   "Invalid match log.": "Registro partita non valido.",
   "Invalid JSON file.": "File JSON non valido.",
 });
+
+Object.assign(italian, {
+  "Starting side": "Schieramento iniziale",
+  "Play as": "Gioca con",
+  Random: "Casuale",
+  "Starting match": "Inizio partita",
+  "Get ready!": "Preparati!",
+  "You start with White": "Inizi con il Bianco",
+  "You start with Black": "Inizi con il Nero",
+  "The clock starts after the countdown.":
+    "Il tempo parte dopo il conto alla rovescia.",
+});

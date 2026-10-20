@@ -30,9 +30,9 @@ test("language preference translates menus, tutorial and game and survives reloa
     .boundingBox();
   const board = await page.locator(".board-frame").boundingBox();
   expect(card!.y + card!.height).toBeLessThan(board!.y);
-  await page
-    .getByRole("button", { name: "Inizia partita →", exact: true })
-    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Inizio partita" }),
+  ).toHaveCount(0);
   await page.getByRole("button", { name: "Home", exact: true }).click();
   await page.getByRole("button", { name: "Impostazioni" }).click();
   await page
