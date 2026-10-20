@@ -55,3 +55,15 @@ Browser coverage exercises 3–2–1, the missing extra Start button in normal p
 first bot action, cancellation, persisted Random preference, direct resume and rematch countdown. Menu-launched
 matches and rematches count down; resumed matches retain their current state.
 Direct laboratory links retain a manual start for deterministic diagnostics.
+
+### Board height and legibility comfort pass
+
+The square board now anchors near the card panel instead of the bottom of its
+column, matching the higher placement in the user's reference. Its size follows
+the column's actual available height through container units, with the previous
+viewport calculation retained as a fallback. Both clocks have a 130px minimum
+width and 35–41px numerals (120px / 33px on short screens). Game labels, move
+budgets, coordinates, color tags and action hints are larger without changing the
+font family. Manual geometry checks cover 375×667, 393×852, 414×896 and 430×932,
+including 59px top and 34px bottom safe areas; the board remains square and no
+page scrolling or player-row clipping is introduced.

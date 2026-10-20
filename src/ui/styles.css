@@ -1724,3 +1724,125 @@ h2 {
 .reduce-motion .countdown-number {
   animation: none;
 }
+
+/* Comfort pass: anchor the table closer to the card and size its square board
+   from the space actually left after readable labels, timers and safe areas. */
+.game-screen {
+  gap: 6px;
+}
+.game-screen .board-column {
+  justify-content: flex-start;
+  container-type: size;
+}
+.game-screen .player-strip {
+  height: 58px;
+  min-height: 58px;
+}
+.game-screen .clock {
+  font-size: clamp(35px, 9.4vw, 41px);
+  min-width: 130px;
+  padding: 5px 12px;
+  letter-spacing: -0.8px;
+}
+.game-screen .player-name strong {
+  font-size: 14px;
+}
+.game-screen .player-name > span {
+  font-size: 11px;
+}
+.game-screen .turn-banner strong {
+  font-size: 14px;
+}
+.game-screen .turn-banner > span {
+  font-size: 12px;
+  line-height: 1.25;
+}
+.game-screen .format-label {
+  font-size: 12px;
+}
+.game-screen .play-dock {
+  min-height: 94px;
+  padding: 8px 10px;
+}
+.game-screen .mini-card {
+  width: 48px;
+  height: 68px;
+}
+.game-screen .move-summary h2 {
+  font-size: 16px;
+}
+.game-screen .move-headline > strong {
+  font-size: 16px;
+}
+.game-screen .move-summary p {
+  font-size: 11px;
+}
+.game-screen .risk-label {
+  font-size: 10px;
+}
+.game-screen .pill {
+  font-size: 11px;
+}
+.game-screen .action-bar {
+  min-height: 56px;
+}
+.game-screen .action-bar > span {
+  font-size: 13px;
+}
+.game-screen .action-bar small {
+  font-size: 11px;
+}
+.game-screen .action-bar button {
+  font-size: 15px;
+}
+.game-screen .action-bar button.available-action {
+  font-size: 18px;
+}
+.game-screen .rank,
+.game-screen .file {
+  font-size: 11px;
+}
+@supports (width: 1cqh) {
+  .game-screen .board-column > .board-frame,
+  .game-screen .board-column > .player-strip {
+    width: min(100%, calc(100cqh - 138px));
+  }
+}
+@media (max-height: 720px) {
+  .game-screen {
+    gap: 5px;
+  }
+  .game-screen .player-strip {
+    height: 48px;
+    min-height: 48px;
+  }
+  .game-screen .clock {
+    min-width: 120px;
+    font-size: 33px;
+    padding: 4px 10px;
+  }
+  .game-screen .turn-banner strong {
+    font-size: 13px;
+  }
+  .game-screen .turn-banner > span {
+    font-size: 11px;
+  }
+  .game-screen .move-headline > strong {
+    font-size: 14px;
+  }
+  .game-screen .move-summary h2 {
+    font-size: 15px;
+  }
+  .game-screen .play-dock {
+    min-height: 90px;
+  }
+  @supports (width: 1cqh) {
+    .game-screen .board-column > .board-frame,
+    .game-screen .board-column > .player-strip {
+      width: min(100%, calc(100cqh - 118px));
+    }
+  }
+}
+.game-screen .frame-color-label {
+  font-size: 10px;
+}

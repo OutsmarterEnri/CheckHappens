@@ -3,6 +3,17 @@ test("language preference translates menus, tutorial and game and survives reloa
   page,
 }) => {
   await page.setViewportSize({ width: 393, height: 852 });
+  // Seed 1 opens with Wild: exercise the mandatory popup after auto-start.
+  await page.addInitScript(() => {
+    const original = crypto.getRandomValues.bind(crypto);
+    crypto.getRandomValues = ((values: Uint32Array) => {
+      if (values instanceof Uint32Array && values.length === 1) {
+        values[0] = 1;
+        return values;
+      }
+      return original(values);
+    }) as typeof crypto.getRandomValues;
+  });
   await page.goto("/");
   await page.getByRole("button", { name: "Settings" }).click();
   await page
@@ -33,6 +44,13 @@ test("language preference translates menus, tutorial and game and survives reloa
   await expect(
     page.getByRole("dialog", { name: "Inizio partita" }),
   ).toHaveCount(0);
+  // Auto-start can draw a Wild/+4: resolve its mandatory popup before leaving.
+  const colorPopup = page.getByRole("dialog", {
+    name: "Scegli colore",
+    exact: true,
+  });
+  await expect(colorPopup).toBeVisible();
+  await colorPopup.getByRole("button", { name: "Blu", exact: true }).click();
   await page.getByRole("button", { name: "Home", exact: true }).click();
   await page.getByRole("button", { name: "Impostazioni" }).click();
   await page
