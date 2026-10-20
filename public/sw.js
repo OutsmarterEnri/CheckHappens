@@ -1,5 +1,5 @@
 // Shell updates wait for open games to close; no forced activation.
-const CACHE = "check-happens-v2-4";
+const CACHE = "check-happens-v2-5";
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -18,6 +18,7 @@ self.addEventListener("install", (event) => {
           "./",
           "index.html",
           "manifest.webmanifest",
+          "THIRD_PARTY_NOTICES.txt",
           "icon.svg",
           "icons/icon-192.png",
           "icons/icon-512.png",
