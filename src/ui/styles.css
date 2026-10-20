@@ -1592,3 +1592,73 @@ h2 {
     }
   }
 }
+
+/* Card first, then the board within comfortable thumb reach. */
+.player-strip {
+  height: 42px;
+  min-height: 42px;
+  width: min(
+    100%,
+    calc(
+      100dvh - 370px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    )
+  );
+}
+.board-frame {
+  width: min(
+    100%,
+    calc(
+      100dvh - 370px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    )
+  );
+}
+.clock {
+  font-size: clamp(30px, 8.2vw, 36px);
+  padding: 4px 10px;
+  min-width: 106px;
+  border-width: 3px;
+}
+.action-bar button.available-action {
+  min-width: 112px;
+  min-height: 52px;
+  font-size: 17px;
+  border-width: 3px;
+  box-shadow:
+    0 4px 0 var(--ink),
+    0 0 0 3px var(--paper);
+  animation: action-appear 220ms ease-out;
+}
+@keyframes action-appear {
+  from {
+    transform: translateY(5px) scale(0.94);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .action-bar button.available-action {
+    animation: none;
+  }
+}
+.reduce-motion .action-bar button.available-action {
+  animation: none;
+}
+.language-picker select {
+  min-height: 46px;
+  min-width: 128px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  padding: 8px;
+}
+/* Tutorial sizing belongs to its own scrolling layout. */
+.tutorial-board {
+  width: min(100%, 340px);
+}
+.board-column {
+  justify-content: flex-end;
+  padding-bottom: 4px;
+}

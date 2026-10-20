@@ -1,10 +1,13 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { LanguageProvider } from "./ui/locale";
 import { Shell } from "./ui/Shell";
 import "./ui/styles.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Shell />
+    <LanguageProvider>
+      <Shell />
+    </LanguageProvider>
   </React.StrictMode>,
 );
 

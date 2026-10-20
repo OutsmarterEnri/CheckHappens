@@ -6,7 +6,7 @@
 
 Check Happens is an independent experimental web game for two players on one device, or one player against a local training bot. It combines legal chess moves with colored cards that change move budgets, clocks and even who controls each army.
 
-The interface is in English, designed around a single iPhone portrait screen, with a playful cartoon style and direct touch controls. It runs entirely in the browser; there is no game server or account system.
+The interface supports English and Italian, designed around a single iPhone portrait screen, with a playful cartoon style and direct touch controls. It runs entirely in the browser; there is no game server or account system.
 
 <img src="docs/v2-game-iphone.png" alt="Check Happens portrait game table: clocks, colored chessboard frame and remaining moves" width="340" />
 
@@ -124,7 +124,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **118 unit tests and 25 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **121 unit tests and 27 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
@@ -146,3 +146,12 @@ Report rule or interface problems through [GitHub Issues](https://github.com/Out
 Third-party licenses continue to apply separately. React, React DOM and Scheduler use MIT; their copyright and permission notices are preserved. Vite's core license and supplied bundled-tool notices are also retained. See [third-party notices](THIRD_PARTY_NOTICES.md), [the dependency inventory](docs/DEPENDENCY_LICENSES.md), and the deployed `THIRD_PARTY_NOTICES.txt` file.
 
 This is an independent prototype, not an official or endorsed Mattel product. UNO is a Mattel brand; references describe inspiration and terminology, not a license to use its branding, artwork or trade dress. The availability of source code or the choice of a software license does not clear trademark, asset or commercial-distribution rights. The name **Check Happens** has not undergone a trademark-clearance review. See [rights and release notes](docs/RIGHTS.md) before wider distribution or monetization.
+
+### Language and phone controls
+
+Choose **Settings → Language → English / Italiano**. The choice is saved on this
+device and applies to menus, the tutorial, card choices, turn feedback and results.
+Match JSON diagnostics remain in English for reproducible analysis. The card panel
+sits above the board; larger clocks and highlighted Pass/List actions keep the
+board and turn controls within easier thumb reach. The installed iOS safe-area
+header workaround is preserved.

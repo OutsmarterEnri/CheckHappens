@@ -1,3 +1,4 @@
+import { Localized } from "./locale";
 import { startRecordingSession } from "../domain/logCodec";
 import { useEffect, useRef, useState } from "react";
 import { createGame, dispatch } from "../domain/turnResolver";
@@ -408,750 +409,774 @@ export function App({
     Math.max(s.current?.value ?? 1, s.moveIndex + remaining),
   );
   return (
-    <div className="game-screen" data-phase={s.phase}>
-      <div className="portrait-hint" role="status">
-        <strong>Your table looks better upright.</strong>
-        <span>Rotate your phone to portrait to play.</span>
-      </div>
-      <header className="game-header">
-        <button
-          className="brand compact"
-          aria-label="Home"
-          onClick={() => {
-            saveGame(ref.current);
-            onHome();
-          }}
-        >
-          CH<span>Check Happens.</span>
-        </button>
-        <span className="format-label">
-          {s.mode === "classical"
-            ? "Classic"
-            : `${s.initialMinutes ?? minutes} + 0`}
-        </span>
-        <button aria-label="New match" onClick={() => setConfirmNew(true)}>
-          ＋
-        </button>
-        <button aria-label="Game options" onClick={() => setDrawer("more")}>
-          ···
-        </button>
-      </header>
-      <div
-        className="turn-banner"
-        key={`${s.turn}-${s.active}`}
-        role="status"
-        aria-live="polite"
-      >
-        <strong>
-          {s.phase === "READY"
-            ? "READY?"
-            : s.outcome
-              ? "MATCH OVER"
-              : computerTurn
-                ? "BOT’S TURN"
-                : opponentMode === "computer"
-                  ? "YOUR TURN!"
-                  : `${playerName(s.active).toUpperCase()}’S TURN`}
-        </strong>
-        <span>
-          {s.phase === "READY"
-            ? "In Cards we trust"
-            : s.outcome
-              ? s.outcome.reason
-              : `${own === "w" ? "White" : "Black"} · ${computerTurn ? "thinking…" : phaseLabel[s.phase]}`}
-        </span>
-      </div>
-      <section className="board-column" aria-label="Game table">
-        <div
-          className={`player-strip ${s.active === opponent && s.phase !== "READY" ? "active" : ""}`}
-        >
-          <span className="avatar">{opponent.slice(1)}</span>
-          <div className="player-name">
-            <strong>{playerName(opponent)}</strong>
-            <span>
-              {s.control[opponent] === "w" ? "White army" : "Black army"}
-            </span>
-          </div>
-          <div className="clock" aria-label={`Time ${opponent}`}>
-            {time(s.clock.remaining[opponent])}
-          </div>
+    <Localized>
+      <div className="game-screen" data-phase={s.phase}>
+        <div className="portrait-hint" role="status">
+          <strong>Your table looks better upright.</strong>
+          <span>Rotate your phone to portrait to play.</span>
         </div>
-        <div
-          className={`board-frame color-${s.color ?? "neutral"} ${spin ? "reverse-enter" : ""}`}
-          key={s.orientation}
-        >
-          <span className="frame-color-label">
-            {s.color ? colorNames[s.color] : "Neutral"}
-          </span>
-          {fx && (
-            <div
-              key={fx.id}
-              className={`comic-fx ${fx.kind}`}
-              aria-hidden="true"
-            >
-              {fx.label}
-              <span>✦</span>
-            </div>
-          )}
-          <div className="board" role="group" aria-label="Chessboard, a1 to h8">
-            {squares.map((sq, i) => {
-              const piece = s.pieces.find((p) => p.square === sq),
-                ghost = ghosts.find((p) => p.home === sq);
-              const possible = selectedMoves.some((m) => m.to === sq);
-              const breakable =
-                !!piece &&
-                nextRisk > 0 &&
-                !computerTurn &&
-                moves.some((m) => m.pieceId === piece.id);
-              const target =
-                s.phase === "CHOOSE_TARGETS" &&
-                !computerTurn &&
-                piece &&
-                (s.current?.kind === "skip"
-                  ? piece.army !== own && piece.type !== "k"
-                  : s.current?.kind === "wild" &&
-                    evolutions.some((c) => c.pieceId === piece.id));
-              return (
-                <button
-                  key={sq}
-                  className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${selected === sq ? "selected" : ""} ${possible ? "possible" : ""} ${target ? "target" : ""} ${ghost ? "hologram" : ""} ${ghost && resurrections.includes(ghost.id) ? "ghost-selected" : ""} ${piece && s.used.includes(piece.id) ? "used" : ""} ${breakable ? "at-risk" : ""} ${piece?.type === "k" && check && piece.army === own ? "checked" : ""}`}
-                  onClick={() => clickSquare(sq)}
-                  aria-label={`${squareName(sq)}${ghost ? `, ghost ${pieceNames[ghost.original]}` : ""}${piece ? `, ${pieceNames[piece.type]} ${piece.army === "w" ? "white" : "black"}${piece.blocked ? ", blocked" : ""}${s.used.includes(piece.id) ? ", used" : ""}` : ""}${possible ? ", legal destination" : ""}${breakable ? `, ${nextRisk}% break risk` : ""}`}
-                  aria-pressed={
-                    ghost ? resurrections.includes(ghost.id) : selected === sq
-                  }
-                >
-                  {i % 8 === 0 && (
-                    <span className="rank">{Math.floor(sq / 8) + 1}</span>
-                  )}
-                  {i >= 56 && (
-                    <span className="file">{"abcdefgh"[sq % 8]}</span>
-                  )}
-                  {piece && (
-                    <span
-                      className="piece-actor"
-                      key={`${piece.id}-${piece.square}-${piece.type}`}
-                    >
-                      <PieceIcon type={piece.type} army={piece.army} />
-                      {breakable && (
-                        <svg
-                          className="crack"
-                          viewBox="0 0 48 48"
-                          aria-hidden="true"
-                        >
-                          <path d="m28 9-7 10 8 2-10 12 5 8" />
-                        </svg>
-                      )}
-                    </span>
-                  )}
-                  {ghost && (
-                    <span className="ghost-piece">
-                      <PieceIcon type={ghost.original} army={ghost.army} />
-                      <b>{resurrections.includes(ghost.id) ? "✓" : "+"}</b>
-                    </span>
-                  )}
-                  {piece?.blocked && <span className="blocked">⊘</span>}
-                  {piece && s.used.includes(piece.id) && (
-                    <span className="used-dot" />
-                  )}
-                  {possible && (
-                    <span className={piece ? "capture-ring" : "move-dot"} />
-                  )}
-                  {puff?.square === sq && (
-                    <span
-                      key={puff.id}
-                      className="break-puff"
-                      role="img"
-                      aria-label={`${pieceNames[puff.type]} broke`}
-                    >
-                      <span className="puff-silhouette">
-                        <PieceIcon type={puff.type} army={puff.army} />
-                      </span>
-                      <i />
-                      <i />
-                      <i />
-                      <b>POOF!</b>
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-        <div
-          className={`player-strip bottom-player ${s.active === bottomPlayer && s.phase !== "READY" ? "active" : ""}`}
-        >
-          <span className="avatar">{bottomPlayer.slice(1)}</span>
-          <div className="player-name">
-            <strong>{playerName(bottomPlayer)}</strong>
-            <span>
-              {s.control[bottomPlayer] === "w" ? "White army" : "Black army"}
-            </span>
-          </div>
-          <div
-            className={`clock ${s.clock.remaining[bottomPlayer] < 30000 ? "low" : ""}`}
-            aria-label={`Time ${bottomPlayer}`}
+        <header className="game-header">
+          <button
+            className="brand compact"
+            aria-label="Home"
+            onClick={() => {
+              saveGame(ref.current);
+              onHome();
+            }}
           >
-            {time(s.clock.remaining[bottomPlayer])}
-          </div>
-        </div>
-      </section>
-      <section
-        className={`play-dock ${nextRisk > 0 ? "risky-dock" : ""}`}
-        aria-label="Card and moves"
-      >
+            CH<span>Check Happens.</span>
+          </button>
+          <span className="format-label">
+            {s.mode === "classical"
+              ? "Classic"
+              : `${s.initialMinutes ?? minutes} + 0`}
+          </span>
+          <button aria-label="New match" onClick={() => setConfirmNew(true)}>
+            ＋
+          </button>
+          <button aria-label="Game options" onClick={() => setDrawer("more")}>
+            ···
+          </button>
+        </header>
         <div
-          className={`mini-card ${s.color ?? "neutral"}`}
-          key={`${s.turn}-${s.current?.id}`}
-          aria-label={`Card ${cardLabel(s.current)}`}
+          className="turn-banner"
+          key={`${s.turn}-${s.active}`}
+          role="status"
+          aria-live="polite"
         >
           <strong>
-            {s.mode === "classical"
-              ? "♟"
-              : s.current
-                ? cardLabel(s.current)
-                : "?"}
+            {s.phase === "READY"
+              ? "READY?"
+              : s.outcome
+                ? "MATCH OVER"
+                : computerTurn
+                  ? "BOT’S TURN"
+                  : opponentMode === "computer"
+                    ? "YOUR TURN!"
+                    : `${playerName(s.active).toUpperCase()}’S TURN`}
           </strong>
-        </div>
-        <div className="move-summary">
-          <div className="section-top">
-            <h2>
-              {s.current
-                ? `${cardLabel(s.current)} · ${s.color ? colorNames[s.color] : "Wild"}`
-                : s.mode === "classical"
-                  ? "Classic chess"
-                  : "Anything can happen."}
-            </h2>
-            <span className="pill">{s.deck.length - s.deckIndex} cards</span>
-          </div>
-          <div className="move-headline">
-            <strong>
-              {s.phase === "PRE_DRAW_DEFENSE"
-                ? "Defend first"
-                : s.phase === "READY"
-                  ? "Your first card awaits"
-                  : s.phase === "CHOOSE_TARGETS"
-                    ? `${s.current?.kind === "skip" ? "Tap an enemy piece" : s.current?.kind === "wild" ? "Tap a pawn" : `Tap ${resurrectionCount(s)} ghosts · ${resurrections.length} selected`}`
-                    : s.phase === "CHOOSE_COLOR"
-                      ? "Pick a color"
-                      : `${remaining} move${remaining === 1 ? "" : "s"} left`}
-            </strong>
-            <span className={`risk-label ${nextRisk > 0 ? "danger" : ""}`}>
-              {nextRisk > 0 ? `${nextRisk}% BREAK RISK` : "SAFE"}
-            </span>
-          </div>
-          <div
-            className="move-track"
-            aria-label={`${s.moveIndex} moves completed, ${remaining} remaining`}
-          >
-            {Array.from({ length: count }, (_, i) => (
-              <span
-                key={i}
-                className={`${i < s.moveIndex ? "done" : ""} ${i >= 4 ? "risky" : ""}`}
-              />
-            ))}
-          </div>
-          <p>
-            {s.phase === "PRE_DRAW_DEFENSE"
-              ? `${s.color ? colorNames[s.color] : "Previous color"} stays active until you draw.`
-              : s.yellow
-                ? `${s.budget} card moves + ${s.yellow} mandatory capture bonus`
-                : `${s.mode === "classical" ? "One move per turn" : `Next: move ${s.moveIndex + 1}`} · ${mandatory ? "MUST MOVE" : canEnd(s) ? "MAY PASS" : phaseLabel[s.phase]}`}
-          </p>
-        </div>
-      </section>
-      <div className="action-bar" aria-live="polite">
-        {s.outcome ? (
-          <>
-            <span>
-              {s.outcome.winner
-                ? `${playerName(s.outcome.winner)} wins!`
-                : "Draw"}
-              <small>{s.outcome.reason}</small>
-            </span>
-            <button className="primary" onClick={newMatch}>
-              Play again →
-            </button>
-          </>
-        ) : s.phase === "READY" ? (
-          <>
-            <span>
-              Pass & play or train.
-              <small>{s.initialMinutes ?? minutes} minutes each.</small>
-            </span>
-            <button
-              className="primary"
-              onClick={() => send({ type: "StartGame" })}
-            >
-              Start match →
-            </button>
-          </>
-        ) : computerTurn ? (
           <span>
-            Bot is thinking…<small>Same rules. No shortcuts.</small>
+            {s.phase === "READY"
+              ? "In Cards we trust"
+              : s.outcome
+                ? s.outcome.reason
+                : `${own === "w" ? "White" : "Black"} · ${computerTurn ? "thinking…" : phaseLabel[s.phase]}`}
           </span>
-        ) : (
-          <>
-            <span>
-              {error ||
-                (selected !== null
-                  ? `From ${squareName(selected)} · tap a destination`
-                  : s.phase === "CHOOSE_TARGETS"
-                    ? "Tap the highlighted pieces"
-                    : s.phase === "CHOOSE_COLOR"
-                      ? "Pick a color in the popup"
-                      : nextRisk > 0
-                        ? "This piece might break."
-                        : check
-                          ? "Save your king!"
-                          : "Pick a piece, make it happen.")}
-              <small>
-                {nextRisk > 0
-                  ? "Move completes first. Breaking ends your turn."
-                  : s.color
-                    ? bonusText[s.color]
-                    : "In Cards we trust"}
-              </small>
-            </span>
-            {canEnd(s) ? (
-              <button onClick={() => send({ type: "EndOptionalMoves" })}>
-                Pass →
-              </button>
-            ) : s.phase === "CHOOSE_TARGETS" ? (
-              <button onClick={() => setDrawer("targets")}>List</button>
-            ) : null}
-          </>
-        )}
-      </div>
-      {drawer && !outcomePopup && (
-        <div className="modal-backdrop">
-          <section
-            className="modal drawer"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Game options"
+        </div>
+        <section
+          className={`play-dock ${nextRisk > 0 ? "risky-dock" : ""}`}
+          aria-label="Card and moves"
+        >
+          <div
+            className={`mini-card ${s.color ?? "neutral"}`}
+            key={`${s.turn}-${s.current?.id}`}
+            aria-label={`Card ${cardLabel(s.current)}`}
           >
+            <strong>
+              {s.mode === "classical"
+                ? "♟"
+                : s.current
+                  ? cardLabel(s.current)
+                  : "?"}
+            </strong>
+          </div>
+          <div className="move-summary">
             <div className="section-top">
               <h2>
-                {drawer === "more"
-                  ? "Your table"
-                  : drawer === "help"
-                    ? "How it works"
-                    : drawer === "lab"
-                      ? "Lab"
-                      : drawer === "log"
-                        ? "Move log"
-                        : "Choose pieces"}
+                {s.current
+                  ? `${cardLabel(s.current)} · ${s.color ? colorNames[s.color] : "Wild"}`
+                  : s.mode === "classical"
+                    ? "Classic chess"
+                    : "Anything can happen."}
               </h2>
-              <button
-                aria-label="Close options"
-                onClick={() => setDrawer(null)}
-              >
-                ×
-              </button>
+              <span className="pill">{s.deck.length - s.deckIndex} cards</span>
             </div>
-            {drawer === "more" && (
-              <div className="drawer-menu">
-                <button onClick={() => setDrawer("help")}>How to play</button>
-                <button onClick={() => setDrawer("log")}>Move log</button>
-                <button onClick={() => setDrawer("lab")}>Lab & replay</button>
-                <button onClick={exportReplay}>Save match JSON</button>
-                <button
-                  onClick={() => {
-                    setVerification(verifyMatch(exportMatch(ref.current)));
-                    setDrawer("log");
-                  }}
-                >
-                  Verify this match
-                </button>
-                <button onClick={() => analyzeInput.current?.click()}>
-                  Analyze JSON file
-                </button>
-                <button
-                  onClick={() => {
-                    saveGame(ref.current);
-                    onHome();
-                  }}
-                >
-                  Home <small>The clock keeps running</small>
-                </button>
+            <div className="move-headline">
+              <strong>
+                {s.phase === "PRE_DRAW_DEFENSE"
+                  ? "Defend first"
+                  : s.phase === "READY"
+                    ? "Your first card awaits"
+                    : s.phase === "CHOOSE_TARGETS"
+                      ? `${s.current?.kind === "skip" ? "Tap an enemy piece" : s.current?.kind === "wild" ? "Tap a pawn" : `Tap ${resurrectionCount(s)} ghosts · ${resurrections.length} selected`}`
+                      : s.phase === "CHOOSE_COLOR"
+                        ? "Pick a color"
+                        : `${remaining} move${remaining === 1 ? "" : "s"} left`}
+              </strong>
+              <span className={`risk-label ${nextRisk > 0 ? "danger" : ""}`}>
+                {nextRisk > 0 ? `${nextRisk}% BREAK RISK` : "SAFE"}
+              </span>
+            </div>
+            <div
+              className="move-track"
+              aria-label={`${s.moveIndex} moves completed, ${remaining} remaining`}
+            >
+              {Array.from({ length: count }, (_, i) => (
+                <span
+                  key={i}
+                  className={`${i < s.moveIndex ? "done" : ""} ${i >= 4 ? "risky" : ""}`}
+                />
+              ))}
+            </div>
+            <p>
+              {s.phase === "PRE_DRAW_DEFENSE"
+                ? `${s.color ? colorNames[s.color] : "Previous color"} stays active until you draw.`
+                : s.yellow
+                  ? `${s.budget} card moves + ${s.yellow} mandatory capture bonus`
+                  : `${s.mode === "classical" ? "One move per turn" : `Next: move ${s.moveIndex + 1}`} · ${mandatory ? "MUST MOVE" : canEnd(s) ? "MAY PASS" : phaseLabel[s.phase]}`}
+            </p>
+          </div>
+        </section>
+        <section className="board-column" aria-label="Game table">
+          <div
+            className={`player-strip ${s.active === opponent && s.phase !== "READY" ? "active" : ""}`}
+          >
+            <span className="avatar">{opponent.slice(1)}</span>
+            <div className="player-name">
+              <strong>{playerName(opponent)}</strong>
+              <span>
+                {s.control[opponent] === "w" ? "White army" : "Black army"}
+              </span>
+            </div>
+            <div className="clock" aria-label={`Time ${opponent}`}>
+              {time(s.clock.remaining[opponent])}
+            </div>
+          </div>
+          <div
+            className={`board-frame color-${s.color ?? "neutral"} ${spin ? "reverse-enter" : ""}`}
+            key={s.orientation}
+          >
+            <span className="frame-color-label">
+              {s.color ? colorNames[s.color] : "Neutral"}
+            </span>
+            {fx && (
+              <div
+                key={fx.id}
+                className={`comic-fx ${fx.kind}`}
+                aria-hidden="true"
+              >
+                {fx.label}
+                <span>✦</span>
               </div>
             )}
-            {drawer === "help" && (
-              <>
-                <p>
-                  Numbers give moves with different pieces. The first four are
-                  safe and required. From move 5 you may pass or risk a break:
-                  20%, 40%, 60%, 80%, then 99%.
-                </p>
-                <p>
-                  Giving check ends the turn. Under check, defend before drawing
-                  with the previous color. Checkmate gets one emergency card
-                  while the deck lasts.
-                </p>
-                {colors.map((c) => (
-                  <p key={c}>
-                    <span className={`dot ${c}`} />{" "}
-                    <strong>{colorNames[c]}:</strong> {bonusText[c]}
-                  </p>
-                ))}
-                <p>{cardDescription(s.current)}</p>
-                <p>
-                  Custom time modes: 4-minute Bullet, 7-minute Blitz, 10-minute
-                  Rapid.
-                </p>
-              </>
-            )}
-            {drawer === "log" && (
-              <div className="journal-list">
-                <div className="log-tools">
+            <div
+              className="board"
+              role="group"
+              aria-label="Chessboard, a1 to h8"
+            >
+              {squares.map((sq, i) => {
+                const piece = s.pieces.find((p) => p.square === sq),
+                  ghost = ghosts.find((p) => p.home === sq);
+                const possible = selectedMoves.some((m) => m.to === sq);
+                const breakable =
+                  !!piece &&
+                  nextRisk > 0 &&
+                  !computerTurn &&
+                  moves.some((m) => m.pieceId === piece.id);
+                const target =
+                  s.phase === "CHOOSE_TARGETS" &&
+                  !computerTurn &&
+                  piece &&
+                  (s.current?.kind === "skip"
+                    ? piece.army !== own && piece.type !== "k"
+                    : s.current?.kind === "wild" &&
+                      evolutions.some((c) => c.pieceId === piece.id));
+                return (
+                  <button
+                    key={sq}
+                    className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${selected === sq ? "selected" : ""} ${possible ? "possible" : ""} ${target ? "target" : ""} ${ghost ? "hologram" : ""} ${ghost && resurrections.includes(ghost.id) ? "ghost-selected" : ""} ${piece && s.used.includes(piece.id) ? "used" : ""} ${breakable ? "at-risk" : ""} ${piece?.type === "k" && check && piece.army === own ? "checked" : ""}`}
+                    onClick={() => clickSquare(sq)}
+                    aria-label={`${squareName(sq)}${ghost ? `, ghost ${pieceNames[ghost.original]}` : ""}${piece ? `, ${pieceNames[piece.type]} ${piece.army === "w" ? "white" : "black"}${piece.blocked ? ", blocked" : ""}${s.used.includes(piece.id) ? ", used" : ""}` : ""}${possible ? ", legal destination" : ""}${breakable ? `, ${nextRisk}% break risk` : ""}`}
+                    aria-pressed={
+                      ghost ? resurrections.includes(ghost.id) : selected === sq
+                    }
+                  >
+                    {i % 8 === 0 && (
+                      <span className="rank">{Math.floor(sq / 8) + 1}</span>
+                    )}
+                    {i >= 56 && (
+                      <span className="file">{"abcdefgh"[sq % 8]}</span>
+                    )}
+                    {piece && (
+                      <span
+                        className="piece-actor"
+                        key={`${piece.id}-${piece.square}-${piece.type}`}
+                      >
+                        <PieceIcon type={piece.type} army={piece.army} />
+                        {breakable && (
+                          <svg
+                            className="crack"
+                            viewBox="0 0 48 48"
+                            aria-hidden="true"
+                          >
+                            <path d="m28 9-7 10 8 2-10 12 5 8" />
+                          </svg>
+                        )}
+                      </span>
+                    )}
+                    {ghost && (
+                      <span className="ghost-piece">
+                        <PieceIcon type={ghost.original} army={ghost.army} />
+                        <b>{resurrections.includes(ghost.id) ? "✓" : "+"}</b>
+                      </span>
+                    )}
+                    {piece?.blocked && <span className="blocked">⊘</span>}
+                    {piece && s.used.includes(piece.id) && (
+                      <span className="used-dot" />
+                    )}
+                    {possible && (
+                      <span className={piece ? "capture-ring" : "move-dot"} />
+                    )}
+                    {puff?.square === sq && (
+                      <span
+                        key={puff.id}
+                        className="break-puff"
+                        role="img"
+                        aria-label={`${pieceNames[puff.type]} broke`}
+                      >
+                        <span className="puff-silhouette">
+                          <PieceIcon type={puff.type} army={puff.army} />
+                        </span>
+                        <i />
+                        <i />
+                        <i />
+                        <b>POOF!</b>
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div
+            className={`player-strip bottom-player ${s.active === bottomPlayer && s.phase !== "READY" ? "active" : ""}`}
+          >
+            <span className="avatar">{bottomPlayer.slice(1)}</span>
+            <div className="player-name">
+              <strong>{playerName(bottomPlayer)}</strong>
+              <span>
+                {s.control[bottomPlayer] === "w" ? "White army" : "Black army"}
+              </span>
+            </div>
+            <div
+              className={`clock ${s.clock.remaining[bottomPlayer] < 30000 ? "low" : ""}`}
+              aria-label={`Time ${bottomPlayer}`}
+            >
+              {time(s.clock.remaining[bottomPlayer])}
+            </div>
+          </div>
+        </section>
+        <div className="action-bar" aria-live="polite">
+          {s.outcome ? (
+            <>
+              <span>
+                {s.outcome.winner
+                  ? `${playerName(s.outcome.winner)} wins!`
+                  : "Draw"}
+                <small>{s.outcome.reason}</small>
+              </span>
+              <button className="primary" onClick={newMatch}>
+                Play again →
+              </button>
+            </>
+          ) : s.phase === "READY" ? (
+            <>
+              <span>
+                Pass & play or train.
+                <small>{s.initialMinutes ?? minutes} minutes each.</small>
+              </span>
+              <button
+                className="primary"
+                onClick={() => send({ type: "StartGame" })}
+              >
+                Start match →
+              </button>
+            </>
+          ) : computerTurn ? (
+            <span>
+              Bot is thinking…<small>Same rules. No shortcuts.</small>
+            </span>
+          ) : (
+            <>
+              <span>
+                {error ||
+                  (selected !== null
+                    ? `From ${squareName(selected)} · tap a destination`
+                    : s.phase === "CHOOSE_TARGETS"
+                      ? "Tap the highlighted pieces"
+                      : s.phase === "CHOOSE_COLOR"
+                        ? "Pick a color in the popup"
+                        : nextRisk > 0
+                          ? "This piece might break."
+                          : check
+                            ? "Save your king!"
+                            : "Pick a piece, make it happen.")}
+                <small>
+                  {nextRisk > 0
+                    ? "Move completes first. Breaking ends your turn."
+                    : s.color
+                      ? bonusText[s.color]
+                      : "In Cards we trust"}
+                </small>
+              </span>
+              {canEnd(s) ? (
+                <button
+                  className="primary available-action"
+                  onClick={() => send({ type: "EndOptionalMoves" })}
+                >
+                  Pass →
+                </button>
+              ) : s.phase === "CHOOSE_TARGETS" ? (
+                <button
+                  className="primary available-action"
+                  onClick={() => setDrawer("targets")}
+                >
+                  List
+                </button>
+              ) : null}
+            </>
+          )}
+        </div>
+        {drawer && !outcomePopup && (
+          <div className="modal-backdrop">
+            <section
+              className="modal drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Game options"
+            >
+              <div className="section-top">
+                <h2>
+                  {drawer === "more"
+                    ? "Your table"
+                    : drawer === "help"
+                      ? "How it works"
+                      : drawer === "lab"
+                        ? "Lab"
+                        : drawer === "log"
+                          ? "Move log"
+                          : "Choose pieces"}
+                </h2>
+                <button
+                  aria-label="Close options"
+                  onClick={() => setDrawer(null)}
+                >
+                  ×
+                </button>
+              </div>
+              {drawer === "more" && (
+                <div className="drawer-menu">
+                  <button onClick={() => setDrawer("help")}>How to play</button>
+                  <button onClick={() => setDrawer("log")}>Move log</button>
+                  <button onClick={() => setDrawer("lab")}>Lab & replay</button>
                   <button onClick={exportReplay}>Save match JSON</button>
                   <button
-                    onClick={() =>
-                      setVerification(verifyMatch(exportMatch(ref.current)))
-                    }
+                    onClick={() => {
+                      setVerification(verifyMatch(exportMatch(ref.current)));
+                      setDrawer("log");
+                    }}
                   >
                     Verify this match
                   </button>
                   <button onClick={() => analyzeInput.current?.click()}>
                     Analyze JSON file
                   </button>
-                </div>
-                {verification && (
-                  <div
-                    className={`verification ${verification.valid ? "valid" : "invalid"}`}
-                    role="status"
+                  <button
+                    onClick={() => {
+                      saveGame(ref.current);
+                      onHome();
+                    }}
                   >
-                    <strong>
-                      {verification.valid ? "VERIFIED" : "DIVERGENCE FOUND"}
-                    </strong>
-                    <p>{verification.message}</p>
-                    <small>
-                      {verification.checked} actions checked ·{" "}
-                      {verification.rejected} rejected inputs
-                      {verification.firstDivergence !== undefined
-                        ? ` · first divergence #${verification.firstDivergence}`
-                        : ""}
-                    </small>
-                  </div>
-                )}
-                {records
-                  .slice(-60)
-                  .reverse()
-                  .map((e) => (
-                    <p key={e.seq}>{e.text}</p>
+                    Home <small>The clock keeps running</small>
+                  </button>
+                </div>
+              )}
+              {drawer === "help" && (
+                <>
+                  <p>
+                    Numbers give moves with different pieces. The first four are
+                    safe and required. From move 5 you may pass or risk a break:
+                    20%, 40%, 60%, 80%, then 99%.
+                  </p>
+                  <p>
+                    Giving check ends the turn. Under check, defend before
+                    drawing with the previous color. Checkmate gets one
+                    emergency card while the deck lasts.
+                  </p>
+                  {colors.map((c) => (
+                    <p key={c}>
+                      <span className={`dot ${c}`} />{" "}
+                      <strong>{colorNames[c]}:</strong> {bonusText[c]}
+                    </p>
                   ))}
-              </div>
-            )}
-            {drawer === "targets" && (
-              <div className="target-list">
-                {ghosts.length
-                  ? ghosts.map((p) => (
-                      <button
-                        key={p.id}
-                        onClick={() => {
-                          const last =
-                            !resurrections.includes(p.id) &&
-                            resurrections.length + 1 === resurrectionCount(s);
-                          chooseResurrection(p.id);
-                          if (last) setDrawer(null);
-                        }}
-                        aria-pressed={resurrections.includes(p.id)}
-                      >
-                        {pieceNames[p.original]} · {squareName(p.home)}
-                      </button>
-                    ))
-                  : s.current?.kind === "wild"
-                    ? evolutions.map((c) => (
+                  <p>{cardDescription(s.current)}</p>
+                  <p>
+                    Custom time modes: 4-minute Bullet, 7-minute Blitz,
+                    10-minute Rapid.
+                  </p>
+                </>
+              )}
+              {drawer === "log" && (
+                <div className="journal-list">
+                  <div className="log-tools">
+                    <button onClick={exportReplay}>Save match JSON</button>
+                    <button
+                      onClick={() =>
+                        setVerification(verifyMatch(exportMatch(ref.current)))
+                      }
+                    >
+                      Verify this match
+                    </button>
+                    <button onClick={() => analyzeInput.current?.click()}>
+                      Analyze JSON file
+                    </button>
+                  </div>
+                  {verification && (
+                    <div
+                      className={`verification ${verification.valid ? "valid" : "invalid"}`}
+                      role="status"
+                    >
+                      <strong>
+                        {verification.valid ? "VERIFIED" : "DIVERGENCE FOUND"}
+                      </strong>
+                      <p translate="no">{verification.message}</p>
+                      <small>
+                        {verification.checked} actions checked ·{" "}
+                        {verification.rejected} rejected inputs
+                        {verification.firstDivergence !== undefined
+                          ? ` · first divergence #${verification.firstDivergence}`
+                          : ""}
+                      </small>
+                    </div>
+                  )}
+                  {records
+                    .slice(-60)
+                    .reverse()
+                    .map((e) => (
+                      <p key={e.seq} translate="no">
+                        {e.text}
+                      </p>
+                    ))}
+                </div>
+              )}
+              {drawer === "targets" && (
+                <div className="target-list">
+                  {ghosts.length
+                    ? ghosts.map((p) => (
                         <button
-                          key={`${c.pieceId}-${c.pieceType}`}
+                          key={p.id}
                           onClick={() => {
-                            send({ type: "ChooseEvolution", ...c });
-                            setDrawer(null);
+                            const last =
+                              !resurrections.includes(p.id) &&
+                              resurrections.length + 1 === resurrectionCount(s);
+                            chooseResurrection(p.id);
+                            if (last) setDrawer(null);
                           }}
+                          aria-pressed={resurrections.includes(p.id)}
                         >
-                          {squareName(
-                            s.pieces.find((p) => p.id === c.pieceId)!.square!,
-                          )}{" "}
-                          → {pieceNames[c.pieceType]}
+                          {pieceNames[p.original]} · {squareName(p.home)}
                         </button>
                       ))
-                    : s.pieces
-                        .filter(
-                          (p) =>
-                            p.square !== null &&
-                            p.army !== own &&
-                            p.type !== "k",
-                        )
-                        .map((p) => (
+                    : s.current?.kind === "wild"
+                      ? evolutions.map((c) => (
                           <button
-                            key={p.id}
+                            key={`${c.pieceId}-${c.pieceType}`}
                             onClick={() => {
-                              send({ type: "ChooseSkipTarget", pieceId: p.id });
+                              send({ type: "ChooseEvolution", ...c });
                               setDrawer(null);
                             }}
                           >
-                            {pieceNames[p.type]} · {squareName(p.square!)}
+                            {squareName(
+                              s.pieces.find((p) => p.id === c.pieceId)!.square!,
+                            )}{" "}
+                            → {pieceNames[c.pieceType]}
                           </button>
-                        ))}
-              </div>
-            )}
-            {drawer === "lab" && (
-              <div className="lab">
-                <label>
-                  Seed
-                  <input
-                    type="number"
-                    value={seed}
-                    onChange={(e) => setSeed(e.target.value)}
-                  />
-                </label>
-                <button
-                  onClick={() =>
-                    load(
-                      createGame(
-                        Number(seed) || 2026,
-                        performance.now(),
-                        undefined,
-                        minutes,
-                      ),
-                    )
-                  }
-                >
-                  Load seed
-                </button>
-                {[
-                  ["defense", "Defense before draw"],
-                  ["resurrection", "Resurrection & Wild"],
-                  ["resurrection2", "Resurrection +2"],
-                  ["risk", "Blue risk"],
-                  ["breakage", "Break-risk demo"],
-                  ["emergency", "Checkmate & Reset"],
-                  ["yellow", "Yellow chain"],
-                  ["last", "Last card"],
-                  ["win", "Win finale"],
-                  ["lose", "Lose finale"],
-                  ["draw", "Draw finale"],
-                ].map(([id, label]) => (
+                        ))
+                      : s.pieces
+                          .filter(
+                            (p) =>
+                              p.square !== null &&
+                              p.army !== own &&
+                              p.type !== "k",
+                          )
+                          .map((p) => (
+                            <button
+                              key={p.id}
+                              onClick={() => {
+                                send({
+                                  type: "ChooseSkipTarget",
+                                  pieceId: p.id,
+                                });
+                                setDrawer(null);
+                              }}
+                            >
+                              {pieceNames[p.type]} · {squareName(p.square!)}
+                            </button>
+                          ))}
+                </div>
+              )}
+              {drawer === "lab" && (
+                <div className="lab">
+                  <label>
+                    Seed
+                    <input
+                      type="number"
+                      value={seed}
+                      onChange={(e) => setSeed(e.target.value)}
+                    />
+                  </label>
                   <button
-                    key={id}
-                    onClick={() => load(demo(id, performance.now()))}
-                  >
-                    {label}
-                  </button>
-                ))}
-                <label>
-                  Ordered deck (R red, V green, B blue, G yellow)
-                  <input
-                    aria-label="Ordered deck"
-                    value={deckText}
-                    onChange={(e) => setDeckText(e.target.value)}
-                  />
-                </label>
-                <button
-                  onClick={() => {
-                    try {
+                    onClick={() =>
                       load(
                         createGame(
                           Number(seed) || 2026,
                           performance.now(),
-                          parseDeck(deckText),
+                          undefined,
                           minutes,
                         ),
-                      );
-                    } catch (e) {
-                      setError((e as Error).message);
+                      )
                     }
-                  }}
-                >
-                  Load deck
-                </button>
-                <button onClick={exportReplay}>Export replay</button>
-                <button onClick={() => importInput.current?.click()}>
-                  Import replay
-                </button>
-                <input
-                  hidden
-                  ref={importInput}
-                  type="file"
-                  accept="application/json"
-                  onChange={async (e) => {
-                    try {
-                      const f = e.target.files?.[0];
-                      if (!f) return;
-                      if (f.size > 20_000_000)
-                        throw new Error("File exceeds 20 MB");
-                      const log = importMatch(await f.text());
-                      const state = stateFromLog(log);
-                      state.clock.lastAt = performance.now();
-                      load(state);
-                    } catch (e) {
-                      setError(
-                        e instanceof Error ? e.message : "Invalid match log.",
-                      );
-                    } finally {
-                      e.target.value = "";
-                    }
-                  }}
-                />
-              </div>
-            )}
-            {error && <p role="alert">{error}</p>}
-          </section>
-        </div>
-      )}
-      <input
-        hidden
-        data-testid="analyze-file"
-        ref={analyzeInput}
-        type="file"
-        accept="application/json"
-        onChange={async (e) => {
-          try {
-            const file = e.target.files?.[0];
-            if (!file) return;
-            if (file.size > 20_000_000) throw new Error("File exceeds 20 MB");
-            const report = verifyMatch(JSON.parse(await file.text()));
-            setVerification(report);
-            setDrawer("log");
-          } catch (e) {
-            setVerification({
-              valid: false,
-              checked: 0,
-              rejected: 0,
-              message: e instanceof Error ? e.message : "Invalid JSON file.",
-            });
-            setDrawer("log");
-          } finally {
-            e.target.value = "";
-          }
-        }}
-      />
-      {outcomePopup && s.outcome && (
-        <MatchFinale
-          outcome={s.outcome}
-          computer={opponentMode === "computer"}
-          winnerName={
-            s.outcome.winner ? playerName(s.outcome.winner) : "Nobody"
-          }
-          moves={records.filter((e) => e.type === "MoveCompleted").length}
-          onAgain={newMatch}
-          onReview={() => {
-            setResultDismissed(true);
-            setDrawer(null);
-          }}
-          onExport={exportReplay}
-        />
-      )}
-      {colorPopup && !outcomePopup && (
-        <div className="modal-backdrop">
-          <section
-            className="modal color-popup"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Choose color"
-          >
-            <span className="eyebrow">{cardLabel(s.current)} · TAP & PLAY</span>
-            <h2>Choose your color.</h2>
-            <div className="color-wheel">
-              {colors.map((c) => (
-                <button
-                  className={`color-choice ${c}`}
-                  key={c}
-                  onClick={() => send({ type: "ChooseUnoColor", color: c })}
-                >
-                  <span className={`dot ${c}`} />
-                  {colorNames[c]}
-                </button>
-              ))}
-            </div>
-            <small>Your clock keeps running.</small>
-          </section>
-        </div>
-      )}
-      {evolutionTarget && !s.outcome && !computerTurn && (
-        <div className="modal-backdrop">
-          <section
-            className="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Evolve pawn"
-          >
-            <h2>Pick a new role.</h2>
-            <div className="promotion-choices">
-              {evolutions
-                .filter((c) => c.pieceId === evolutionTarget)
-                .map((c) => (
-                  <button
-                    key={c.pieceType}
-                    onClick={() => send({ type: "ChooseEvolution", ...c })}
                   >
-                    <PieceIcon type={c.pieceType} army={own} />
-                    {pieceNames[c.pieceType]}
+                    Load seed
+                  </button>
+                  {[
+                    ["defense", "Defense before draw"],
+                    ["resurrection", "Resurrection & Wild"],
+                    ["resurrection2", "Resurrection +2"],
+                    ["risk", "Blue risk"],
+                    ["breakage", "Break-risk demo"],
+                    ["emergency", "Checkmate & Reset"],
+                    ["yellow", "Yellow chain"],
+                    ["last", "Last card"],
+                    ["win", "Win finale"],
+                    ["lose", "Lose finale"],
+                    ["draw", "Draw finale"],
+                  ].map(([id, label]) => (
+                    <button
+                      key={id}
+                      onClick={() => load(demo(id, performance.now()))}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                  <label>
+                    Ordered deck (R red, V green, B blue, G yellow)
+                    <input
+                      aria-label="Ordered deck"
+                      value={deckText}
+                      onChange={(e) => setDeckText(e.target.value)}
+                    />
+                  </label>
+                  <button
+                    onClick={() => {
+                      try {
+                        load(
+                          createGame(
+                            Number(seed) || 2026,
+                            performance.now(),
+                            parseDeck(deckText),
+                            minutes,
+                          ),
+                        );
+                      } catch (e) {
+                        setError((e as Error).message);
+                      }
+                    }}
+                  >
+                    Load deck
+                  </button>
+                  <button onClick={exportReplay}>Export replay</button>
+                  <button onClick={() => importInput.current?.click()}>
+                    Import replay
+                  </button>
+                  <input
+                    hidden
+                    ref={importInput}
+                    type="file"
+                    accept="application/json"
+                    onChange={async (e) => {
+                      try {
+                        const f = e.target.files?.[0];
+                        if (!f) return;
+                        if (f.size > 20_000_000)
+                          throw new Error("File exceeds 20 MB");
+                        const log = importMatch(await f.text());
+                        const state = stateFromLog(log);
+                        state.clock.lastAt = performance.now();
+                        load(state);
+                      } catch (e) {
+                        setError(
+                          e instanceof Error ? e.message : "Invalid match log.",
+                        );
+                      } finally {
+                        e.target.value = "";
+                      }
+                    }}
+                  />
+                </div>
+              )}
+              {error && <p role="alert">{error}</p>}
+            </section>
+          </div>
+        )}
+        <input
+          hidden
+          data-testid="analyze-file"
+          ref={analyzeInput}
+          type="file"
+          accept="application/json"
+          onChange={async (e) => {
+            try {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              if (file.size > 20_000_000) throw new Error("File exceeds 20 MB");
+              const report = verifyMatch(JSON.parse(await file.text()));
+              setVerification(report);
+              setDrawer("log");
+            } catch (e) {
+              setVerification({
+                valid: false,
+                checked: 0,
+                rejected: 0,
+                message: e instanceof Error ? e.message : "Invalid JSON file.",
+              });
+              setDrawer("log");
+            } finally {
+              e.target.value = "";
+            }
+          }}
+        />
+        {outcomePopup && s.outcome && (
+          <MatchFinale
+            outcome={s.outcome}
+            computer={opponentMode === "computer"}
+            winnerName={
+              s.outcome.winner ? playerName(s.outcome.winner) : "Nobody"
+            }
+            moves={records.filter((e) => e.type === "MoveCompleted").length}
+            onAgain={newMatch}
+            onReview={() => {
+              setResultDismissed(true);
+              setDrawer(null);
+            }}
+            onExport={exportReplay}
+          />
+        )}
+        {colorPopup && !outcomePopup && (
+          <div className="modal-backdrop">
+            <section
+              className="modal color-popup"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Choose color"
+            >
+              <span className="eyebrow">
+                {cardLabel(s.current)} · TAP & PLAY
+              </span>
+              <h2>Choose your color.</h2>
+              <div className="color-wheel">
+                {colors.map((c) => (
+                  <button
+                    className={`color-choice ${c}`}
+                    key={c}
+                    onClick={() => send({ type: "ChooseUnoColor", color: c })}
+                  >
+                    <span className={`dot ${c}`} />
+                    {colorNames[c]}
                   </button>
                 ))}
-            </div>
-            <button className="quiet" onClick={() => setEvolutionTarget(null)}>
-              Cancel
-            </button>
-          </section>
-        </div>
-      )}
-      {promotion && !s.outcome && (
-        <div className="modal-backdrop">
-          <section
-            className="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Promote pawn"
-          >
-            <h2>A new role.</h2>
-            <div className="promotion-choices">
-              {promotion.map((m) => (
-                <button
-                  key={m.promotion}
-                  onClick={() =>
-                    send({
-                      type: "SubmitMove",
-                      from: m.from,
-                      to: m.to,
-                      promotion: m.promotion,
-                    })
-                  }
-                >
-                  <PieceIcon type={m.promotion!} army={own} />
-                  {pieceNames[m.promotion!]}
-                </button>
-              ))}
-            </div>
-            <button className="quiet" onClick={() => setPromotion(null)}>
-              Cancel
-            </button>
-          </section>
-        </div>
-      )}
-      {confirmNew && (
-        <div className="modal-backdrop">
-          <section
-            className="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="New match"
-          >
-            <h2>Make a fresh start?</h2>
-            <p>
-              This replaces the current match. Export it first if you want to
-              keep it.
-            </p>
-            <button className="primary" onClick={newMatch}>
-              New match
-            </button>
-            <button className="quiet" onClick={() => setConfirmNew(false)}>
-              Keep playing
-            </button>
-          </section>
-        </div>
-      )}
-    </div>
+              </div>
+              <small>Your clock keeps running.</small>
+            </section>
+          </div>
+        )}
+        {evolutionTarget && !s.outcome && !computerTurn && (
+          <div className="modal-backdrop">
+            <section
+              className="modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Evolve pawn"
+            >
+              <h2>Pick a new role.</h2>
+              <div className="promotion-choices">
+                {evolutions
+                  .filter((c) => c.pieceId === evolutionTarget)
+                  .map((c) => (
+                    <button
+                      key={c.pieceType}
+                      onClick={() => send({ type: "ChooseEvolution", ...c })}
+                    >
+                      <PieceIcon type={c.pieceType} army={own} />
+                      {pieceNames[c.pieceType]}
+                    </button>
+                  ))}
+              </div>
+              <button
+                className="quiet"
+                onClick={() => setEvolutionTarget(null)}
+              >
+                Cancel
+              </button>
+            </section>
+          </div>
+        )}
+        {promotion && !s.outcome && (
+          <div className="modal-backdrop">
+            <section
+              className="modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Promote pawn"
+            >
+              <h2>A new role.</h2>
+              <div className="promotion-choices">
+                {promotion.map((m) => (
+                  <button
+                    key={m.promotion}
+                    onClick={() =>
+                      send({
+                        type: "SubmitMove",
+                        from: m.from,
+                        to: m.to,
+                        promotion: m.promotion,
+                      })
+                    }
+                  >
+                    <PieceIcon type={m.promotion!} army={own} />
+                    {pieceNames[m.promotion!]}
+                  </button>
+                ))}
+              </div>
+              <button className="quiet" onClick={() => setPromotion(null)}>
+                Cancel
+              </button>
+            </section>
+          </div>
+        )}
+        {confirmNew && (
+          <div className="modal-backdrop">
+            <section
+              className="modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="New match"
+            >
+              <h2>Make a fresh start?</h2>
+              <p>
+                This replaces the current match. Export it first if you want to
+                keep it.
+              </p>
+              <button className="primary" onClick={newMatch}>
+                New match
+              </button>
+              <button className="quiet" onClick={() => setConfirmNew(false)}>
+                Keep playing
+              </button>
+            </section>
+          </div>
+        )}
+      </div>
+    </Localized>
   );
 }
