@@ -118,7 +118,11 @@ test("actual timeout opens finale and its JSON verifies", async ({ page }) => {
   await page.clock.install();
   await page.goto("/?play=local");
   await deck(page, "R4 V2");
-  await page.clock.runFor(421000);
+  // Simulate elapsed time without rendering all 2,800 polling intervals.
+  // This also exercises catching up after a suspended/backgrounded tab.
+  await page.clock.fastForward(419000);
+  await expect(page.getByRole("dialog", { name: "PLAYER 2 WINS!" })).toHaveCount(0);
+  await page.clock.fastForward(2000);
   await expect(
     page.getByRole("dialog", { name: "PLAYER 2 WINS!" }),
   ).toBeVisible();
