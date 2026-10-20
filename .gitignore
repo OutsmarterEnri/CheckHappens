@@ -1,0 +1,14 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+match-logs/
+*.match.json
+check-happens-*-turn-*.json
+graphify-out/
+.DS_Store
+Thumbs.db
