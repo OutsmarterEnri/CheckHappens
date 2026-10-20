@@ -312,6 +312,11 @@ export function App({
     drawer,
     outcomePopup,
   ]);
+  // Compute once per render, then share between board highlights and popups.
+  const evolutions =
+    s.phase === "CHOOSE_TARGETS" && s.current?.kind === "wild"
+      ? evolutionChoices(s)
+      : [];
   const moves = movesAllowed(s),
     selectedMoves = moves.filter((m) => m.from === selected);
   const own = s.control[s.active],
@@ -346,7 +351,7 @@ export function App({
     }
     if (s.phase === "CHOOSE_TARGETS" && s.current?.kind === "wild") {
       const piece = s.pieces.find((p) => p.square === sq);
-      if (piece && evolutionChoices(s).some((c) => c.pieceId === piece.id))
+      if (piece && evolutions.some((c) => c.pieceId === piece.id))
         setEvolutionTarget(piece.id);
       return;
     }
@@ -505,7 +510,7 @@ export function App({
                 (s.current?.kind === "skip"
                   ? piece.army !== own && piece.type !== "k"
                   : s.current?.kind === "wild" &&
-                    evolutionChoices(s).some((c) => c.pieceId === piece.id));
+                    evolutions.some((c) => c.pieceId === piece.id));
               return (
                 <button
                   key={sq}
@@ -857,7 +862,7 @@ export function App({
                       </button>
                     ))
                   : s.current?.kind === "wild"
-                    ? evolutionChoices(s).map((c) => (
+                    ? evolutions.map((c) => (
                         <button
                           key={`${c.pieceId}-${c.pieceType}`}
                           onClick={() => {
@@ -1074,7 +1079,7 @@ export function App({
           >
             <h2>Pick a new role.</h2>
             <div className="promotion-choices">
-              {evolutionChoices(s)
+              {evolutions
                 .filter((c) => c.pieceId === evolutionTarget)
                 .map((c) => (
                   <button

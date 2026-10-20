@@ -85,7 +85,9 @@ export function evolutionChoices(
       p.army === s.control[s.active] && p.type === "p" && p.square !== null,
   )) {
     for (const type of ["r", "b", "n"] as const) {
-      const copy = structuredClone(s);
+      // Only pieces change in this simulation. Keep the immutable history shared;
+      // copying checkpoints and the journal makes Wild slower as a match grows.
+      const copy = { ...s, pieces: structuredClone(s.pieces) };
       copy.pieces.find((q) => q.id === p.id)!.type = type;
       if (!engine.inCheck(copy, copy.control[copy.active]))
         choices.push({ pieceId: p.id, pieceType: type });

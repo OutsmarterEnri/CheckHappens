@@ -778,6 +778,24 @@ describe("regressioni e casi limite", () => {
     expect(s.outcome?.winner).toBe("P2");
     expect(s.deckIndex).toBe(1);
   });
+  it("Wild choices stay identical with recorded history and do not mutate the match", () => {
+    const s = createGame(42, 0);
+    s.phase = "CHOOSE_TARGETS";
+    s.current = card("wild", null);
+    const expected = s.pieces
+      .filter((piece) => piece.army === "w" && piece.type === "p")
+      .flatMap((piece) =>
+        (["r", "b", "n"] as const).map((pieceType) => ({
+          pieceId: piece.id,
+          pieceType,
+        })),
+      );
+    expect(evolutionChoices(s)).toEqual(expected);
+    for (let i = 0; i < 100; i++) checkpoint(s);
+    const before = structuredClone(s);
+    expect(evolutionChoices(s)).toEqual(expected);
+    expect(s).toEqual(before);
+  });
   it("evoluzione di salvataggio senza difesa è vietata", () => {
     const s = demo("emergency", 0);
     s.pieces.push(p("wp", "w", "p", "h2"));
