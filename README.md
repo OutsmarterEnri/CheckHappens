@@ -4,22 +4,24 @@
 
 **Chess, action cards, and plans that rarely survive the next draw.**
 
-Check Happens is an independent experimental web game for two players on one device, or one player against a local training bot. It combines legal chess moves with colored cards that change move budgets, clocks and even who controls each army.
+Check Happens is an independent experimental web game for two players on one device, one player against a local training bot, or two devices through a private room server. It combines legal chess moves with colored cards that change move budgets, clocks and even who controls each army.
 
-The interface supports English and Italian, designed around a single iPhone portrait screen, with a playful cartoon style and direct touch controls. It runs entirely in the browser; there is no game server or account system.
+The interface supports English and Italian, designed around a single iPhone portrait screen, with a playful cartoon style and direct touch controls. Local and bot games run entirely in the browser. Private invitations use the included authoritative Node server; no account system is required.
 
 <img src="docs/v2-game-iphone.png" alt="Check Happens portrait game table: clocks, colored chessboard frame and remaining moves" width="340" />
 
-**Status:** playable prototype, version 2.0.1. **Project code:** reserved, not open source. **GitHub Pages:** deployment prepared; publishing requires the manual steps below.
+**Status:** playable prototype, version 2.5.0. **Project code:** reserved, not open source. **GitHub Pages:** frontend published; private Internet matches require a separately hosted HTTPS server.
 
 ## What you can play
 
 - **Local match:** two people pass one phone between turns.
 - **Training:** Easy, Medium and Hard bots, with approximate labels of 120, 200 and 500 Elo. Their strategies differ; these are not measured ratings.
+- **Private match:** invitation link, two devices, authoritative clocks and reconnect. [Server setup](docs/PRIVATE_MATCHES.md).
+- **Themes:** Candy Chaos plus four alternative palettes, saved in Settings.
 - **Time controls:** 4-minute Bullet, 7-minute Blitz and 10-minute Rapid, per player. These are this game's custom mode names.
 - **Interactive tutorial**, reduced-motion settings, automatic on-device saving and match JSON export/analysis.
 
-The board frame remembers the active card color. The turn banner identifies the player and controlled army. The move counter separates remaining actions and required bonuses. Risky pieces crack and shake before a move; a broken piece disappears with a puff. Win/Lose/Draw finales offer review, replay export and a rematch.
+The board frame remembers the active card color. The turn banner identifies the player and controlled army. The move counter separates remaining actions and required bonuses. Skip chains lock the affected piece. Risky pieces show progressively stronger cracks based on their effective break chance and shake before a move; a broken piece disappears with a puff. Win/Lose/Draw finales offer review, replay export and a rematch.
 
 ## How a turn works
 
@@ -124,16 +126,16 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **126 unit tests and 30 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **148 unit tests and 34 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
 ## Current limits and data
 
-- **Private online invitations are planned**, not implemented. Pages hosts the frontend; multiplayer rooms will require an additional service. [Online design notes](docs/ONLINE.md).
+- Private rooms are implemented and tested locally with two browser clients. No public backend is configured yet. GitHub Pages serves only the frontend; use the included server on your LAN or deploy it separately with HTTPS. [Private matches](docs/PRIVATE_MATCHES.md).
 - Leaving the table does not pause the clock. Resume accounts for elapsed time. A new match replaces the single local save: export before replacing it.
 - Storage is best-effort. Clearing browser data, changing browser/device/origin, or exhausting storage can lose the on-device save. The local development URL and Pages URL have separate saves.
-- No app analytics, account backend or automatic match upload is implemented. GitHub may process hosting traffic, including IP addresses, under its own policies.
+- Local/bot games do not upload matches. Private mode sends commands to the selected room server, which stores game logs and hashed seat credentials. No analytics or accounts are implemented. GitHub and the chosen backend host may process connection information, including IP addresses.
 - The local engine's dead-position/timeout material evaluator is conservative and does not cover every exceptional chess position. Bots are heuristic training opponents, not certified Elo engines.
 - Lab fixtures and ordered decks are debugging starting positions. They replace the current table and are not ordinary match history.
 

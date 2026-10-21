@@ -1,5 +1,7 @@
+import { PrivateRoom } from "./PrivateRoom";
+import { themes, THEME_KEY, validTheme } from "./themes";
 import { Localized, useLanguage } from "./locale";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { App } from "./App";
 import { Tutorial } from "./Tutorial";
 import { PieceIcon } from "./PieceIcon";
@@ -21,11 +23,32 @@ import {
 } from "../domain/match";
 const MATCH_KEY = "check-happens-match";
 export function Shell() {
+  const [theme, setTheme] = useState(() =>
+    validTheme(readPreference(THEME_KEY, "candy")),
+  );
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute(
+        "content",
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--app-background")
+          .trim(),
+      );
+    writePreference(THEME_KEY, theme);
+  }, [theme]);
   const { language, setLanguage } = useLanguage();
   const query = new URLSearchParams(location.search).get("play");
   const [screen, setScreen] = useState<
-    "home" | "choose" | "game" | "tutorial" | "settings"
-  >(query === "local" || query === "computer" ? "game" : "home");
+    "home" | "choose" | "game" | "tutorial" | "settings" | "private"
+  >(
+    query === "local" || query === "computer"
+      ? "game"
+      : new URLSearchParams(location.hash.slice(1)).has("invite")
+        ? "private"
+        : "home",
+  );
   const [mode, setMode] = useState<OpponentMode>(
     query === "computer"
       ? "computer"
@@ -78,7 +101,9 @@ export function Shell() {
   return (
     <Localized>
       <div className={prefs.reduceMotion ? "reduce-motion" : ""}>
-        {screen === "game" ? (
+        {screen === "private" ? (
+          <PrivateRoom minutes={minutes} side={side} onHome={home} />
+        ) : screen === "game" ? (
           <App
             key={gameKey}
             opponentMode={mode}
@@ -210,15 +235,34 @@ export function Shell() {
                 <small className="rating-note">
                   Training labels are estimates, not calibrated ratings.
                 </small>
-                <div className="online-planned">
-                  <strong>Private invitation</strong>
-                  <small>Planned · online rooms are not live yet</small>
-                </div>
+                <button
+                  className="private-play"
+                  onClick={() => setScreen("private")}
+                >
+                  Private match<small>Experimental · invitation only</small>
+                </button>
               </section>
             )}
             {screen === "settings" && (
               <section className="settings-panel">
                 <h2>Just the essentials.</h2>
+                <fieldset className="theme-picker">
+                  <legend>Theme</legend>
+                  {themes.map((t) => (
+                    <button
+                      key={t.id}
+                      aria-pressed={theme === t.id}
+                      onClick={() => setTheme(t.id)}
+                    >
+                      <span className="theme-swatches" aria-hidden="true">
+                        {t.colors.map((c) => (
+                          <i key={c} style={{ background: c }} />
+                        ))}
+                      </span>
+                      {t.name}
+                    </button>
+                  ))}
+                </fieldset>
                 <label className="language-picker">
                   <span>Language</span>
                   <select
@@ -263,7 +307,7 @@ export function Shell() {
               </section>
             )}
             <small className="menu-caption">
-              VERSION 2.0 · MADE FOR YOUR POCKET
+              VERSION 2.5 · MADE FOR YOUR POCKET
             </small>
           </main>
         )}

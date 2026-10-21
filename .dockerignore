@@ -1,0 +1,11 @@
+.git
+node_modules
+dist
+dist-server
+test-results
+playwright-report
+.room-data*
+.env*
+match-logs
+*.match.json
+check-happens-*-turn-*.json

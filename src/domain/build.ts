@@ -9,7 +9,7 @@ export const BUILD_INFO: BuildInfo =
   typeof __APP_BUILD__ !== "undefined"
     ? __APP_BUILD__
     : {
-        appVersion: "2.0.1",
+        appVersion: "2.5.0",
         revision: "unknown",
         dirty: true,
         id: "unbundled",

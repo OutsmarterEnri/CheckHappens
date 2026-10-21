@@ -30,8 +30,8 @@ Official example: [Mattel's Classic UNO product page](https://shop.mattel.com/pr
 
 ## Hosting and tester data
 
-The app currently has no account backend, analytics integration or automatic match upload. Device storage and manually exported logs still deserve clear explanation to testers. Pages hosting is operated by GitHub; GitHub documents collection of visitor IP addresses for security. Public issues and attachments may disclose files to others. Do not request unrelated personal data in match reports.
+The app has no accounts or analytics integration. Local and bot games stay on-device. Private mode sends commands to the chosen room server, which persists match logs and hashed seat/invitation credentials; the hosting provider also receives network connection information. Explain this before inviting testers and configure retention for the actual host. Device storage and manually exported logs still deserve clear explanation to testers. Pages hosting is operated by GitHub; GitHub documents collection of visitor IP addresses for security. Public issues and attachments may disclose files to others. Do not request unrelated personal data in match reports.
 
-A public prototype is not a promise of general legal/privacy compliance. If accounts, telemetry, payments, advertising, multiplayer servers or other data collection are introduced, revisit the privacy information and applicable obligations for the actual deployment.
+A public prototype is not a promise of general legal/privacy compliance. If accounts, telemetry, payments, advertising, additional multiplayer data collection or other data collection is introduced, revisit the privacy information and applicable obligations for the actual deployment.
 
 Reference: [GitHub Pages data collection](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection).

@@ -1,10 +1,10 @@
-# Verification — version 2.0.1
+# Verification — version 2.5.0
 
 Latest UI and language verification: 21 October 2026.
 
 - Strict TypeScript and Vite production build pass.
-- 126 Vitest tests pass: 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
-- 30 Chromium browser tests pass. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
+- 148 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
+- 34 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
 - Initial engine perft remains 20 / 400 / 8902 at depth 1 / 2 / 3.
@@ -13,7 +13,7 @@ Latest UI and language verification: 21 October 2026.
 - The opaque header/safe-area background and non-fading turn banner are preserved.
 - Service-worker fallback handles static servers with `Vary: Origin`, which otherwise caused precached module/style requests to miss offline.
 
-Tests use Chromium and emulated viewport dimensions, not a physical iPhone. Native Safari behavior, Dynamic Type at all accessibility sizes and real device safe areas still need a release pass. Elo strengths are estimates. Online invitations have no active transport and are not included in these results.
+Tests use Chromium and emulated viewport dimensions, not a physical iPhone. Native Safari behavior, Dynamic Type at all accessibility sizes and real device safe areas still need a release pass. Elo strengths are estimates. Private transport is tested with two Chromium contexts and a real local HTTP server. Public HTTPS hosting and two physical iPhones remain deployment checks.
 
 The verifier reuses the production resolver, so deterministic replay alone cannot prove rule correctness. Independent regression cases cover card rules and chess legality. Logs are unsigned and cannot establish authenticity.
 
@@ -31,7 +31,7 @@ the game table's available height. Normal browser layout remains unchanged.
 This follows the safe-area header experiment reported by
 [OJapp](https://tips.ojapp.app/en/ios-27-pwa-top-blur-workaround-2/), not a documented
 Apple API. Chromium checks cannot reproduce or prove removal of the system blur;
-confirmation on the affected iPhone is pending. The service-worker cache is
+the user confirmed the patch works on the affected iPhone. The service-worker cache is
 bumped so an installed app can receive the updated shell after its windows close.
 
 ### Bilingual phone UI

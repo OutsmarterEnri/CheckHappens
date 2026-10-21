@@ -1,5 +1,5 @@
 import { Localized } from "./locale";
-import type { Outcome } from "../domain/types";
+import type { Outcome, Player } from "../domain/types";
 import { PieceIcon } from "./PieceIcon";
 export function MatchFinale({
   outcome,
@@ -9,6 +9,8 @@ export function MatchFinale({
   onAgain,
   onReview,
   onExport,
+  viewerPlayer,
+  againLabel,
 }: {
   outcome: Outcome;
   computer: boolean;
@@ -17,11 +19,13 @@ export function MatchFinale({
   onAgain: () => void;
   onReview: () => void;
   onExport: () => void;
+  viewerPlayer?: Player;
+  againLabel?: string;
 }) {
   const mood =
     outcome.winner === null
       ? "draw"
-      : computer && outcome.winner === "P2"
+      : computer && outcome.winner !== (viewerPlayer ?? "P1")
         ? "lose"
         : "win";
   return (
@@ -67,7 +71,7 @@ export function MatchFinale({
             {moves} moves. One unforgettable table.
           </span>
           <button className="primary" onClick={onAgain}>
-            One more round <span aria-hidden="true">→</span>
+            {againLabel ?? "One more round"} <span aria-hidden="true">→</span>
           </button>
           <div className="finale-actions">
             <button onClick={onExport}>Save match JSON</button>

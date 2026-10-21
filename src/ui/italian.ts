@@ -1,5 +1,7 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "The room server is temporarily unavailable.":
+    "Il server della stanza è temporaneamente indisponibile.",
   Home: "Home",
   "Main menu": "Menu principale",
   Play: "Gioca",
@@ -319,3 +321,94 @@ Object.assign(italian, {
   "The clock starts after the countdown.":
     "Il tempo parte dopo il conto alla rovescia.",
 });
+
+Object.assign(italian, {
+  Theme: "Tema",
+  "Candy Chaos": "Caos Caramellato",
+  "Minty Mayhem": "Menta Ma Non Troppo",
+  "Bubblegum Bandit": "Bandito alla Gomma Rosa",
+  "Peach Please": "Pesca Col Matto",
+  "Cloudy with a Chance of Check": "Nuvoloso con Scacchi Sparsi",
+  "VERSION 2.5 · MADE FOR YOUR POCKET": "VERSIONE 2.5 · DA PORTARE IN TASCA",
+  "Experimental · invitation only": "Sperimentale · solo su invito",
+  "Experimental multiplayer · testing only": "Multiplayer sperimentale · solo per test",
+  "Private match": "Partita privata",
+  "Two devices · invitation only": "Due dispositivi · solo su invito",
+  "Waiting for your friend…": "Aspettando il tuo amico…",
+  "Send this invite link. The match starts when the second player joins.":
+    "Invia questo link. La partita inizia quando entra il secondo giocatore.",
+  "Invite link": "Link di invito",
+  "Copy invitation": "Copia invito",
+  "Invite copied!": "Invito copiato!",
+  "Select and copy the invite link.": "Seleziona e copia il link di invito.",
+  "Connected to room": "Collegato alla stanza",
+  "Reconnecting…": "Riconnessione…",
+  "RECONNECTING…": "RICONNESSIONE…",
+  "Leave room": "Esci dalla stanza",
+  "Play on two devices. White starts; cards and clocks are managed by the room server.":
+    "Gioca su due dispositivi. Inizia il Bianco; carte e timer sono gestiti dal server della stanza.",
+  "Room server": "Server delle stanze",
+  "A separate room server is required. For a Wi-Fi test, open the address printed by the server on both phones.":
+    "Serve un server separato. Per una prova Wi-Fi, apri l’indirizzo mostrato dal server su entrambi i telefoni.",
+  "Create private room": "Crea stanza privata",
+  "Join an invitation": "Accetta un invito",
+  "Room code": "Codice stanza",
+  "Invitation key": "Chiave di invito",
+  "Join private room": "Entra nella stanza",
+  "Reconnect to previous room": "Rientra nella stanza precedente",
+  "Connecting…": "Connessione…",
+  Opponent: "Avversario",
+  "OPPONENT’S TURN": "TURNO DELL’AVVERSARIO",
+  "Sending move…": "Invio della mossa…",
+  "Waiting for your opponent…": "Aspettando l’avversario…",
+  "Opponent disconnected. The clock keeps running.":
+    "Avversario disconnesso. Il tempo continua a scorrere.",
+  "Recent actions. Full JSON is available after the match.":
+    "Azioni recenti. Il JSON completo è disponibile a fine partita.",
+  "Back to private matches": "Torna alle partite private",
+  "Leave table": "Lascia la partita",
+  "LOCKED!": "INCATENATO!",
+  "The room starts automatically. Leaving does not pause it.":
+    "La partita parte automaticamente. Uscire non la mette in pausa.",
+  "Enter a complete room server address.":
+    "Inserisci l’indirizzo completo del server.",
+  "This page requires an HTTPS room server.":
+    "Questa pagina richiede un server HTTPS.",
+  "This room has expired or does not exist.":
+    "La stanza è scaduta o non esiste.",
+  "This device no longer has access to the room.":
+    "Questo dispositivo non ha più accesso alla stanza.",
+  "This invitation is not valid.": "Questo invito non è valido.",
+  "Both seats are already taken. Reconnect on your original device.":
+    "Entrambi i posti sono occupati. Rientra dal dispositivo originale.",
+  "The server is full. Try again later.":
+    "Il server è pieno. Riprova più tardi.",
+  "Choose a supported time and side.":
+    "Scegli un tempo e uno schieramento validi.",
+  "Wait for your turn.": "Aspetta il tuo turno.",
+  "The position changed. Check the board and try again.":
+    "La posizione è cambiata. Controlla la scacchiera e riprova.",
+  "This action is not available.": "Questa azione non è disponibile.",
+  "Waiting for both players to join.":
+    "Aspettando l’ingresso di entrambi i giocatori.",
+  "The match has ended.": "La partita è terminata.",
+  "The complete JSON becomes available after the match.":
+    "Il JSON completo sarà disponibile dopo la partita.",
+  "Too many requests. Wait a moment.": "Troppe richieste. Aspetta un momento.",
+  "This game address is not allowed by the room server.":
+    "L’indirizzo del gioco non è autorizzato dal server.",
+  "The room server could not complete the request.":
+    "Il server non ha completato la richiesta.",
+  "That move is not legal.": "Questa mossa non è legale.",
+  "This action is not available now.": "Questa azione non è disponibile ora.",
+  "Choose one of the highlighted options.":
+    "Scegli una delle opzioni evidenziate.",
+  "Complete the required action first.":
+    "Completa prima l’azione obbligatoria.",
+  "The room server sent an invalid position.":
+    "Il server ha inviato una posizione non valida.",
+  "Connection lost. Please reconnect.":
+    "Connessione persa. Riprova a collegarti.",
+});
+
+Object.assign(italian, { "Opponent is playing": "Sta giocando l’avversario" });

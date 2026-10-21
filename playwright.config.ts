@@ -11,6 +11,12 @@ export default defineConfig({
   },
   webServer: [
     {
+      command: "npm run build:server && npm run start:server",
+      url: "http://127.0.0.1:8787/health",
+      reuseExistingServer: process.env.PW_REUSE_SERVER === "1",
+      env: { PORT: "8787", HOST: "127.0.0.1", ROOM_DATA_DIR: ".room-data-e2e" },
+    },
+    {
       command:
         "node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5173",
       url: "http://127.0.0.1:5173",

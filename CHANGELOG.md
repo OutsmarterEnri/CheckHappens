@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.5.0
+
+- Four alternative, persisted cartoon palettes in bilingual Settings.
+- Skip chains and five progressive crack stages reflect effective break risk, with reduced-motion support.
+- Private invitations, two-device authoritative play, countdown and reconnect through the included Node server.
+- Authenticated commands, revision/idempotency checks, hidden future deck, atomic room persistence and end-of-match verified JSON.
+- LAN instructions, Docker packaging and separate HTTPS hosting guidance; no public backend provisioned.
+- Viewer-aware online finales and independent offline saves.
+
+
 ## 2.0.1
 
 - Compact JSON schema 2 groups consecutive clock samples while retaining exact duration and fingerprint checks for every dispatch.

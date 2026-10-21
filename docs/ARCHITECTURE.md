@@ -1,6 +1,6 @@
 # Architecture
 
-React + strict TypeScript + Vite, with no production dependencies beyond React. No backend or AI service is needed to play.
+React + strict TypeScript + Vite, with no production dependencies beyond React. Local/bot play needs no backend or AI service. Private rooms use the separate Node service.
 
 - `domain/types.ts`: state, phases, typed commands and events.
 - `domain/turnResolver.ts`: synchronous deterministic rules. `resolveCommand` applies a command; `dispatch` adds journal recording around it.
@@ -13,7 +13,11 @@ React + strict TypeScript + Vite, with no production dependencies beyond React. 
 - `ui/Shell.tsx`: home, mode/time/bot choice, settings and tutorial.
 - `ui/App.tsx`: one-screen table and command dispatch; secondary actions use dialogs. `MatchFinale.tsx` renders Win/Lose/Draw without changing the outcome.
 - `ui/persistence.ts`: best-effort device save and resume; elapsed wall time is charged on returning.
-- `online/protocol.ts`: future private-room messages only. No active transport.
+- `online/protocol.ts` and `client.ts`: validated room snapshots, authenticated HTTP commands, revision checks, retry IDs and polling/reconnect.
+- `server/rooms.ts`: authoritative resolver, monotonic clocks, seat ownership, cryptographic deck shuffle, redacted public snapshots and replayable logs.
+- `server/http.ts`: bounded JSON requests, CORS, rate limits, atomic persistence and optional static serving.
+- `ui/PrivateRoom.tsx`: invitation/create/join/reconnect flow; `App.tsx` renders remote snapshots without local clock dispatch or offline-save writes.
+- `ui/themes.ts` and `PieceEffects.tsx`: persisted palettes and reduced-motion-compatible chains/progressive cracks.
 
 The first four numbered moves are mandatory and safe. Defense before drawing keeps the prior color, does not reduce the numeric card budget and consumes the optional action attached to a special card. Checkmate begins a full emergency-card turn while cards remain. Reverse swaps armies, clocks and orientation and keeps the newly drawn color. These rules have focused domain regression tests.
 

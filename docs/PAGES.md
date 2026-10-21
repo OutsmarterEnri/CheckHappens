@@ -45,7 +45,7 @@ The workflow uses `contents: read`, Pages configuration read access for build, a
 
 Open the site in Safari in portrait orientation. Check home/tutorial, one local game, all time presets, one bot game, color selection, Reverse, JSON export and resume after leaving the app. Visit online once before testing offline. Verify `THIRD_PARTY_NOTICES.txt` is available under the same project URL. If desired, use **Share → Add to Home Screen**.
 
-This does not install a native iOS application or create online multiplayer rooms. Each device/browser keeps its own save and logs. Localhost/LAN saves do not automatically migrate to the Pages origin; export a match on the old origin first if needed. A schema-1/2 diagnostic file can be imported through the Lab if you want to continue a compatible match.
+This does not install a native iOS application. Pages alone cannot run room servers. Version 2.5 includes a separate Node backend: see [private matches](PRIVATE_MATCHES.md) for LAN testing and HTTPS hosting. Each device/browser keeps its own save and logs. Localhost/LAN saves do not automatically migrate to the Pages origin; export a match on the old origin first if needed. A schema-1/2 diagnostic file can be imported through the Lab if you want to continue a compatible match.
 
 The build uses relative asset URLs (`base: "./"`), and the manifest/service-worker scope is relative to the application directory. Keep the final `/CheckHappens/` slash when sharing the URL. Do not upload the entire repository as the Pages artifact or choose `/docs` as a static publishing folder: this React/Vite app must be built first.
 

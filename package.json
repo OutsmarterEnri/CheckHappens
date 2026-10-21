@@ -1,6 +1,6 @@
 {
   "name": "check-happens",
-  "version": "2.0.1",
+  "version": "2.5.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +11,9 @@
     "preview": "vite preview --host 127.0.0.1",
     "test:e2e": "npm run build && playwright test",
     "analyze:match": "node scripts/analyze-match.mjs",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "build:server": "tsc --noEmit && vite build --ssr server/index.ts --outDir dist-server",
+    "start:server": "node dist-server/index.js"
   },
   "dependencies": {
     "react": "^19.0.0",

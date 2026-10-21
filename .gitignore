@@ -12,3 +12,7 @@ check-happens-*-turn-*.json
 graphify-out/
 .DS_Store
 Thumbs.db
+
+dist-server/
+.room-data/
+.room-data-e2e/

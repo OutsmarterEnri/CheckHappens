@@ -1,5 +1,5 @@
 // Shell updates wait for open games to close; no forced activation.
-const CACHE = "check-happens-v2-9";
+const CACHE = "check-happens-v2-5-0";
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -48,6 +48,8 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (
     request.method !== "GET" ||
+    new URL(request.url).pathname.startsWith("/api/") ||
+    new URL(request.url).pathname === "/health" ||
     new URL(request.url).origin !== self.location.origin
   )
     return;

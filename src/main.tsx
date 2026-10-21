@@ -1,8 +1,13 @@
+import { THEME_KEY, validTheme } from "./ui/themes";
+import { readPreference } from "./ui/preferences";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { LanguageProvider } from "./ui/locale";
 import { Shell } from "./ui/Shell";
 import "./ui/styles.css";
+document.documentElement.dataset.theme = validTheme(
+  readPreference(THEME_KEY, "candy"),
+);
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <LanguageProvider>

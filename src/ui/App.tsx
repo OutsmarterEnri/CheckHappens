@@ -1,3 +1,5 @@
+import type { RemoteGame } from "../online/protocol";
+import { PieceCracks, SkipChains, crackStage } from "./PieceEffects";
 import { Localized } from "./locale";
 import { startRecordingSession } from "../domain/logCodec";
 import { useEffect, useRef, useState } from "react";
@@ -76,6 +78,7 @@ export function App({
   botLevel = "easy",
   sidePreference = "white",
   autoStart = false,
+  online,
 }: {
   opponentMode?: OpponentMode;
   onHome?: () => void;
@@ -83,6 +86,7 @@ export function App({
   botLevel?: BotLevel;
   sidePreference?: SidePreference;
   autoStart?: boolean;
+  online?: RemoteGame;
 }) {
   const freshMatch = () => {
     const seed = freshSeed();
@@ -95,15 +99,17 @@ export function App({
     );
   };
   const [automaticStart, setAutomaticStart] = useState(autoStart);
-  const [countdown, setCountdown] = useState<number | null>(
+  const [localCountdown, setCountdown] = useState<number | null>(
     autoStart ? 3 : null,
   );
   const [s, setS] = useState(() =>
-    startRecordingSession(
-      restoreGame() ?? freshMatch(),
-      opponentMode,
-      botLevel,
-    ),
+    online
+      ? { ...online.state, orientation: online.state.control[online.player] }
+      : startRecordingSession(
+          restoreGame() ?? freshMatch(),
+          opponentMode,
+          botLevel,
+        ),
   );
   const ref = useRef(s);
   const [spin, setSpin] = useState(false);
@@ -117,7 +123,15 @@ export function App({
     s.active === "P2" &&
     s.phase !== "READY" &&
     !s.outcome;
-  const colorPopup = s.phase === "CHOOSE_COLOR" && !computerTurn && !s.outcome;
+  const inputLocked =
+    computerTurn ||
+    (!!online &&
+      (!online.connected || online.pending || online.player !== s.active));
+  const countdown =
+    online && s.phase === "READY" && online.startsAt !== null
+      ? Math.max(1, Math.ceil((online.startsAt - online.serverNow) / 1000))
+      : localCountdown;
+  const colorPopup = s.phase === "CHOOSE_COLOR" && !inputLocked && !s.outcome;
   const [fx, setFx] = useState<{
     label: string;
     kind: string;
@@ -140,10 +154,64 @@ export function App({
   const [deckText, setDeckText] = useState("R4 VSkip BReverse G+2 J +4");
   const [confirmNew, setConfirmNew] = useState(false);
   const importInput = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!online) return;
+    const next = {
+      ...online.state,
+      orientation: online.state.control[online.player],
+    };
+    const last = ref.current.events.at(-1)?.seq ?? -1;
+    const events = next.events.filter((e) => e.seq > last);
+    if (events.some((e) => e.type === "ArmiesSwapped")) setSpin(true);
+    if (events.some((e) => e.type === "PieceBlocked"))
+      setFx({ label: "LOCKED!", kind: "happy", id: Date.now() });
+    const destroyed = events.find((e) => e.type === "PieceDestroyed"),
+      moved = events.find((e) => e.type === "MoveCompleted");
+    if (destroyed && moved) {
+      const move = moved.data.move as Move,
+        piece = ref.current.pieces.find((p) => p.id === move.pieceId);
+      if (piece)
+        setPuff({
+          square: move.to,
+          type: piece.type,
+          army: piece.army,
+          id: Date.now(),
+        });
+    }
+    const changed =
+      next.turn !== ref.current.turn ||
+      next.phase !== ref.current.phase ||
+      next.moveIndex !== ref.current.moveIndex ||
+      events.some((e) =>
+        [
+          "PieceBlocked",
+          "PieceResurrected",
+          "PieceTransformed",
+          "MoveCompleted",
+        ].includes(e.type),
+      );
+    ref.current = next;
+    setS(next);
+    if (changed) {
+      setSelected(null);
+      setResurrections([]);
+      setPromotion(null);
+      setEvolutionTarget(null);
+    }
+  }, [online?.state]);
   const send = (
     command: Command,
     source: "human" | "computer" | "system" = "human",
   ) => {
+    if (online) {
+      if (source !== "human" || inputLocked) return;
+      void online
+        .send(command)
+        .catch((e) =>
+          setError(e instanceof Error ? e.message : "CONNECTION_LOST"),
+        );
+      return;
+    }
     if (
       source === "human" &&
       opponentMode === "computer" &&
@@ -199,7 +267,7 @@ export function App({
     }
   };
   useEffect(() => {
-    if (!automaticStart || s.phase !== "READY") {
+    if (online || !automaticStart || s.phase !== "READY") {
       setCountdown(null);
       return;
     }
@@ -246,6 +314,7 @@ export function App({
     return () => clearTimeout(timer);
   }, [spin, s.orientation]);
   useEffect(() => {
+    if (online) return;
     const timer = setInterval(() => {
       if (ref.current.phase !== "READY" && !ref.current.outcome) {
         const r = dispatch(
@@ -261,6 +330,7 @@ export function App({
     return () => clearInterval(timer);
   }, []);
   const load = (loaded: State) => {
+    if (online) return;
     const state = startRecordingSession(loaded, opponentMode, botLevel);
     ref.current = state;
     setS(state);
@@ -289,6 +359,7 @@ export function App({
     return () => clearTimeout(id);
   }, [fx]);
   useEffect(() => {
+    if (online) return;
     const persist = () => saveGame(ref.current);
     const timer = setInterval(persist, 2000);
     window.addEventListener("pagehide", persist);
@@ -375,7 +446,7 @@ export function App({
   const ghosts =
     s.phase === "CHOOSE_TARGETS" &&
     ["draw2", "draw4"].includes(s.current?.kind ?? "") &&
-    !computerTurn
+    !inputLocked
       ? availableResurrections(s)
       : [];
   const chooseResurrection = (id: string) => {
@@ -387,7 +458,7 @@ export function App({
     else setResurrections(next);
   };
   const clickSquare = (sq: number) => {
-    if (computerTurn) return;
+    if (inputLocked) return;
     const ghost = ghosts.find((p) => p.home === sq);
     if (ghost) {
       chooseResurrection(ghost.id);
@@ -415,6 +486,14 @@ export function App({
     setError("");
   };
   const exportReplay = () => {
+    if (online) {
+      void online
+        .download()
+        .catch((e) =>
+          setError(e instanceof Error ? e.message : "CONNECTION_LOST"),
+        );
+      return;
+    }
     const a = document.createElement("a"),
       url = URL.createObjectURL(
         new Blob([JSON.stringify(exportMatch(ref.current), null, 2)], {
@@ -440,15 +519,23 @@ export function App({
       ? Math.round(risk(s.moveIndex + 1, s.color) * 100)
       : 0;
   const newMatch = () => {
+    if (online) {
+      online.leave();
+      return;
+    }
     setAutomaticStart(true);
     load(freshMatch());
   };
   const playerName = (player: "P1" | "P2") =>
-    opponentMode === "computer"
-      ? player === "P1"
+    online
+      ? player === online.player
         ? "You"
-        : `${botProfiles[botLevel].label} bot`
-      : `Player ${player.slice(1)}`;
+        : "Opponent"
+      : opponentMode === "computer"
+        ? player === "P1"
+          ? "You"
+          : `${botProfiles[botLevel].label} bot`
+        : `Player ${player.slice(1)}`;
   const count = Math.min(
     12,
     Math.max(s.current?.value ?? 1, s.moveIndex + remaining),
@@ -465,7 +552,7 @@ export function App({
             className="brand compact"
             aria-label="Home"
             onClick={() => {
-              saveGame(ref.current);
+              if (!online) saveGame(ref.current);
               onHome();
             }}
           >
@@ -476,7 +563,11 @@ export function App({
               ? "Classic"
               : `${s.initialMinutes ?? minutes} + 0`}
           </span>
-          <button aria-label="New match" onClick={() => setConfirmNew(true)}>
+          <button
+            disabled={!!online}
+            aria-label="New match"
+            onClick={() => setConfirmNew(true)}
+          >
             ＋
           </button>
           <button aria-label="Game options" onClick={() => setDrawer("more")}>
@@ -494,18 +585,24 @@ export function App({
               ? "READY?"
               : s.outcome
                 ? "MATCH OVER"
-                : computerTurn
-                  ? "BOT’S TURN"
-                  : opponentMode === "computer"
-                    ? "YOUR TURN!"
-                    : `${playerName(s.active).toUpperCase()}’S TURN`}
+                : online
+                  ? !online.connected
+                    ? "RECONNECTING…"
+                    : online.player === s.active
+                      ? "YOUR TURN!"
+                      : "OPPONENT’S TURN"
+                  : computerTurn
+                    ? "BOT’S TURN"
+                    : opponentMode === "computer"
+                      ? "YOUR TURN!"
+                      : `${playerName(s.active).toUpperCase()}’S TURN`}
           </strong>
           <span>
             {s.phase === "READY"
               ? "In Cards we trust"
               : s.outcome
                 ? s.outcome.reason
-                : `${own === "w" ? "White" : "Black"} · ${computerTurn ? "thinking…" : phaseLabel[s.phase]}`}
+                : `${own === "w" ? "White" : "Black"} · ${computerTurn ? "thinking…" : online && online.player !== s.active ? "Opponent is playing" : phaseLabel[s.phase]}`}
           </span>
         </div>
         <section
@@ -616,11 +713,11 @@ export function App({
                 const breakable =
                   !!piece &&
                   nextRisk > 0 &&
-                  !computerTurn &&
+                  !inputLocked &&
                   moves.some((m) => m.pieceId === piece.id);
                 const target =
                   s.phase === "CHOOSE_TARGETS" &&
-                  !computerTurn &&
+                  !inputLocked &&
                   piece &&
                   (s.current?.kind === "skip"
                     ? piece.army !== own && piece.type !== "k"
@@ -629,7 +726,7 @@ export function App({
                 return (
                   <button
                     key={sq}
-                    className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${selected === sq ? "selected" : ""} ${possible ? "possible" : ""} ${target ? "target" : ""} ${ghost ? "hologram" : ""} ${ghost && resurrections.includes(ghost.id) ? "ghost-selected" : ""} ${piece && s.used.includes(piece.id) ? "used" : ""} ${breakable ? "at-risk" : ""} ${piece?.type === "k" && check && piece.army === own ? "checked" : ""}`}
+                    className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${selected === sq ? "selected" : ""} ${possible ? "possible" : ""} ${target ? "target" : ""} ${ghost ? "hologram" : ""} ${ghost && resurrections.includes(ghost.id) ? "ghost-selected" : ""} ${piece && s.used.includes(piece.id) ? "used" : ""} ${breakable ? `at-risk risk-stage-${crackStage(nextRisk)}` : ""} ${piece?.type === "k" && check && piece.army === own ? "checked" : ""}`}
                     onClick={() => clickSquare(sq)}
                     aria-label={`${squareName(sq)}${ghost ? `, ghost ${pieceNames[ghost.original]}` : ""}${piece ? `, ${pieceNames[piece.type]} ${piece.army === "w" ? "white" : "black"}${piece.blocked ? ", blocked" : ""}${s.used.includes(piece.id) ? ", used" : ""}` : ""}${possible ? ", legal destination" : ""}${breakable ? `, ${nextRisk}% break risk` : ""}`}
                     aria-pressed={
@@ -648,15 +745,7 @@ export function App({
                         key={`${piece.id}-${piece.square}-${piece.type}`}
                       >
                         <PieceIcon type={piece.type} army={piece.army} />
-                        {breakable && (
-                          <svg
-                            className="crack"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                          >
-                            <path d="m28 9-7 10 8 2-10 12 5 8" />
-                          </svg>
-                        )}
+                        {breakable && <PieceCracks percent={nextRisk} />}
                       </span>
                     )}
                     {ghost && (
@@ -665,7 +754,12 @@ export function App({
                         <b>{resurrections.includes(ghost.id) ? "✓" : "+"}</b>
                       </span>
                     )}
-                    {piece?.blocked && <span className="blocked">⊘</span>}
+                    {piece?.blocked && (
+                      <>
+                        <SkipChains />
+                        <span className="blocked">⊘</span>
+                      </>
+                    )}
                     {piece && s.used.includes(piece.id) && (
                       <span className="used-dot" />
                     )}
@@ -730,7 +824,7 @@ export function App({
                 Pass & play or train.
                 <small>{s.initialMinutes ?? minutes} minutes each.</small>
               </span>
-              {!automaticStart && (
+              {!online && !automaticStart && (
                 <button
                   className="primary"
                   onClick={() => send({ type: "StartGame" })}
@@ -739,6 +833,19 @@ export function App({
                 </button>
               )}
             </>
+          ) : online && inputLocked ? (
+            <span>
+              {!online.connected
+                ? "Reconnecting…"
+                : online.pending
+                  ? "Sending move…"
+                  : "Waiting for your opponent…"}
+              <small>
+                {online.opponentOnline
+                  ? "Connected to room"
+                  : "Opponent disconnected. The clock keeps running."}
+              </small>
+            </span>
           ) : computerTurn ? (
             <span>
               Bot is thinking…<small>Same rules. No shortcuts.</small>
@@ -766,7 +873,7 @@ export function App({
                       : "In Cards we trust"}
                 </small>
               </span>
-              {canEnd(s) ? (
+              {!inputLocked && canEnd(s) ? (
                 <button
                   className="primary available-action"
                   onClick={() => send({ type: "EndOptionalMoves" })}
@@ -806,9 +913,13 @@ export function App({
                   ? "You start with White"
                   : "You start with Black"}
               </p>
-              <small>The clock starts after the countdown.</small>
+              <small>
+                {online
+                  ? "The room starts automatically. Leaving does not pause it."
+                  : "The clock starts after the countdown."}
+              </small>
               <button className="quiet" onClick={onHome}>
-                Cancel
+                {online ? "Leave table" : "Cancel"}
               </button>
             </section>
           </div>
@@ -844,22 +955,32 @@ export function App({
                 <div className="drawer-menu">
                   <button onClick={() => setDrawer("help")}>How to play</button>
                   <button onClick={() => setDrawer("log")}>Move log</button>
-                  <button onClick={() => setDrawer("lab")}>Lab & replay</button>
+                  {!online && (
+                    <button onClick={() => setDrawer("lab")}>
+                      Lab & replay
+                    </button>
+                  )}
                   <button onClick={exportReplay}>Save match JSON</button>
+                  {!online && (
+                    <>
+                      <button
+                        onClick={() => {
+                          setVerification(
+                            verifyMatch(exportMatch(ref.current)),
+                          );
+                          setDrawer("log");
+                        }}
+                      >
+                        Verify this match
+                      </button>
+                      <button onClick={() => analyzeInput.current?.click()}>
+                        Analyze JSON file
+                      </button>
+                    </>
+                  )}
                   <button
                     onClick={() => {
-                      setVerification(verifyMatch(exportMatch(ref.current)));
-                      setDrawer("log");
-                    }}
-                  >
-                    Verify this match
-                  </button>
-                  <button onClick={() => analyzeInput.current?.click()}>
-                    Analyze JSON file
-                  </button>
-                  <button
-                    onClick={() => {
-                      saveGame(ref.current);
+                      if (!online) saveGame(ref.current);
                       onHome();
                     }}
                   >
@@ -894,19 +1015,26 @@ export function App({
               )}
               {drawer === "log" && (
                 <div className="journal-list">
-                  <div className="log-tools">
-                    <button onClick={exportReplay}>Save match JSON</button>
-                    <button
-                      onClick={() =>
-                        setVerification(verifyMatch(exportMatch(ref.current)))
-                      }
-                    >
-                      Verify this match
-                    </button>
-                    <button onClick={() => analyzeInput.current?.click()}>
-                      Analyze JSON file
-                    </button>
-                  </div>
+                  {!online && (
+                    <div className="log-tools">
+                      <button onClick={exportReplay}>Save match JSON</button>
+                      <button
+                        onClick={() =>
+                          setVerification(verifyMatch(exportMatch(ref.current)))
+                        }
+                      >
+                        Verify this match
+                      </button>
+                      <button onClick={() => analyzeInput.current?.click()}>
+                        Analyze JSON file
+                      </button>
+                    </div>
+                  )}
+                  {online && (
+                    <p>
+                      Recent actions. Full JSON is available after the match.
+                    </p>
+                  )}
                   {verification && (
                     <div
                       className={`verification ${verification.valid ? "valid" : "invalid"}`}
@@ -1125,11 +1253,16 @@ export function App({
         {outcomePopup && s.outcome && (
           <MatchFinale
             outcome={s.outcome}
-            computer={opponentMode === "computer"}
+            computer={opponentMode === "computer" || !!online}
+            viewerPlayer={online?.player}
+            againLabel={online ? "Back to private matches" : undefined}
             winnerName={
               s.outcome.winner ? playerName(s.outcome.winner) : "Nobody"
             }
-            moves={records.filter((e) => e.type === "MoveCompleted").length}
+            moves={
+              online?.totalMoves ??
+              records.filter((e) => e.type === "MoveCompleted").length
+            }
             onAgain={newMatch}
             onReview={() => {
               setResultDismissed(true);
@@ -1166,7 +1299,7 @@ export function App({
             </section>
           </div>
         )}
-        {evolutionTarget && !s.outcome && !computerTurn && (
+        {evolutionTarget && !s.outcome && !inputLocked && (
           <div className="modal-backdrop">
             <section
               className="modal"
