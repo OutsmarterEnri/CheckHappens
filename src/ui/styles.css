@@ -2183,3 +2183,459 @@ h2 {
     flex-basis: 72px;
   }
 }
+
+/* Learning pages never scroll: one short lesson and one board per viewport. */
+.learn-page {
+  height: 100svh;
+  height: 100dvh;
+  max-width: 480px;
+  margin: auto;
+  padding: max(8px, env(safe-area-inset-top)) 12px
+    max(8px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+.learn-page > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 44px;
+  gap: 8px;
+}
+.learn-page h1 {
+  font-size: 21px;
+  margin: 0;
+  text-align: right;
+  line-height: 1.1;
+}
+.learn-page h2 {
+  font-size: 17px;
+  margin: 0 0 5px;
+  line-height: 1.15;
+}
+.learn-page button {
+  min-height: 44px;
+  font: inherit;
+  font-weight: 800;
+}
+.learn-page p {
+  font-size: 14px;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--ink);
+}
+.learn-page select {
+  min-height: 44px;
+  max-width: 100%;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--ink);
+  padding: 4px;
+  font: inherit;
+}
+.learn-page > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex: 0 0 44px;
+  font-size: 13px;
+}
+.learn-page > footer small {
+  font-size: 11px;
+  max-width: 100px;
+  text-align: center;
+}
+.learn-hub-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+.learn-hub-options button {
+  padding: 18px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  background: var(--panel);
+  box-shadow: 3px 4px 0 var(--ink);
+  text-align: left;
+}
+.learn-hub-options strong,
+.learn-hub-options span {
+  display: block;
+}
+.learn-hub-options strong {
+  font-size: 23px;
+  margin-bottom: 8px;
+}
+.learn-hub-options span {
+  font-size: 15px;
+  font-weight: 500;
+}
+.learn-hub footer {
+  justify-content: center;
+  text-align: center;
+}
+.learn-selectors {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.learn-selectors label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  min-width: 0;
+  flex: 1;
+}
+.learn-selectors select {
+  width: 100%;
+}
+.learn-explanation {
+  flex: 0 0 104px;
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 10px;
+}
+.learn-card-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 100px;
+  min-height: 0;
+}
+.learn-card-info .mini-card {
+  width: 66px;
+  height: 90px;
+  flex: 0 0 66px;
+}
+.learn-card-info .mini-card strong {
+  font-size: 21px;
+}
+.learn-card-info > div:last-child {
+  flex: 1;
+  min-width: 0;
+}
+.learn-card-info .quiet {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.learn-sandbox-note {
+  flex: 0 0 56px;
+}
+.practice-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.practice-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 38px;
+  padding: 4px 8px;
+  background: var(--yellow);
+  border-radius: 10px;
+  font-size: 12px;
+}
+.practice-status strong {
+  max-width: 90px;
+  flex-shrink: 0;
+}
+.practice-status span {
+  text-align: right;
+  line-height: 1.15;
+}
+.practice-board-slot {
+  container-type: size;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.practice-board {
+  width: min(100cqh, 100cqw, 400px);
+  height: min(100cqh, 100cqw, 400px);
+  padding: 4px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.practice-board .square {
+  position: relative;
+}
+.practice-board .square > svg {
+  width: 90%;
+  height: 90%;
+}
+.practice-coordinate {
+  position: absolute;
+  bottom: 1px;
+  left: 2px;
+  font-size: 8px;
+  opacity: 0.7;
+  z-index: 1;
+}
+.practice-controls {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.practice-tool-row,
+.practice-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+}
+.practice-tool-row button {
+  height: 44px;
+  width: 44px;
+  padding: 3px;
+  flex: 1;
+  min-width: 0;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  background: var(--panel);
+}
+.practice-tool-row button svg {
+  width: 32px;
+  height: 32px;
+}
+.practice-tool-row button[aria-pressed="true"] {
+  background: var(--yellow);
+}
+.practice-toolbar > button {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 12px;
+  min-width: 0;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+}
+.practice-toolbar .color-choice {
+  height: 44px;
+}
+.practice-promotion {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  max-width: 82px;
+}
+.practice-promotion select {
+  min-height: 30px;
+  height: 30px;
+  font-size: 12px;
+}
+.practice-feedback {
+  font-size: 12px;
+  line-height: 1.2;
+  height: 29px;
+  display: flex;
+  align-items: center;
+}
+.practice-metrics {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  line-height: 1.2;
+  min-height: 18px;
+}
+@media (max-height: 720px) {
+  .learn-page {
+    gap: 5px;
+  }
+  .learn-explanation {
+    flex-basis: 100px;
+    padding: 8px;
+  }
+  .learn-page p {
+    font-size: 13px;
+  }
+  .learn-card-info {
+    flex-basis: 92px;
+  }
+  .learn-card-info .mini-card {
+    height: 82px;
+  }
+  .practice-status {
+    flex-basis: 34px;
+  }
+}
+
+/* Existing menus also use the viewport, with paged secondary information. */
+.menu-screen {
+  overflow: hidden;
+}
+.menu-choose,
+.menu-settings {
+  gap: 8px;
+  justify-content: center;
+  padding-top: max(8px, env(safe-area-inset-top));
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+.menu-choose .menu-logo,
+.menu-settings .menu-logo,
+.menu-choose .menu-tagline,
+.menu-settings .menu-tagline {
+  display: none;
+}
+.menu-choose h1,
+.menu-settings h1 {
+  font-size: 25px;
+}
+.menu-choose .mode-menu {
+  gap: 8px;
+  margin-top: 0;
+}
+.menu-choose .mode-menu > button {
+  min-height: 48px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+.menu-choose .mode-menu h2 {
+  font-size: 18px;
+}
+.menu-settings .settings-panel {
+  padding: 12px;
+}
+.menu-settings .theme-picker {
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.menu-settings .theme-picker button {
+  min-height: 50px;
+  padding: 6px;
+  gap: 6px;
+  font-size: 11px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.menu-settings .theme-swatches i {
+  width: 13px;
+  height: 13px;
+}
+.menu-settings .settings-panel label {
+  padding: 9px 0;
+}
+.menu-settings .settings-info p {
+  font-size: 12px;
+  line-height: 1.35;
+  min-height: 50px;
+  margin: 4px 0;
+}
+.menu-settings .settings-info button {
+  min-height: 44px;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+@media (max-height: 620px) {
+  .menu-choose {
+    gap: 5px;
+  }
+  .menu-choose .mode-menu {
+    gap: 5px;
+  }
+  .menu-choose h1,
+  .menu-settings > h1 {
+    display: none;
+  }
+  .menu-choose .time-options button,
+  .menu-choose .bot-options button {
+    min-height: 46px;
+    padding: 4px;
+  }
+  .menu-settings .settings-panel {
+    padding: 8px;
+  }
+  .menu-settings .theme-picker button {
+    min-height: 44px;
+  }
+}
+.learn-sandbox-note {
+  flex-basis: 36px;
+}
+.practice-table[data-editing="true"] .quiet-feedback {
+  display: none;
+}
+@media (max-height: 620px) {
+  .learn-page {
+    gap: 4px;
+  }
+  .learn-page h1 {
+    font-size: 18px;
+  }
+  .practice-status {
+    flex-basis: 30px;
+  }
+  .practice-feedback {
+    height: 24px;
+    font-size: 11px;
+  }
+  .practice-metrics {
+    font-size: 10px;
+  }
+}
+.learn-explanation {
+  flex-basis: 120px;
+}
+.learn-card-info {
+  flex-basis: 116px;
+}
+.private-menu {
+  gap: 8px;
+  padding-top: max(8px, env(safe-area-inset-top));
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+.private-menu h1 {
+  font-size: 24px;
+}
+.private-tabs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+.private-tabs button {
+  flex: 1;
+  min-height: 44px;
+  padding: 6px;
+  font-size: 13px;
+}
+.private-tabs [aria-pressed="true"] {
+  background: var(--yellow);
+}
+.private-join {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+.private-join button {
+  min-height: 44px;
+}
+.private-menu input {
+  min-height: 44px;
+}
+@media (max-height: 620px) {
+  .private-menu {
+    gap: 5px;
+  }
+  .private-menu p,
+  .private-menu small {
+    font-size: 12px;
+  }
+  .private-menu input {
+    padding: 6px;
+  }
+}

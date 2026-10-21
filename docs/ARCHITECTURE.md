@@ -24,3 +24,7 @@ The first four numbered moves are mandatory and safe. Defense before drawing kee
 Journal data is excluded from checkpoint snapshots and from resolver cloning, preventing recursive growth. Checkpoint-only replay remains a legacy helper; V2 diagnostics re-execute commands instead of trusting checkpoints. Exports and device saves group clock ticks without discarding durations or fingerprints, and omit duplicate checkpoint/event histories. Imports regenerate the full history. Runtime state still keeps individual dispatch entries for verification.
 
 Development-only Graphify builds a local AST graph; use it for cross-module navigation and verify findings against source/tests. OmniRoute is optional development tooling, not configured and not bundled into the game. Agent Skills validation applies when changing skills, not during gameplay.
+
+Learning is isolated in `Tutorial.tsx`, `PracticeTable.tsx` and `domain/practice.ts`. The card lab and guided chapters supply reproducible setup states; Sandbox validates edited pieces before calling the same resolver. Practice uses a frozen clock timestamp while color bonuses remain visible. It neither restores nor saves the live-match slot, and its staged move-five setup is not exported as a recorded match.
+
+Sandbox removal retains a non-king in the lost pile so resurrection can be tested; Clear pieces removes the extra inventory. New palette pieces remember their placement square as home. King count, pawn ranks, king adjacency and the inactive side’s check status are validated before starting.

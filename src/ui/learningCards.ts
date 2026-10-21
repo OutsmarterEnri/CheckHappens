@@ -1,0 +1,58 @@
+export const practiceCards = [
+  {
+    label: "Safe 2",
+    symbol: "2",
+    color: "green",
+    title: "Two moves, zero break risk.",
+    text: "Move two different pieces. Both moves are required and safe. The king may move if the move is legal.",
+  },
+  {
+    label: "Risky 7",
+    symbol: "7",
+    color: "red",
+    title: "Four safe moves. Then a choice.",
+    text: "A 7 grants seven moves with different pieces. Moves 1–4 are required and safe. From move 5, pieces may break after moving. You may pass unless a yellow capture bonus is still required. The king cannot move from move 5 onward, even with Blue.",
+  },
+  {
+    label: "+2",
+    symbol: "+2",
+    color: "yellow",
+    title: "Bring your team back.",
+    text: "Revive up to two eligible lost pieces on their free original squares. Choose as many as possible. With no eligible pieces, continue to the optional move.",
+  },
+  {
+    label: "+4",
+    symbol: "+4",
+    color: "neutral",
+    title: "A color and a comeback.",
+    text: "Choose a color, then revive up to four eligible lost pieces on their free original squares. It does not mean drawing four cards.",
+  },
+  {
+    label: "Wild",
+    symbol: "Wild",
+    color: "neutral",
+    title: "Choose. Evolve. Surprise.",
+    text: "Choose the active color, then evolve an eligible pawn into a rook, bishop or knight. No queen. With no eligible pawn, continue to the optional move.",
+  },
+  {
+    label: "Skip",
+    symbol: "Skip",
+    color: "red",
+    title: "Chain an enemy piece.",
+    text: "Choose an eligible enemy piece to freeze for its next controller’s turn. Kings are immune. A frozen piece still attacks squares: it can still give check.",
+  },
+  {
+    label: "Reverse",
+    symbol: "Reverse",
+    color: "blue",
+    title: "The other army is yours.",
+    text: "Swap armies and remaining clocks, rotate the board, then play the received army with the newly drawn color. Your opponent starts a normal turn afterward.",
+  },
+  {
+    label: "Reset 0",
+    symbol: "0",
+    color: "green",
+    title: "Home, surviving pieces!",
+    text: "Return surviving non-pawn pieces to their original squares. Pawns stay put. Reset does not revive lost pieces; occupied home squares follow the game’s collision rules.",
+  },
+];

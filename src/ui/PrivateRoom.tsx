@@ -46,6 +46,7 @@ export function PrivateRoom({
           (location.port === "8787" ? location.origin : ""),
       ),
   );
+  const [joining, setJoining] = useState(() => fragment.has("invite"));
   const [roomId, setRoomId] = useState(() => fragment.get("room") ?? "");
   const [invite, setInvite] = useState(() => fragment.get("invite") ?? "");
   const [session, setSession] = useState<RoomCredentials | null>(null);
@@ -257,10 +258,20 @@ export function PrivateRoom({
           </>
         ) : (
           <>
-            <p>
-              Play on two devices. White starts; cards and clocks are managed by
-              the room server.
-            </p>
+            {!joining && (
+              <p>
+                Play on two devices. White starts; cards and clocks are managed
+                by the room server.
+              </p>
+            )}
+            <div className="private-tabs">
+              <button aria-pressed={!joining} onClick={() => setJoining(false)}>
+                Create
+              </button>
+              <button aria-pressed={joining} onClick={() => setJoining(true)}>
+                Join an invitation
+              </button>
+            </div>
             <label>
               Room server
               <input
@@ -271,44 +282,52 @@ export function PrivateRoom({
                 onChange={(e) => setAddress(e.target.value)}
               />
             </label>
-            <small>
-              A separate room server is required. For a Wi-Fi test, open the
-              address printed by the server on both phones.
-            </small>
-            <button
-              className="primary"
-              disabled={pending || !address.trim()}
-              onClick={create}
-            >
-              Create private room
-            </button>
-            <details open={!!fragment.get("invite")}>
-              <summary>Join an invitation</summary>
-              <label>
-                Room code
-                <input
-                  aria-label="Room code"
-                  value={roomId}
-                  onChange={(e) => setRoomId(e.target.value)}
-                />
-              </label>
-              <label>
-                Invitation key
-                <input
-                  aria-label="Invitation key"
-                  value={invite}
-                  onChange={(e) => setInvite(e.target.value)}
-                />
-              </label>
+            {!joining && (
+              <small>
+                A separate room server is required. For a Wi-Fi test, open the
+                address printed by the server on both phones.
+              </small>
+            )}
+            {!joining && (
               <button
-                disabled={
-                  pending || !address.trim() || !roomId.trim() || !invite.trim()
-                }
-                onClick={join}
+                className="primary"
+                disabled={pending || !address.trim()}
+                onClick={create}
               >
-                Join private room
+                Create private room
               </button>
-            </details>
+            )}
+            {joining && (
+              <section className="private-join">
+                <label>
+                  Room code
+                  <input
+                    aria-label="Room code"
+                    value={roomId}
+                    onChange={(e) => setRoomId(e.target.value)}
+                  />
+                </label>
+                <label>
+                  Invitation key
+                  <input
+                    aria-label="Invitation key"
+                    value={invite}
+                    onChange={(e) => setInvite(e.target.value)}
+                  />
+                </label>
+                <button
+                  disabled={
+                    pending ||
+                    !address.trim() ||
+                    !roomId.trim() ||
+                    !invite.trim()
+                  }
+                  onClick={join}
+                >
+                  Join private room
+                </button>
+              </section>
+            )}
             {previous && (
               <button
                 onClick={() => {

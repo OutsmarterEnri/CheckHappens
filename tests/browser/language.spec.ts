@@ -25,15 +25,14 @@ test("language preference translates menus, tutorial and game and survives reloa
   await expect(
     page.getByRole("heading", { name: "Proviamoci insieme." }),
   ).toBeVisible();
+  await page.getByRole("button", { name: /Tutorial guidato/ }).click();
+  await page.getByRole("button", { name: "Prova carta", exact: true }).click();
   await page.getByRole("button", { name: "a2, Pedone", exact: true }).click();
-  await page.getByRole("button", { name: "a3", exact: true }).click();
-  await page
-    .getByRole("button", { name: "a1, Torre fantasma", exact: true })
-    .click();
-  await page.getByRole("button", { name: "Blu", exact: true }).click();
-  await page.getByRole("button", { name: "Inverti ↻", exact: true }).click();
-  await expect(page.getByText("TOCCA A TE!", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Capito. Giochiamo! →" }).click();
+  await page.getByRole("button", { name: /^a3.*destinazione valida/ }).click();
+  for (let i = 0; i < 13; i++)
+    await page.getByRole("button", { name: "Avanti →", exact: true }).click();
+  await page.getByRole("button", { name: "Fine", exact: true }).click();
+  await page.getByRole("button", { name: "← Home", exact: true }).click();
   await page.getByRole("button", { name: "Gioca", exact: false }).click();
   await page.getByRole("button", { name: /Partita locale/ }).click();
   const card = await page

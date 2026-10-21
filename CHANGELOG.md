@@ -31,3 +31,9 @@ Initial local release: English iPhone-oriented interface, 4/7/10-minute modes, t
 - Visible examples of all action cards and safe/risky numbered cards, in English and Italian.
 - Interactive move-risk preview, progressive cracks and explicit king restriction from move five.
 - Expanded color, defense and emergency-turn explanations without touching saved matches.
+
+### Separate learning spaces
+
+- Separate card lab with playable examples, 14 guided lessons and a free position Sandbox.
+- Real resolver and chess legality in practice, frozen clocks and isolated saved-match storage.
+- Viewport-sized learning pages without scrolling; paged settings information and separate private create/join views.

@@ -1,310 +1,286 @@
-import { Localized } from "./locale";
 import { useState } from "react";
-import { PieceCracks } from "./PieceEffects";
-import { risk } from "../domain/cards";
-import { PieceIcon } from "./PieceIcon";
-import { squareName, type UnoColor } from "../domain/types";
+import { Localized, useLanguage, translate } from "./locale";
+import { PracticeTable } from "./PracticeTable";
+import { practiceCards } from "./learningCards";
+import { practiceSetup } from "../domain/practice";
 import { colors } from "../domain/cards";
-import { colorNames } from "../domain/types";
-const cards = [
+import { colorNames, type UnoColor } from "../domain/types";
+const chapters = [
   {
-    label: "Safe 2",
-    symbol: "2",
+    title: "One card. More moves.",
+    text: "A 2 means two required moves with different pieces. Tap a2, then a3. Move b2 next: the other player receives the next card.",
+    card: 0,
     color: "green",
-    title: "Two moves, zero break risk.",
-    text: "Move two different pieces. Both moves are required and safe. The king may move if the move is legal.",
   },
   {
-    label: "Risky 7",
-    symbol: "7",
-    color: "red",
     title: "Four safe moves. Then a choice.",
-    text: "A 7 grants seven moves with different pieces. Moves 1–4 are required and safe. From move 5, pieces may break after moving. You may pass unless a yellow capture bonus is still required. The king cannot move from move 5 onward, even with Blue.",
-  },
-  {
-    label: "+2",
-    symbol: "+2",
-    color: "yellow",
-    title: "Bring your team back.",
-    text: "Revive up to two eligible lost pieces on their free original squares. Choose as many as possible. With no eligible pieces, continue to the optional move.",
-  },
-  {
-    label: "+4",
-    symbol: "+4",
-    color: "neutral",
-    title: "A color and a comeback.",
-    text: "Choose a color, then revive up to four eligible lost pieces on their free original squares. It does not mean drawing four cards.",
-  },
-  {
-    label: "Wild",
-    symbol: "Wild",
-    color: "neutral",
-    title: "Choose. Evolve. Surprise.",
-    text: "Choose the active color, then evolve an eligible pawn into a rook, bishop or knight. No queen. With no eligible pawn, continue to the optional move.",
-  },
-  {
-    label: "Skip",
-    symbol: "Skip",
+    text: "This lesson starts at move 5 of a 7. Try a pawn: it has 20% break risk. The king has no legal destination. Pass ends optional moves.",
+    card: 1,
     color: "red",
-    title: "Chain an enemy piece.",
-    text: "Choose an eligible enemy piece to freeze for its next controller’s turn. Kings are immune. A frozen piece still attacks squares: it can still give check.",
   },
   {
-    label: "Reverse",
-    symbol: "Reverse",
+    title: "Blue changes the odds.",
+    text: "Try the same fifth move with Blue: risk falls to 10%. Move 6 is 20%. Later moves keep their usual risk. The king remains unavailable.",
+    card: 1,
     color: "blue",
-    title: "The other army is yours.",
-    text: "Swap armies and remaining clocks, rotate the board, then play the received army with the newly drawn color. Your opponent starts a normal turn afterward.",
   },
   {
-    label: "Reset 0",
-    symbol: "0",
-    color: "green",
-    title: "Home, surviving pieces!",
-    text: "Return surviving non-pawn pieces to their original squares. Pawns stay put. Reset does not revive lost pieces; occupied home squares follow the game’s collision rules.",
+    title: "Red and Green change time.",
+    text: "Make a move with Red and watch P2 lose 3 seconds. In the card lab, choose Green to add 3 seconds to your own clock. Practice clocks never tick.",
+    card: 0,
+    color: "red",
   },
-];
-const lessonCards = [0, 2, 4, 6, 1];
-const lessons = [
-  [
-    "One card. More moves.",
-    "A 2 gives two moves with different pieces. Tap the pawn on a2, then a3.",
-  ],
-  [
-    "These ghosts are friends.",
-    "A +2 or +4 revives lost pieces. Tap the ghost rook on a1 to bring it back.",
-  ],
-  [
-    "Color changes everything.",
-    "A Wild opens a quick color choice. Tap a color. The frame remembers its effect.",
-  ],
-  [
-    "Reverse!",
-    "Armies and clocks swap. Tap Reverse and watch the board spin. You now control the other army.",
-  ],
-  [
-    "Your turn to make it happen.",
-    "The banner tells you who acts next. Giving check ends a turn. Under check, defend before drawing. Checkmate allows one emergency card while the deck lasts.",
-  ],
-];
+  {
+    title: "Yellow captures keep you going.",
+    text: "Move the rook from b1 to b3 to capture. Yellow adds one required move with a different available piece. You cannot pass while this bonus is owed.",
+    card: 0,
+    color: "yellow",
+    scenario: "yellow",
+  },
+  {
+    title: "These ghosts are friends.",
+    text: "Tap Try card. Revive two pieces by tapping their glowing original squares. You must revive as many eligible pieces as the card allows, then may move or pass.",
+    card: 2,
+    color: "yellow",
+  },
+  {
+    title: "A color and a comeback.",
+    text: "Try +4, choose Blue, then tap four glowing home squares. This revives pieces; it does not draw four cards. The chosen color persists for your moves.",
+    card: 3,
+    color: "blue",
+  },
+  {
+    title: "Choose. Evolve. Surprise.",
+    text: "Try Wild, choose a color, tap a pawn and choose rook, bishop or knight. Evolution is not an ordinary move. A queen is not offered.",
+    card: 4,
+    color: "green",
+  },
+  {
+    title: "Chain an enemy piece.",
+    text: "Try Skip, then tap an enemy pawn. It cannot move during its next controller’s turn, but still attacks squares. Kings cannot be chained.",
+    card: 5,
+    color: "red",
+  },
+  {
+    title: "The other army is yours.",
+    text: "Try Reverse. Notice the board, armies and unequal clocks swap. You keep the newly drawn Blue and may move the received army. Player identities do not swap.",
+    card: 6,
+    color: "blue",
+  },
+  {
+    title: "Home, surviving pieces!",
+    text: "The rook starts away from home. Try Reset and watch it return to a1. Pawns stay put. Lost pieces stay lost; occupied home squares use collision rules.",
+    card: 7,
+    color: "green",
+  },
+  {
+    title: "Defend before drawing.",
+    text: "White is in check. Try card, then move the king from e1 to d1. Defense uses the old Red before drawing Green and does not spend the new numbered budget.",
+    card: 0,
+    color: "red",
+    scenario: "defense",
+  },
+  {
+    title: "Checkmate gets an emergency.",
+    text: "White starts in checkmate. Try card: the emergency Reset changes color and resolves its effect before the position is evaluated. It starts a full emergency turn.",
+    card: 7,
+    color: "green",
+    scenario: "emergency",
+  },
+  {
+    title: "Your turn to make it happen.",
+    text: "Giving check ends your current turn. When the deck runs out, classic chess begins after the last effect finishes. You can revisit any lesson or build a position in Sandbox.",
+    card: 0,
+    color: "green",
+  },
+] as const;
 export function Tutorial({ onHome }: { onHome: () => void }) {
-  const [step, setStep] = useState(0),
-    [selected, setSelected] = useState(false),
-    [pawn, setPawn] = useState(8),
-    [revived, setRevived] = useState(false),
-    [color, setColor] = useState<UnoColor | null>(null),
-    [flipped, setFlipped] = useState(false),
-    [browsedCard, setBrowsedCard] = useState<number | null>(null),
-    [riskMove, setRiskMove] = useState(5);
-  const cardIndex = browsedCard ?? lessonCards[step];
-  const preview = cards[cardIndex];
-  const percent = Math.round(risk(riskMove, "red") * 100);
-  const advance = () => {
-    setStep((n) => n + 1);
-    setSelected(false);
-    setBrowsedCard(null);
-  };
-  const squares = Array.from({ length: 64 }, (_, i) =>
-    flipped
-      ? Math.floor(i / 8) * 8 + 7 - (i % 8)
-      : (7 - Math.floor(i / 8)) * 8 + (i % 8),
+  const { language } = useLanguage();
+  const [page, setPage] = useState<"hub" | "cards" | "guided" | "sandbox">(
+    "hub",
   );
+  const [index, setIndex] = useState(0),
+    [chapter, setChapter] = useState(0),
+    [info, setInfo] = useState(0),
+    [color, setColor] = useState<UnoColor>("green"),
+    [revision, setRevision] = useState(0);
+  const [draft, setDraft] = useState(() => practiceSetup().pieces);
+  const back = () => setPage("hub");
+  if (page === "hub")
+    return (
+      <Localized>
+        <main className="learn-page learn-hub">
+          <header>
+            <button className="quiet" onClick={onHome}>
+              ← Home
+            </button>
+            <h1>Let’s try it together.</h1>
+          </header>
+          <section className="learn-hub-options">
+            <button onClick={() => setPage("cards")}>
+              <strong>Card lab</strong>
+              <span>See every card. Try every effect.</span>
+            </button>
+            <button onClick={() => setPage("guided")}>
+              <strong>Guided tutorial</strong>
+              <span>14 short lessons, real game rules.</span>
+            </button>
+            <button onClick={() => setPage("sandbox")}>
+              <strong>Sandbox</strong>
+              <span>Place pieces. Change cards. Experiment.</span>
+            </button>
+          </section>
+          <footer>
+            Practice without a clock. Your saved match is unchanged.
+          </footer>
+        </main>
+      </Localized>
+    );
+  const lesson = chapters[chapter],
+    card = practiceCards[index];
+  const sentences = translate(card.text, language).match(
+    /[^.!?]+[.!?]+|[^.!?]+$/g,
+  ) ?? [card.text];
   return (
     <Localized>
-      <main className="tutorial-screen">
-        <button className="quiet" onClick={onHome}>
-          ← Home
-        </button>
-        <div className="section-top">
-          <h1>Let’s try it together.</h1>
-          <span>{step + 1} / 5</span>
-        </div>
-        <div className="tutorial-progress">
-          {lessons.map((_, i) => (
-            <span className={i <= step ? "done" : ""} key={i} />
-          ))}
-        </div>
-        <section className="tutorial-card-lab" aria-label="Explore the cards">
-          <h2>Meet your cards.</h2>
-          <div
-            className="tutorial-card-picker"
-            role="group"
-            aria-label="Card examples"
-          >
-            {cards.map((card, i) => (
-              <button
-                key={card.label}
-                aria-pressed={i === cardIndex}
-                onClick={() => setBrowsedCard(i)}
-              >
-                {card.label}
-              </button>
-            ))}
-          </div>
-          <div className="tutorial-card-preview" aria-live="polite">
-            <div
-              className={`mini-card tutorial-big-card ${preview.color}`}
-              aria-label={`Card ${preview.symbol}`}
-            >
-              <strong>{preview.symbol}</strong>
-            </div>
-            <div>
-              <h3>{preview.title}</h3>
-              <p>{preview.text}</p>
-            </div>
-          </div>
-          {cardIndex === 1 && (
-            <div className="tutorial-risk-demo">
-              <div role="group" aria-label="Move risk examples">
-                {[1, 4, 5, 6, 7, 8, 9].map((n) => (
-                  <button
-                    key={n}
-                    aria-pressed={riskMove === n}
-                    onClick={() => setRiskMove(n)}
-                  >
-                    {n}
-                  </button>
-                ))}
-              </div>
-              <div className="tutorial-risk-result" role="status">
-                <span className="tutorial-risk-piece">
-                  <PieceIcon type="n" army="w" />
-                  {percent > 0 && <PieceCracks percent={percent} />}
-                </span>
-                <strong>{`Move ${riskMove}: ${percent}% break risk`}</strong>
-              </div>
-              <p>
-                The fifth move has 20% risk, then 40%, 60%, 80% and 99%. Blue
-                halves only moves 5 and 6 to 10% and 20%. Risk follows the move
-                index, not the number printed on the card.
-              </p>
-              <p className="tutorial-king-rule">
-                The king cannot move from move 5 onward. Choose another unused
-                piece or pass when allowed.
-              </p>
-              <small>Preview only: no random roll is made here.</small>
-            </div>
-          )}
-          {cardIndex > 1 && (
-            <p>
-              Special cards normally leave one optional move after their effect.
-              A defense made before drawing consumes that optional move.
-            </p>
-          )}
-        </section>
-        <h2>{lessons[step][0]}</h2>
-        <p>{lessons[step][1]}</p>
-        <div
-          className={`board-frame tutorial-board color-${color ?? "neutral"} ${flipped ? "reverse-enter" : ""}`}
-        >
-          <div className="board">
-            {squares.map((sq, i) => {
-              const ghost = step === 1 && sq === 0 && !revived;
-              return (
-                <button
-                  key={sq}
-                  className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${sq === pawn && selected ? "selected" : ""} ${ghost ? "hologram" : ""} ${step === 0 && selected && sq === 16 ? "possible" : ""}`}
-                  aria-label={`${squareName(sq)}${ghost ? ", ghost Rook" : sq === pawn ? ", Pawn" : ""}`}
-                  onClick={() => {
-                    if (step === 0 && sq === pawn) setSelected(true);
-                    else if (step === 0 && selected && sq === 16) {
-                      setPawn(16);
-                      advance();
-                    } else if (ghost) {
-                      setRevived(true);
-                      advance();
-                    }
+      <main className={`learn-page learn-${page}`}>
+        <header>
+          <button className="quiet" onClick={back}>
+            ← Tutorial
+          </button>
+          <h1>
+            {page === "cards"
+              ? "Card lab"
+              : page === "guided"
+                ? "Guided tutorial"
+                : "Sandbox"}
+          </h1>
+        </header>
+        {page === "guided" ? (
+          <section className="learn-explanation" aria-live="polite">
+            <h2>{lesson.title}</h2>
+            <p>{lesson.text}</p>
+          </section>
+        ) : (
+          <>
+            <div className="learn-selectors">
+              <label>
+                Card
+                <select
+                  aria-label="Card example"
+                  value={index}
+                  onChange={(e) => {
+                    setIndex(Number(e.target.value));
+                    setInfo(0);
                   }}
                 >
-                  {i % 8 === 0 && (
-                    <span className="rank">{Math.floor(sq / 8) + 1}</span>
-                  )}
-                  {i >= 56 && (
-                    <span className="file">{"abcdefgh"[sq % 8]}</span>
-                  )}
-                  {sq === pawn && <PieceIcon type="p" army="w" />}
-                  {sq === 0 && (ghost || revived) && (
-                    <PieceIcon type="r" army="w" />
-                  )}
-                  {(sq === 4 || sq === 60) && (
-                    <PieceIcon type="k" army={sq === 4 ? "w" : "b"} />
-                  )}{" "}
-                  {step === 0 && selected && sq === 16 && (
-                    <span className="move-dot" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-        {step === 2 && (
-          <div className="tutorial-color-choices color-choices">
-            {colors.map((c) => (
-              <button
-                key={c}
-                className={`color-choice ${c}`}
-                onClick={() => {
-                  setColor(c);
-                  advance();
-                }}
-              >
-                {colorNames[c]}
-              </button>
-            ))}
-          </div>
-        )}
-        {step === 3 && (
-          <button
-            className="primary"
-            onClick={() => {
-              setFlipped(true);
-              advance();
-            }}
-          >
-            Reverse ↻
-          </button>
-        )}
-        {step === 4 && (
-          <>
-            <div className="turn-banner" role="status">
-              <strong>YOUR TURN!</strong>
-              <span>Player 1 · new army</span>
+                  {practiceCards.map((c, i) => (
+                    <option key={c.label} value={i}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Color
+                <select
+                  aria-label="Practice color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value as UnoColor)}
+                >
+                  {colors.map((c) => (
+                    <option key={c} value={c}>
+                      {colorNames[c]}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
-            <section
-              className="tutorial-color-guide"
-              aria-label="Color effects"
-            >
-              <h2>Four colors. Four powers.</h2>
-              <p>
-                Red takes 3 seconds from your opponent. Green adds 3 seconds to
-                your clock. Blue halves break risk on moves 5 and 6. Yellow
-                grants a required extra move after a capture, using another
-                available piece.
+            {page === "cards" ? (
+              <section
+                className="learn-card-info"
+                aria-label="Card explanation"
+              >
+                <div
+                  className={`mini-card ${["draw4", "wild"].includes(["number", "number", "draw2", "draw4", "wild", "skip", "reverse", "reset"][index]) ? "neutral" : color}`}
+                >
+                  <strong>{card.symbol}</strong>
+                </div>
+                <div aria-live="polite">
+                  <p>{sentences[info]}</p>
+                  <button
+                    className="quiet"
+                    onClick={() => setInfo((info + 1) % sentences.length)}
+                  >
+                    More detail{" "}
+                    <span>
+                      {info + 1}/{sentences.length}
+                    </span>{" "}
+                    →
+                  </button>
+                </div>
+              </section>
+            ) : (
+              <p className="learn-sandbox-note">
+                Place pieces, then test with real rules. White starts.
               </p>
-              <p>
-                Under check, defend with the previous color before drawing. This
-                defense does not spend the numbered card’s moves, but consumes a
-                special card’s optional move. In checkmate, draw an emergency
-                card, change color and resolve its effects as a full turn, then
-                evaluate the position.
-              </p>
-            </section>
-            <details>
-              <summary>Risk and colors, quickly</summary>
-              <p>
-                The first 4 moves are safe. From the fifth: 20%, 40%, 60%, 80%,
-                99%. You may pass, except for required yellow bonuses. Red takes
-                3 seconds from your opponent; green gives you 3; blue halves the
-                risk on moves 5 and 6; yellow adds one move per capture. The
-                king cannot be used from move 5 onward.
-              </p>
-            </details>
-            <button className="primary" onClick={onHome}>
-              Got it. Let’s play! →
-            </button>
+            )}
           </>
         )}
-        <small>Practice without a clock. Your saved match is unchanged.</small>
+        <PracticeTable
+          key={`${page}-${page === "guided" ? chapter : index}-${color}-${revision}`}
+          cardIndex={page === "guided" ? lesson.card : index}
+          color={page === "guided" ? lesson.color : color}
+          scenario={
+            page === "guided" && "scenario" in lesson ? lesson.scenario : "card"
+          }
+          sandbox={page === "sandbox"}
+          initialPieces={page === "sandbox" ? draft : undefined}
+          onPositionChange={page === "sandbox" ? setDraft : undefined}
+        />
+        <footer>
+          {page === "guided" ? (
+            <>
+              <button
+                disabled={chapter === 0}
+                onClick={() => setChapter(chapter - 1)}
+              >
+                ← Previous
+              </button>
+              <span>{chapter + 1}/14</span>
+              <button
+                className="primary"
+                onClick={() =>
+                  chapter === 13 ? back() : setChapter(chapter + 1)
+                }
+              >
+                {chapter === 13 ? "Finish" : "Next →"}
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  if (page === "sandbox") setDraft(practiceSetup().pieces);
+                  setRevision(revision + 1);
+                }}
+              >
+                Reset example
+              </button>
+              <small>Separate practice · no saved match changes</small>
+              {page === "cards" && (
+                <button
+                  onClick={() => {
+                    setIndex((index + 1) % practiceCards.length);
+                    setInfo(0);
+                  }}
+                >
+                  Next card →
+                </button>
+              )}
+            </>
+          )}
+        </footer>
       </main>
     </Localized>
   );

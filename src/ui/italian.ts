@@ -1,5 +1,103 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "Piece moved to the lost pile.": "Pezzo spostato tra quelli persi.",
+  Create: "Crea",
+  "Place pieces, then test with real rules. White starts.":
+    "Posiziona i pezzi, poi prova con le regole vere. Inizia il bianco.",
+  "Card lab": "Laboratorio carte",
+  "Guided tutorial": "Tutorial guidato",
+  Sandbox: "Sandbox",
+  "See every card. Try every effect.": "Scopri ogni carta. Prova ogni effetto.",
+  "14 short lessons, real game rules.": "14 lezioni brevi, regole vere.",
+  "Place pieces. Change cards. Experiment.":
+    "Posiziona pezzi. Cambia carte. Sperimenta.",
+  "← Tutorial": "← Tutorial",
+  Card: "Carta",
+  "Card example": "Esempio di carta",
+  "Practice color": "Colore di prova",
+  "Card explanation": "Spiegazione della carta",
+  Color: "Colore",
+  "More detail": "Altri dettagli",
+  "Next card →": "Carta successiva →",
+  "Reset example": "Ricomincia",
+  "Separate practice · no saved match changes":
+    "Prova separata · partita salvata intatta",
+  "Edit mode places pieces freely. Test mode uses legal moves and real card rules. White starts. Pawns cannot start on the end ranks.":
+    "In modifica posizioni i pezzi liberamente. In prova valgono mosse legali ed effetti reali. Inizia il bianco. Niente pedoni sulle traverse estreme.",
+  "Practice board": "Scacchiera di prova",
+  "Edit position": "Modifica posizione",
+  "Choose a piece and tap a square.": "Scegli un pezzo e tocca una casella.",
+  "Piece palette": "Selezione pezzi",
+  Erase: "Rimuovi",
+  "White pieces": "Pezzi bianchi",
+  "Black pieces": "Pezzi neri",
+  "Clear pieces": "Svuota",
+  "Test position": "Prova posizione",
+  "Try card": "Prova carta",
+  Retry: "Riprova",
+  Promotion: "Promozione",
+  "Tap Try card to begin.": "Tocca Prova carta per iniziare.",
+  "Action applied.": "Azione applicata.",
+  "That action is not available.": "Questa azione non è disponibile.",
+  "Choose the active color.": "Scegli il colore attivo.",
+  "Tap an enemy piece to chain it.": "Tocca un pezzo nemico da incatenare.",
+  "Tap a pawn, then choose its evolution.":
+    "Tocca un pedone, poi scegli l’evoluzione.",
+  "Tap the glowing home squares to revive pieces.":
+    "Tocca le caselle originali illuminate per resuscitare i pezzi.",
+  "Defend check before drawing. Keep the previous color.":
+    "Difenditi prima di pescare. Mantieni il colore precedente.",
+  "Select a piece, then a highlighted square.":
+    "Scegli un pezzo, poi una casella evidenziata.",
+  "Experiment finished. Retry or edit the position.":
+    "Prova conclusa. Riprova o modifica la posizione.",
+  "Resolve the card.": "Risolvi la carta.",
+  "Moves 1–4 completed for you.": "Mosse 1–4 già completate per te.",
+  "Card applied.": "Carta applicata.",
+  "Use at most 32 pieces.": "Usa al massimo 32 pezzi.",
+  "Place exactly one king for each army.":
+    "Posiziona esattamente un re per esercito.",
+  "Pawns cannot start on the first or last rank.":
+    "I pedoni non possono iniziare sulla prima o ultima traversa.",
+  "Keep the kings apart.": "Tieni i re distanti.",
+  "Black cannot already be in check when White starts.":
+    "Il nero non può essere già sotto scacco quando inizia il bianco.",
+  "← Previous": "← Indietro",
+  "Next →": "Avanti →",
+  Finish: "Fine",
+  "A 2 means two required moves with different pieces. Tap a2, then a3. Move b2 next: the other player receives the next card.":
+    "Il 2 concede due mosse obbligatorie con pezzi diversi. Tocca a2, poi a3. Muovi poi b2: l’altro giocatore riceve la carta successiva.",
+  "This lesson starts at move 5 of a 7. Try a pawn: it has 20% break risk. The king has no legal destination. Pass ends optional moves.":
+    "Parti dalla quinta mossa di un 7. Prova un pedone: ha il 20% di rischio rottura. Il re non ha destinazioni legali. Passa termina le mosse opzionali.",
+  "Blue changes the odds.": "Il blu cambia le probabilità.",
+  "Try the same fifth move with Blue: risk falls to 10%. Move 6 is 20%. Later moves keep their usual risk. The king remains unavailable.":
+    "Prova la stessa quinta mossa col blu: il rischio scende al 10%. La sesta è al 20%. Le successive mantengono il rischio normale. Il re resta escluso.",
+  "Red and Green change time.": "Rosso e verde cambiano il tempo.",
+  "Make a move with Red and watch P2 lose 3 seconds. In the card lab, choose Green to add 3 seconds to your own clock. Practice clocks never tick.":
+    "Muovi col rosso: P2 perde 3 secondi. Nel laboratorio scegli verde per aggiungere 3 secondi al tuo tempo. I cronometri di prova non scorrono.",
+  "Yellow captures keep you going.": "Le catture gialle ti fanno proseguire.",
+  "Move the rook from b1 to b3 to capture. Yellow adds one required move with a different available piece. You cannot pass while this bonus is owed.":
+    "Cattura con la torre da b1 a b3. Il giallo aggiunge una mossa obbligatoria con un altro pezzo disponibile. Non puoi passare finché devi questo bonus.",
+  "Tap Try card. Revive two pieces by tapping their glowing original squares. You must revive as many eligible pieces as the card allows, then may move or pass.":
+    "Tocca Prova carta. Resuscita due pezzi sulle caselle originali illuminate. Devi resuscitarne il massimo consentito, poi puoi muovere o passare.",
+  "Try +4, choose Blue, then tap four glowing home squares. This revives pieces; it does not draw four cards. The chosen color persists for your moves.":
+    "Prova +4, scegli blu e tocca quattro caselle originali illuminate. Resusciti pezzi, non peschi quattro carte. Il colore scelto resta per le tue mosse.",
+  "Try Wild, choose a color, tap a pawn and choose rook, bishop or knight. Evolution is not an ordinary move. A queen is not offered.":
+    "Prova Jolly, scegli un colore, tocca un pedone e scegli torre, alfiere o cavallo. L’evoluzione non è una mossa ordinaria. La regina non è disponibile.",
+  "Try Skip, then tap an enemy pawn. It cannot move during its next controller’s turn, but still attacks squares. Kings cannot be chained.":
+    "Prova Salta e tocca un pedone nemico. Non si muoverà nel prossimo turno di chi lo controllerà, ma attacca ancora le caselle. I re sono immuni.",
+  "Try Reverse. Notice the board, armies and unequal clocks swap. You keep the newly drawn Blue and may move the received army. Player identities do not swap.":
+    "Prova Inverti. Scacchiera, eserciti e tempi diversi si scambiano. Mantieni il blu appena pescato e puoi muovere l’esercito ricevuto. Le identità restano.",
+  "The rook starts away from home. Try Reset and watch it return to a1. Pawns stay put. Lost pieces stay lost; occupied home squares use collision rules.":
+    "La torre è lontana da casa. Prova Reset: torna in a1. I pedoni restano fermi e i pezzi persi restano persi; valgono le regole di collisione.",
+  "Defend before drawing.": "Difenditi prima di pescare.",
+  "White is in check. Try card, then move the king from e1 to d1. Defense uses the old Red before drawing Green and does not spend the new numbered budget.":
+    "Il bianco è sotto scacco. Prova carta, poi muovi il re da e1 a d1. La difesa usa il vecchio rosso prima di pescare verde e non consuma le nuove mosse numeriche.",
+  "Checkmate gets an emergency.": "Il matto ha una carta d’emergenza.",
+  "White starts in checkmate. Try card: the emergency Reset changes color and resolves its effect before the position is evaluated. It starts a full emergency turn.":
+    "Il bianco parte sotto matto. Prova carta: Reset d’emergenza cambia colore e applica l’effetto prima di valutare la posizione. Inizia un turno completo.",
+  "Giving check ends your current turn. When the deck runs out, classic chess begins after the last effect finishes. You can revisit any lesson or build a position in Sandbox.":
+    "Dare scacco termina il tuo turno. Finito il mazzo, gli scacchi classici iniziano dopo l’ultimo effetto. Puoi ripetere ogni lezione o creare una posizione in Sandbox.",
   "Explore the cards": "Esplora le carte",
   "Meet your cards.": "Conosci le tue carte.",
   "Card examples": "Esempi di carte",

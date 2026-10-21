@@ -38,6 +38,7 @@ export function Shell() {
       );
     writePreference(THEME_KEY, theme);
   }, [theme]);
+  const [settingsPage, setSettingsPage] = useState(0);
   const { language, setLanguage } = useLanguage();
   const query = new URLSearchParams(location.search).get("play");
   const [screen, setScreen] = useState<
@@ -116,7 +117,7 @@ export function Shell() {
         ) : screen === "tutorial" ? (
           <Tutorial onHome={home} />
         ) : (
-          <main className="menu-screen">
+          <main className={`menu-screen menu-${screen}`}>
             {screen !== "home" && (
               <button className="quiet back-menu" onClick={home}>
                 ← Home
@@ -291,19 +292,23 @@ export function Shell() {
                     }}
                   />
                 </label>
-                <p>
-                  Choose 4-minute Bullet, 7-minute Blitz or 10-minute Rapid
-                  before each match. These are this game’s custom mode names.
-                </p>
-                <p>
-                  Three training bots: Easy ~120, Medium ~200, Hard ~500 Elo.
-                  Their strategies differ, but the ratings have not been
-                  measured.
-                </p>
-                <p>
-                  Matches save on this device. Leaving the table does not pause
-                  the clock. Existing matches keep their remaining time.
-                </p>
+                <div className="settings-info" aria-live="polite">
+                  <p>
+                    {
+                      [
+                        "Choose 4-minute Bullet, 7-minute Blitz or 10-minute Rapid before each match. These are this game’s custom mode names.",
+                        "Three training bots: Easy ~120, Medium ~200, Hard ~500 Elo. Their strategies differ, but the ratings have not been measured.",
+                        "Matches save on this device. Leaving the table does not pause the clock. Existing matches keep their remaining time.",
+                      ][settingsPage]
+                    }
+                  </p>
+                  <button
+                    className="quiet"
+                    onClick={() => setSettingsPage((settingsPage + 1) % 3)}
+                  >
+                    More detail {settingsPage + 1}/3 →
+                  </button>
+                </div>
               </section>
             )}
             <small className="menu-caption">
