@@ -44,3 +44,10 @@ Initial local release: English iPhone-oriented interface, 4/7/10-minute modes, t
 - Visible cards, suggested squares, contextual hints, verified objectives and result feedback.
 - Next unlocks on actual game outcomes; retry and a final transition to match setup support the first game.
 - The learning-board grid no longer inherits toolbar minimum sizing on small screens.
+
+### Tutorial rule audit
+
+- Derive lesson card faces from actual setup/event data: Yellow 1, concealed pre-defense card and Green 4 after defense.
+- Prepare risk lessons with four real resolver moves instead of changing counters; retain piece-use and clock effects. Free practice starts at move one.
+- Correct the Yellow instruction and block completion while another capture bonus remains.
+- Explain Red as time removal, qualify Yellow/Reverse exceptions and filter Wild options through engine legality.

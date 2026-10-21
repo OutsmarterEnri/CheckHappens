@@ -4,7 +4,7 @@ export const practiceCards = [
     symbol: "2",
     color: "green",
     title: "Two moves, zero break risk.",
-    text: "Move two different pieces. Both moves are required and safe. The king may move if the move is legal.",
+    text: "Move two different pieces. Both moves are required and have no break risk. Giving check ends the turn early. The king may move if legal.",
   },
   {
     label: "Risky 7",
@@ -18,7 +18,7 @@ export const practiceCards = [
     symbol: "+2",
     color: "yellow",
     title: "Bring your team back.",
-    text: "Revive up to two eligible lost pieces on their free original squares. Choose as many as possible. With no eligible pieces, continue to the optional move.",
+    text: "Revive up to two eligible lost pieces on their free original squares. Choose as many as possible. Normally one optional move follows; prior defense consumes it.",
   },
   {
     label: "+4",
@@ -32,7 +32,7 @@ export const practiceCards = [
     symbol: "Wild",
     color: "neutral",
     title: "Choose. Evolve. Surprise.",
-    text: "Choose the active color, then evolve an eligible pawn into a rook, bishop or knight. No queen. With no eligible pawn, continue to the optional move.",
+    text: "Choose the active color, then an eligible pawn and a legal rook, bishop or knight evolution. No queen. Normally one optional move remains; prior defense consumes it.",
   },
   {
     label: "Skip",
@@ -46,7 +46,7 @@ export const practiceCards = [
     symbol: "Reverse",
     color: "blue",
     title: "The other army is yours.",
-    text: "Swap armies and remaining clocks, rotate the board, then play the received army with the newly drawn color. Your opponent starts a normal turn afterward.",
+    text: "Swap armies and remaining clocks. Keep the new color. Normally you may move the received army. Check or mate can end the turn or trigger emergency rules.",
   },
   {
     label: "Reset 0",

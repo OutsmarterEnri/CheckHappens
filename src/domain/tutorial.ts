@@ -1,4 +1,4 @@
-import type { State, UnoColor } from "./types";
+import type { State, UnoColor, Card } from "./types";
 const count = (s: State, event: string) =>
   s.events.filter((e) => e.type === event).length;
 export interface TutorialMission {
@@ -37,14 +37,14 @@ export const tutorialMissions: TutorialMission[] = [
     task: "Draw Green and make one legal move. Watch your clock.",
     hint: "Move a pawn from a2 to a3. Practice time is frozen so you can see the bonus clearly.",
     learned:
-      "Green added 3 seconds to your clock after the move. Every completed move applies the active color.",
+      "Green added 3 seconds after your move. It adds time to you; Red instead removes time from the opponent.",
     focus: [8],
     complete: (s) => s.clock.remaining.P1 > 420000,
   },
   {
     id: "red",
     group: "Colors have power",
-    title: "Steal three seconds.",
+    title: "Take three seconds away.",
     card: 0,
     color: "red",
     task: "Draw Red and make one move. Watch the other clock.",
@@ -60,13 +60,15 @@ export const tutorialMissions: TutorialMission[] = [
     title: "You can say enough.",
     card: 1,
     color: "red",
-    task: "Four safe moves are already done. Draw the 7, then Pass without moving.",
+    task: "Draw the 7. Four safe moves will be played for you. Then Pass before taking a risk.",
     hint: "Move 5 has 20% break risk. The king cannot move from move 5 onward. Passing avoids taking this risk.",
     learned:
       "You passed safely. Moves 1–4 are required. Later risks: 20%, 40%, 60%, 80%, 99%. You may pass unless a Yellow bonus remains.",
     focus: [],
     complete: (s) =>
-      count(s, "TurnEnded") > 0 && count(s, "MoveCompleted") === 0,
+      count(s, "TurnEnded") > 0 &&
+      count(s, "MoveCompleted") === 4 &&
+      count(s, "RiskResolved") === 0,
   },
   {
     id: "blue",
@@ -74,12 +76,15 @@ export const tutorialMissions: TutorialMission[] = [
     title: "Blue softens the gamble.",
     card: 1,
     color: "blue",
-    task: "Draw Blue. Try the fifth move with a pawn, not the king.",
+    task: "Draw Blue. Four safe moves will be played for you. Try move 5 with a2; the king is unavailable.",
     hint: "Tap a2, then a3. Blue makes move 5 a 10% risk and move 6 a 20% risk. Later risks are unchanged.",
     learned:
       "You tried a real risk roll. Blue reduces the odds; it never makes the king available from move 5 onward.",
     focus: [8],
-    complete: (s) => count(s, "MoveCompleted") > 0,
+    complete: (s) =>
+      s.events.some(
+        (e) => e.type === "RiskResolved" && e.data.probability === 0.1,
+      ),
   },
   {
     id: "yellow",
@@ -89,12 +94,14 @@ export const tutorialMissions: TutorialMission[] = [
     color: "yellow",
     scenario: "yellow",
     task: "Draw Yellow. Capture b3 with the rook on b1, then move another piece.",
-    hint: "After b1 to b3, try the bishop on c1 to d2. Pass is unavailable while the capture bonus is owed.",
+    hint: "After b1 to b3, move the knight from e3 to f5 without capturing. A second capture creates another required bonus.",
     learned:
-      "Yellow gave one required extra move. Another available piece had to play it, even if you wanted to pass.",
-    focus: [1, 2],
+      "Your capturer survived, so Yellow required another piece to move. A broken capturer earns no bonus; check or break ends the turn.",
+    focus: [1, 20],
     complete: (s) =>
-      count(s, "YellowBonusGranted") > 0 && count(s, "MoveCompleted") >= 2,
+      count(s, "YellowBonusGranted") > 0 &&
+      count(s, "MoveCompleted") >= 2 &&
+      s.active === "P2",
   },
   {
     id: "skip",
@@ -157,7 +164,7 @@ export const tutorialMissions: TutorialMission[] = [
     task: "Draw Reverse. Watch the armies, board and unequal clocks swap.",
     hint: "P1 stays P1, but now controls Black. The newly drawn Blue remains active.",
     learned:
-      "Reverse exchanged armies and remaining clocks. You may move the received army; the opponent then starts a normal turn.",
+      "Here, Reverse swapped armies and clocks and left an optional move with the new Blue. Check or mate can change what happens next.",
     focus: [],
     complete: (s) => count(s, "ArmiesSwapped") > 0,
   },
@@ -189,7 +196,10 @@ export const tutorialMissions: TutorialMission[] = [
     complete: (s) =>
       s.events.some(
         (e) => e.type === "MoveCompleted" && e.data.defense === true,
-      ),
+      ) &&
+      s.phase === "RESOLVE_MOVES" &&
+      s.color === "green" &&
+      s.budget === 4,
   },
   {
     id: "emergency",
@@ -240,3 +250,17 @@ export const tutorialMissions: TutorialMission[] = [
     complete: (s) => s.mode === "classical",
   },
 ];
+
+/** Show the actual lesson deck/event card, never a second handwritten card value. */
+export function tutorialCardView(
+  state: State,
+  hideUntilDraw = false,
+): { card: Card | null; drawn: boolean } {
+  const event = state.events.find((e) => e.type === "CardDrawn");
+  return event
+    ? { card: event.data.card as Card, drawn: true }
+    : {
+        card: hideUntilDraw ? null : (state.deck[state.deckIndex] ?? null),
+        drawn: false,
+      };
+}

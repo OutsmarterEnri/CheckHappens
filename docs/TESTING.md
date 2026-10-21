@@ -3,7 +3,7 @@
 Latest UI and language verification: 21 October 2026.
 
 - Strict TypeScript and Vite production build pass.
-- 171 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
+- 176 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
 - 42 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
@@ -79,3 +79,7 @@ Card lab and 14 guided lessons use the same dispatch/engine as real matches. San
 ### Tutorial rebuilt around actions
 
 Sixteen missions use actual resolver outcomes to unlock Next. Seventeen new unit cases prove each goal starts incomplete, is achievable through real legal commands, and is not satisfied by drawing alone. Three browser journeys play all missions in EN/IT and at 320×568, checking instructions, hints, results, viewport bounds and the untouched offline save. Learning-board grid cells now override toolbar minimum sizing, preventing adjacent small-screen squares from intercepting taps.
+
+### Tutorial/engine audit
+
+The Yellow lesson now shows the actual 1 card and requests a quiet knight move after the capture: the old bishop suggestion captured again and left another mandatory bonus. Completion stays blocked while that bonus remains. Defense conceals the new card until the engine draws the real Green 4, and uses Begin turn rather than Draw card. Risk lessons execute four real safe moves through dispatch; used pieces, positions, color bonuses and exact journal replay are preserved. Card lab and sandbox start a 7 at move one. Wild offers only engine-legal evolutions. Five independent regressions cover previews, genuine risk preparation, free practice, chained Yellow captures and defense color/budget/used-piece behavior.

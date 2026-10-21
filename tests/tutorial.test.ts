@@ -20,7 +20,7 @@ export function solveMission(index: number): State {
     red: [move(8, 16)],
     pass: [{ type: "EndOptionalMoves" }],
     blue: [move(8, 16)],
-    yellow: [move(1, 17), move(2, 11)],
+    yellow: [move(1, 17), move(20, 37)],
     skip: [{ type: "ChooseSkipTarget", pieceId: "b-48" }],
     revive2: [{ type: "ChooseResurrections", pieceIds: ["w-0", "w-1"] }],
     revive4: [

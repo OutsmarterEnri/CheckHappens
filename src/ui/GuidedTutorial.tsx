@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
-import { tutorialMissions } from "../domain/tutorial";
+import { useCallback, useMemo, useState } from "react";
+import { tutorialMissions, tutorialCardView } from "../domain/tutorial";
 import type { State } from "../domain/types";
-import { practiceCards } from "./learningCards";
+import { practiceSetup } from "../domain/practice";
+import { cardLabel } from "../domain/cards";
 import { PracticeTable } from "./PracticeTable";
 import { Localized } from "./locale";
 export function GuidedTutorial({
@@ -15,10 +16,20 @@ export function GuidedTutorial({
     [complete, setComplete] = useState(false),
     [hint, setHint] = useState(false),
     [finished, setFinished] = useState(false),
-    [needsRetry, setNeedsRetry] = useState(false);
+    [needsRetry, setNeedsRetry] = useState(false),
+    [observed, setObserved] = useState<State | null>(null);
   const mission = tutorialMissions[index];
+  const initial = useMemo(
+    () => practiceSetup(mission.card, mission.color, mission.scenario),
+    [index],
+  );
+  const view = tutorialCardView(
+    observed ?? initial,
+    mission.scenario === "defense",
+  );
   const observe = useCallback(
     (state: State) => {
+      setObserved(state);
       const done = tutorialMissions[index].complete(state);
       setComplete(done);
       setNeedsRetry(
@@ -32,6 +43,7 @@ export function GuidedTutorial({
     setComplete(false);
     setHint(false);
     setNeedsRetry(false);
+    setObserved(null);
     setIndex(next);
   };
   if (finished)
@@ -99,10 +111,24 @@ export function GuidedTutorial({
           aria-live="polite"
         >
           <div
-            className={`mini-card ${mission.card === 3 || mission.card === 4 ? "neutral" : mission.color}`}
-            aria-hidden="true"
+            className={`mini-card ${view.card?.color ?? "neutral"}`}
+            role="img"
+            data-card-kind={view.card?.kind ?? "hidden"}
+            data-card-value={view.card?.value}
+            aria-label={
+              view.card
+                ? `${cardLabel(view.card)} · ${view.drawn ? "Card drawn" : "Next card"}`
+                : "Card not drawn yet"
+            }
           >
-            <strong>{practiceCards[mission.card].symbol}</strong>
+            <strong>{view.card ? cardLabel(view.card) : "?"}</strong>
+            <small className="coach-card-caption">
+              {view.drawn
+                ? "Card drawn"
+                : view.card
+                  ? "Next card"
+                  : "Defend first"}
+            </small>
           </div>
           <div>
             <h1>{complete ? "You did it!" : mission.title}</h1>
@@ -123,6 +149,7 @@ export function GuidedTutorial({
           color={mission.color}
           scenario={mission.scenario ?? "card"}
           guided
+          startAtRisk={mission.id === "pass" || mission.id === "blue"}
           onSnapshot={observe}
           locked={complete}
           focusSquares={mission.focus}

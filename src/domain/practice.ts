@@ -39,8 +39,11 @@ export function practiceSetup(
       ],
       [practiceCard(0, color), practiceCard(0, "red")],
     );
-  if (["defense", "emergency", "yellow", "last"].includes(scenario))
-    return demo(scenario, 0);
+  if (["defense", "emergency", "yellow", "last"].includes(scenario)) {
+    const prepared = demo(scenario, 0);
+    if (scenario === "yellow") prepared.deck[1] = practiceCard(0, "green");
+    return prepared;
+  }
   const s = createGame(42, 0, [
     practiceCard(index, color),
     { id: "practice-next", kind: "number", color: "green", value: 2 },
@@ -66,10 +69,20 @@ export function beginPractice(input: State, risky = false): State {
   if (!result.ok) return result.state;
   const s = result.state;
   if (risky && s.phase === "RESOLVE_MOVES" && s.current?.kind === "number") {
-    // This isolated lesson starts at move five; it is never saved or exported.
-    s.moveIndex = 4;
-    s.budget = 3;
-    s.used = [];
+    // Stage the lesson through actual safe moves, preserving used pieces,
+    // board positions, color effects and the resolver journal.
+    let prepared = s;
+    for (const from of [9, 10, 11, 12]) {
+      const step = dispatch(
+        prepared,
+        { type: "SubmitMove", from, to: from + 8 },
+        0,
+        "human",
+      );
+      if (!step.ok) throw new Error("Invalid risk lesson setup");
+      prepared = step.state;
+    }
+    return prepared;
   }
   return s;
 }

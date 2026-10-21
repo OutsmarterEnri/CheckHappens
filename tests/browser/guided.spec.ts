@@ -67,6 +67,14 @@ for (const [lang, width, height] of [
         exact: true,
       });
       await expect(next).toBeDisabled();
+      if (i === 5)
+        await expect(
+          page.locator(".coach-brief [data-card-value]"),
+        ).toHaveAttribute("data-card-value", "1");
+      if (i === 12)
+        await expect(
+          page.locator(".coach-brief [data-card-kind]"),
+        ).toHaveAttribute("data-card-kind", "hidden");
       await fit(page);
       const hint = page.getByRole("button", {
         name: lang === "en" ? "Hint" : "Aiuto",
@@ -82,7 +90,13 @@ for (const [lang, width, height] of [
         .click();
       await page
         .getByRole("button", {
-          name: lang === "en" ? "Draw card" : "Pesca carta",
+          name: [12, 13].includes(i)
+            ? lang === "en"
+              ? "Begin turn"
+              : "Inizia turno"
+            : lang === "en"
+              ? "Draw card"
+              : "Pesca carta",
           exact: true,
         })
         .click();
@@ -124,7 +138,7 @@ for (const [lang, width, height] of [
             exact: true,
           }),
         ).toHaveCount(0);
-        await move(page, "c1", "d2");
+        await move(page, "e3", "f5");
       }
       if (i === 6)
         await page
@@ -157,7 +171,12 @@ for (const [lang, width, height] of [
           })
           .click();
       }
-      if (i === 12) await move(page, "e1", "d1");
+      if (i === 12) {
+        await move(page, "e1", "d1");
+        await expect(
+          page.locator(".coach-brief [data-card-value]"),
+        ).toHaveAttribute("data-card-value", "4");
+      }
       if (i === 14) await move(page, "b1", "b8");
       await expect(next).toBeEnabled();
       await expect(page.locator(".coach-success")).toBeVisible();

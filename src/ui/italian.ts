@@ -1,5 +1,30 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "Begin turn": "Inizia turno",
+  "Card drawn": "Carta pescata",
+  "Next card": "Prossima carta",
+  "Card not drawn yet": "Carta non ancora pescata",
+  "Take three seconds away.": "Togli tre secondi.",
+  "Green added 3 seconds after your move. It adds time to you; Red instead removes time from the opponent.":
+    "Il verde ha aggiunto 3 secondi dopo la mossa. Aumenta il tuo tempo; il rosso invece toglie tempo all’avversario.",
+  "Draw the 7. Four safe moves will be played for you. Then Pass before taking a risk.":
+    "Pesca il 7. Giocheremo per te quattro mosse sicure. Poi passa prima di rischiare.",
+  "Draw Blue. Four safe moves will be played for you. Try move 5 with a2; the king is unavailable.":
+    "Pesca blu. Giocheremo per te quattro mosse sicure. Prova la quinta con a2; il re è escluso.",
+  "After b1 to b3, move the knight from e3 to f5 without capturing. A second capture creates another required bonus.":
+    "Dopo b1–b3, muovi il cavallo da e3 a f5 senza catturare. Una seconda cattura crea un altro bonus obbligatorio.",
+  "Your capturer survived, so Yellow required another piece to move. A broken capturer earns no bonus; check or break ends the turn.":
+    "Il pezzo ha catturato ed è sopravvissuto: il giallo imponeva un altro pezzo. Chi si rompe non ottiene bonus; scacco o rottura terminano il turno.",
+  "Here, Reverse swapped armies and clocks and left an optional move with the new Blue. Check or mate can change what happens next.":
+    "Qui Inverti ha scambiato eserciti e tempi, lasciando una mossa opzionale col nuovo blu. Scacco o matto possono cambiare la sequenza.",
+  "Move two different pieces. Both moves are required and have no break risk. Giving check ends the turn early. The king may move if legal.":
+    "Muovi due pezzi diversi. Le mosse sono obbligatorie e senza rischio rottura. Dare scacco termina prima il turno. Il re può muovere se legale.",
+  "Revive up to two eligible lost pieces on their free original squares. Choose as many as possible. Normally one optional move follows; prior defense consumes it.":
+    "Resuscita fino a due pezzi persi idonei sulle caselle originali libere. Scegline il massimo possibile. Segue normalmente una mossa opzionale, consumata da una difesa precedente.",
+  "Choose the active color, then an eligible pawn and a legal rook, bishop or knight evolution. No queen. Normally one optional move remains; prior defense consumes it.":
+    "Scegli il colore, poi un pedone idoneo e un’evoluzione legale in torre, alfiere o cavallo. Niente regina. La normale mossa opzionale è consumata da una difesa precedente.",
+  "Swap armies and remaining clocks. Keep the new color. Normally you may move the received army. Check or mate can end the turn or trigger emergency rules.":
+    "Scambia eserciti e tempi rimasti. Mantieni il nuovo colore. Normalmente puoi muovere l’esercito ricevuto. Scacco o matto possono terminare il turno o attivare l’emergenza.",
   "That turn ended before the goal. Tap Retry for a fresh attempt.":
     "Il turno è finito prima dell’obiettivo. Tocca Riprova per un nuovo tentativo.",
   "You passed safely. Moves 1–4 are required. Later risks: 20%, 40%, 60%, 80%, 99%. You may pass unless a Yellow bonus remains.":

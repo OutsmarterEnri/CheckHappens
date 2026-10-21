@@ -36,11 +36,13 @@ export function PracticeTable({
   onPositionChange,
   onSnapshot,
   guided = false,
+  startAtRisk = false,
   locked = false,
   focusSquares = [],
 }: {
   onSnapshot?: (state: State) => void;
   guided?: boolean;
+  startAtRisk?: boolean;
   locked?: boolean;
   focusSquares?: number[];
   initialPieces?: Piece[];
@@ -310,20 +312,26 @@ export function PracticeTable({
             </div>
           ) : evolve ? (
             <div className="practice-toolbar">
-              {(["r", "b", "n"] as const).map((t) => (
-                <button
-                  key={t}
-                  onClick={() =>
-                    send({
-                      type: "ChooseEvolution",
-                      pieceId: evolve,
-                      pieceType: t,
-                    })
-                  }
-                >
-                  {pieceNames[t]}
-                </button>
-              ))}
+              {(["r", "b", "n"] as const)
+                .filter((t) =>
+                  evolutionChoices(s).some(
+                    (c) => c.pieceId === evolve && c.pieceType === t,
+                  ),
+                )
+                .map((t) => (
+                  <button
+                    key={t}
+                    onClick={() =>
+                      send({
+                        type: "ChooseEvolution",
+                        pieceId: evolve,
+                        pieceType: t,
+                      })
+                    }
+                  >
+                    {pieceNames[t]}
+                  </button>
+                ))}
             </div>
           ) : (
             <div className="practice-toolbar">
@@ -331,17 +339,19 @@ export function PracticeTable({
                 <button
                   className="primary"
                   onClick={() => {
-                    setS(
-                      beginPractice(s, cardIndex === 1 && scenario === "card"),
-                    );
+                    setS(beginPractice(s, startAtRisk));
                     setMessage(
-                      cardIndex === 1
+                      startAtRisk
                         ? "Moves 1–4 completed for you."
                         : "Card applied.",
                     );
                   }}
                 >
-                  {guided ? "Draw card" : "Try card"}
+                  {scenario === "defense" || scenario === "emergency"
+                    ? "Begin turn"
+                    : guided
+                      ? "Draw card"
+                      : "Try card"}
                 </button>
               ) : (
                 <button onClick={reset}>Retry</button>
