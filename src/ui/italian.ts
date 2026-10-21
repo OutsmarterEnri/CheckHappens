@@ -1,5 +1,143 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "That turn ended before the goal. Tap Retry for a fresh attempt.":
+    "Il turno è finito prima dell’obiettivo. Tocca Riprova per un nuovo tentativo.",
+  "You passed safely. Moves 1–4 are required. Later risks: 20%, 40%, 60%, 80%, 99%. You may pass unless a Yellow bonus remains.":
+    "Hai passato senza rischiare. Le prime 4 mosse sono obbligatorie; poi rischi 20%, 40%, 60%, 80%, 99%. Puoi passare salvo bonus gialli.",
+  "Learn the chaos.": "Impara il caos.",
+  "One challenge at a time. You play, we guide.":
+    "Una sfida alla volta. Tu giochi, noi ti guidiamo.",
+  "Your first turn": "Il tuo primo turno",
+  "Colors have power": "I colori hanno potere",
+  "Take a risk?": "Vuoi rischiare?",
+  "Cards change the plan": "Le carte cambiano i piani",
+  "When kings are threatened": "Quando il re è in pericolo",
+  "The last card": "L’ultima carta",
+  "Two pieces. Two moves.": "Due pezzi. Due mosse.",
+  "Draw the 2. Move a2 to a3, then b2 to b3.":
+    "Pesca il 2. Muovi da a2 ad a3, poi da b2 a b3.",
+  "Tap a piece, then a marked square. A piece can move only once in this card turn.":
+    "Tocca un pezzo, poi una casella segnata. In questo turno ogni pezzo può muovere una sola volta.",
+  "You spent both required moves with different pieces. The next player now draws automatically.":
+    "Hai usato le due mosse obbligatorie con pezzi diversi. Il prossimo giocatore ora pesca automaticamente.",
+  "Earn three seconds.": "Guadagna tre secondi.",
+  "Draw Green and make one legal move. Watch your clock.":
+    "Pesca verde e fai una mossa legale. Guarda il tuo tempo.",
+  "Move a pawn from a2 to a3. Practice time is frozen so you can see the bonus clearly.":
+    "Muovi un pedone da a2 ad a3. Qui il tempo è fermo per farti vedere bene il bonus.",
+  "Green added 3 seconds to your clock after the move. Every completed move applies the active color.":
+    "Il verde ha aggiunto 3 secondi al tuo tempo. Ogni mossa completata applica il colore attivo.",
+  "Steal three seconds.": "Ruba tre secondi.",
+  "Draw Red and make one move. Watch the other clock.":
+    "Pesca rosso e fai una mossa. Guarda il tempo avversario.",
+  "Try a2 to a3. Red removes time from the opponent, even without a capture.":
+    "Prova da a2 ad a3. Il rosso toglie tempo all’avversario anche senza catturare.",
+  "Red removed 3 seconds from P2. The frame keeps the active color visible throughout the turn.":
+    "Il rosso ha tolto 3 secondi a P2. La cornice mostra il colore attivo per tutto il turno.",
+  "You can say enough.": "Puoi dire basta.",
+  "Four safe moves are already done. Draw the 7, then Pass without moving.":
+    "Quattro mosse sicure sono già fatte. Pesca il 7, poi passa senza muovere.",
+  "Move 5 has 20% break risk. The king cannot move from move 5 onward. Passing avoids taking this risk.":
+    "La quinta mossa ha il 20% di rischio. Il re non può muoversi dalla quinta in poi. Passare evita questo rischio.",
+  "You passed the optional part safely. Moves 1–4 are required; later moves can be passed unless a Yellow bonus remains.":
+    "Hai rinunciato alle mosse opzionali. Le prime 4 sono obbligatorie; dopo puoi passare, salvo bonus gialli da giocare.",
+  "Blue softens the gamble.": "Il blu ammorbidisce il rischio.",
+  "Draw Blue. Try the fifth move with a pawn, not the king.":
+    "Pesca blu. Prova la quinta mossa con un pedone; il re è escluso.",
+  "Tap a2, then a3. Blue makes move 5 a 10% risk and move 6 a 20% risk. Later risks are unchanged.":
+    "Tocca a2, poi a3. Col blu il rischio è 10% alla quinta e 20% alla sesta. Le successive non cambiano.",
+  "You tried a real risk roll. Blue reduces the odds; it never makes the king available from move 5 onward.":
+    "Hai provato un vero sorteggio di rottura. Il blu riduce il rischio, ma il re resta escluso dalla quinta mossa.",
+  "A capture earns a duty.": "Catturare crea un obbligo.",
+  "Draw Yellow. Capture b3 with the rook on b1, then move another piece.":
+    "Pesca giallo. Cattura in b3 con la torre in b1, poi muovi un altro pezzo.",
+  "After b1 to b3, try the bishop on c1 to d2. Pass is unavailable while the capture bonus is owed.":
+    "Dopo b1–b3, prova l’alfiere da c1 a d2. Non puoi passare finché devi giocare il bonus cattura.",
+  "Yellow gave one required extra move. Another available piece had to play it, even if you wanted to pass.":
+    "Il giallo ha aggiunto una mossa obbligatoria. Doveva giocarla un altro pezzo disponibile, anche volendo passare.",
+  "Put a piece in chains.": "Metti un pezzo in catene.",
+  "Draw Skip and tap an enemy pawn to freeze it.":
+    "Pesca Salta e tocca un pedone nemico da bloccare.",
+  "Tap a7. Kings are immune. A frozen piece still attacks squares and can still give check.":
+    "Tocca a7. I re sono immuni. Un pezzo bloccato attacca ancora le caselle e può dare scacco.",
+  "The chains stop that piece moving on its next controller’s turn. Its attacks stay active.":
+    "Le catene impediscono al pezzo di muoversi nel prossimo turno di chi lo controllerà. I suoi attacchi restano.",
+  "Bring two friends back.": "Riporta due amici in campo.",
+  "Draw +2 and fill two glowing home squares.":
+    "Pesca +2 e riempi due caselle originali illuminate.",
+  "Tap the ghosts on a1 and b1. You must revive as many eligible pieces as possible, up to two.":
+    "Tocca i fantasmi in a1 e b1. Devi resuscitare il maggior numero possibile di pezzi idonei, fino a due.",
+  "+2 revives pieces on free original squares. It does not draw cards. A special normally leaves one optional move.":
+    "+2 resuscita pezzi sulle caselle originali libere. Non pesca carte. Una speciale lascia normalmente una mossa opzionale.",
+  "Choose a comeback color.": "Scegli il colore della rimonta.",
+  "Draw +4, choose a color and revive all four ghosts.":
+    "Pesca +4, scegli un colore e resuscita tutti e quattro i fantasmi.",
+  "After picking a color, tap a1, b1, c1 and a2. Occupied original squares cannot receive a resurrection.":
+    "Scelto il colore, tocca a1, b1, c1 e a2. Non puoi resuscitare su una casella originale occupata.",
+  "+4 chose a color and revived four pieces. The chosen color now applies to your moves.":
+    "+4 ha scelto un colore e resuscitato quattro pezzi. Ora quel colore si applica alle tue mosse.",
+  "Give a pawn a new job.": "Dai un nuovo ruolo al pedone.",
+  "Draw Wild. Pick a color, tap a pawn and choose its new piece.":
+    "Pesca Jolly. Scegli un colore, tocca un pedone e scegli il nuovo pezzo.",
+  "Tap a2, then choose rook, bishop or knight. Wild never offers a queen.":
+    "Tocca a2, poi scegli torre, alfiere o cavallo. Jolly non offre mai una regina.",
+  "Evolution changed the pawn without spending an ordinary move. It stays on its square and keeps its identity.":
+    "L’evoluzione ha cambiato il pedone senza usare una mossa ordinaria. Mantiene casella e identità.",
+  "Now you play the other army.": "Ora giochi l’altro esercito.",
+  "Draw Reverse. Watch the armies, board and unequal clocks swap.":
+    "Pesca Inverti. Guarda scambiarsi eserciti, scacchiera e tempi diversi.",
+  "P1 stays P1, but now controls Black. The newly drawn Blue remains active.":
+    "P1 resta P1, ma ora controlla il nero. Il blu appena pescato resta attivo.",
+  "Reverse exchanged armies and remaining clocks. You may move the received army; the opponent then starts a normal turn.":
+    "Inverti ha scambiato eserciti e tempi. Puoi muovere l’esercito ricevuto; poi l’avversario inizia un turno normale.",
+  "Send the rook home.": "Rimanda la torre a casa.",
+  "The rook is on a4. Draw Reset and watch a1.":
+    "La torre è in a4. Pesca Reset e guarda a1.",
+  "Reset returns surviving non-pawn pieces home. It does not revive lost pieces or move ordinary pawns.":
+    "Reset riporta a casa i pezzi sopravvissuti diversi dai pedoni. Non resuscita e non muove i pedoni ordinari.",
+  "The rook returned to a1. Reset applies collision rules if a home square is occupied.":
+    "La torre è tornata in a1. Reset applica le regole di collisione se una casella originale è occupata.",
+  "Save the king before drawing.": "Salva il re prima di pescare.",
+  "Begin the turn, then move the king from e1 to d1 to escape check.":
+    "Inizia il turno, poi muovi il re da e1 a d1 per uscire dallo scacco.",
+  "The old Red still applies to defense. Only after escaping does the new Green card appear.":
+    "Il vecchio rosso vale ancora per la difesa. Solo dopo il salvataggio compare la nuova carta verde.",
+  "Defense kept the old color and left all four numbered moves. With a special card, it consumes the optional move instead.":
+    "La difesa ha usato il vecchio colore e lasciato tutte le 4 mosse numeriche. Con una speciale consuma invece la mossa opzionale.",
+  "Checkmate gets one last card.": "Sotto matto, un’ultima carta.",
+  "Begin this checkmated turn. Watch the emergency Reset rescue the king.":
+    "Inizia questo turno sotto matto. Guarda Reset d’emergenza salvare il re.",
+  "With cards remaining, checkmate triggers an emergency draw: new color, effects, then position evaluation.":
+    "Se restano carte, il matto attiva una pescata d’emergenza: nuovo colore, effetti, poi valutazione della posizione.",
+  "The emergency card rescued this position and begins a full turn. A card that fails to rescue it still loses the game.":
+    "La carta d’emergenza ha salvato questa posizione e avviato un turno completo. Se non la salva, la partita è persa.",
+  "Check ends your turn.": "Lo scacco termina il tuo turno.",
+  "Draw the 2. Move the rook from b1 to b8 to give check.":
+    "Pesca il 2. Muovi la torre da b1 a b8 per dare scacco.",
+  "The rook attacks the king along rank 8. Giving check ends the turn even with a numbered move left.":
+    "La torre attacca il re lungo l’ottava traversa. Dare scacco termina il turno anche se resta una mossa numerica.",
+  "Your unused move was forfeited. The opponent must now defend before drawing, using the persistent color.":
+    "Hai perso la mossa non usata. Ora l’avversario deve difendersi prima di pescare, mantenendo il colore.",
+  "Then it becomes chess.": "Poi diventano scacchi.",
+  "Play the last 2: move a2 to a3 and b2 to b3.":
+    "Gioca l’ultimo 2: muovi da a2 ad a3 e da b2 a b3.",
+  "The last card finishes all of its actions before the game switches. Ordinary chess then uses one move per turn.":
+    "L’ultima carta completa tutte le azioni prima del cambio. Negli scacchi ordinari si gioca poi una mossa per turno.",
+  "The deck is empty. Card colors and temporary blocks end; the position and controlled armies stay. You are ready to play.":
+    "Il mazzo è vuoto. Colori e blocchi temporanei finiscono; restano posizione ed eserciti controllati. Ora puoi giocare.",
+  "Tutorial progress": "Avanzamento tutorial",
+  "You did it!": "Ce l’hai fatta!",
+  Hint: "Aiuto",
+  "Show task": "Mostra obiettivo",
+  "Draw card": "Pesca carta",
+  "You know the chaos.": "Ora conosci il caos.",
+  "You played through cards, colors, break risk and king emergencies. Your first match can begin.":
+    "Hai provato carte, colori, rischio rottura ed emergenze del re. La tua prima partita può iniziare.",
+  "Ready to play →": "Pronto a giocare →",
+  "Play the lessons again": "Rigioca le lezioni",
+  "Explore cards and Sandbox": "Esplora carte e Sandbox",
+  "No clock. No penalties. Your saved match is safe.":
+    "Niente timer o penalità. La partita salvata è al sicuro.",
   "Piece moved to the lost pile.": "Pezzo spostato tra quelli persi.",
   Create: "Crea",
   "Place pieces, then test with real rules. White starts.":

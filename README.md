@@ -19,7 +19,7 @@ The interface supports English and Italian, designed around a single iPhone port
 - **Private match:** invitation link, two devices, authoritative clocks and reconnect. [Server setup](docs/PRIVATE_MATCHES.md).
 - **Themes:** Candy Chaos plus four alternative palettes, saved in Settings.
 - **Time controls:** 4-minute Bullet, 7-minute Blitz and 10-minute Rapid, per player. These are this game's custom mode names.
-- **Learning hub:** separate card lab, 14 guided lessons and a free position sandbox; all fit the phone viewport without scrolling.
+- **Learning hub:** separate card lab, 16 interactive challenges with goals, hints and outcome feedback and a free position sandbox; all fit the phone viewport without scrolling.
 - Reduced-motion settings, automatic on-device saving and match JSON export/analysis.
 
 The board frame remembers the active card color. The turn banner identifies the player and controlled army. The move counter separates remaining actions and required bonuses. Skip chains lock the affected piece. Risky pieces show progressively stronger cracks based on their effective break chance and shake before a move; a broken piece disappears with a puff. Win/Lose/Draw finales offer review, replay export and a rematch.
@@ -127,7 +127,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **154 unit tests and 39 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **171 unit tests and 42 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 

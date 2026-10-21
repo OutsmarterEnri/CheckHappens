@@ -1,5 +1,5 @@
 import { createGame, dispatch } from "./turnResolver";
-import { demo } from "./fixtures";
+import { demo, fixture, testPiece } from "./fixtures";
 import { engine } from "../engine/implementation";
 import type { Card, Piece, State, UnoColor } from "./types";
 export function practiceCard(index: number, color: UnoColor): Card {
@@ -30,7 +30,16 @@ export function practiceSetup(
   color: UnoColor = "green",
   scenario = "card",
 ): State {
-  if (["defense", "emergency", "yellow"].includes(scenario))
+  if (scenario === "check")
+    return fixture(
+      [
+        testPiece("wk", "w", "k", "a1"),
+        testPiece("wr", "w", "r", "b1"),
+        testPiece("bk", "b", "k", "h8"),
+      ],
+      [practiceCard(0, color), practiceCard(0, "red")],
+    );
+  if (["defense", "emergency", "yellow", "last"].includes(scenario))
     return demo(scenario, 0);
   const s = createGame(42, 0, [
     practiceCard(index, color),

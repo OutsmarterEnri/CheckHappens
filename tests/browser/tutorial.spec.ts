@@ -59,29 +59,15 @@ for (const language of ["en", "it"] as const)
         name: language === "en" ? /Guided tutorial/ : /Tutorial guidato/,
       })
       .click();
-    for (let chapter = 0; chapter < 14; chapter++) {
-      await fits(page);
-      await page
-        .getByRole("button", {
-          name: language === "en" ? "Try card" : "Prova carta",
-          exact: true,
-        })
-        .click();
-      await fits(page);
-      if (chapter < 13)
-        await page
-          .getByRole("button", {
-            name: language === "en" ? "Next →" : "Avanti →",
-            exact: true,
-          })
-          .click();
-    }
+    await fits(page);
     await page
       .getByRole("button", {
-        name: language === "en" ? "Finish" : "Fine",
+        name: language === "en" ? "Draw card" : "Pesca carta",
         exact: true,
       })
       .click();
+    await fits(page);
+    await page.getByRole("button", { name: "← Tutorial", exact: true }).click();
     await page.getByRole("button", { name: /^Sandbox/ }).click();
     await fits(page);
     await page

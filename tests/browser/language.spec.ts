@@ -23,15 +23,11 @@ test("language preference translates menus, tutorial and game and survives reloa
   await page.reload();
   await page.getByRole("button", { name: "Tutorial" }).click();
   await expect(
-    page.getByRole("heading", { name: "Proviamoci insieme." }),
+    page.getByRole("heading", { name: "Impara il caos." }),
   ).toBeVisible();
   await page.getByRole("button", { name: /Tutorial guidato/ }).click();
-  await page.getByRole("button", { name: "Prova carta", exact: true }).click();
-  await page.getByRole("button", { name: "a2, Pedone", exact: true }).click();
-  await page.getByRole("button", { name: /^a3.*destinazione valida/ }).click();
-  for (let i = 0; i < 13; i++)
-    await page.getByRole("button", { name: "Avanti →", exact: true }).click();
-  await page.getByRole("button", { name: "Fine", exact: true }).click();
+  await page.getByRole("button", { name: "Pesca carta", exact: true }).click();
+  await page.getByRole("button", { name: "← Tutorial", exact: true }).click();
   await page.getByRole("button", { name: "← Home", exact: true }).click();
   await page.getByRole("button", { name: "Gioca", exact: false }).click();
   await page.getByRole("button", { name: /Partita locale/ }).click();

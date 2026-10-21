@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Localized, useLanguage, translate } from "./locale";
 import { PieceIcon } from "./PieceIcon";
 import { PieceCracks, SkipChains } from "./PieceEffects";
@@ -34,7 +34,15 @@ export function PracticeTable({
   sandbox = false,
   initialPieces,
   onPositionChange,
+  onSnapshot,
+  guided = false,
+  locked = false,
+  focusSquares = [],
 }: {
+  onSnapshot?: (state: State) => void;
+  guided?: boolean;
+  locked?: boolean;
+  focusSquares?: number[];
   initialPieces?: Piece[];
   onPositionChange?: (pieces: Piece[]) => void;
   cardIndex?: number;
@@ -57,7 +65,11 @@ export function PracticeTable({
   const [message, setMessage] = useState("Tap Try card to begin."),
     [before, setBefore] = useState(s);
   const [promotion, setPromotion] = useState<"q" | "r" | "b" | "n">("q");
+  useEffect(() => {
+    onSnapshot?.(s);
+  }, [s, onSnapshot]);
   const send = (command: Command) => {
+    if (locked) return;
     const result = dispatch(s, command, s.clock.lastAt, "human");
     setS(result.state);
     setSelected(null);
@@ -75,6 +87,7 @@ export function PracticeTable({
       ? Math.round(risk(s.moveIndex + 1, s.color) * 100)
       : 0;
   const click = (sq: number) => {
+    if (locked) return;
     if (editing) {
       const removed = s.pieces.find((p) => p.square === sq);
       let pieces = s.pieces.filter((p) => p.square !== sq);
@@ -175,7 +188,7 @@ export function PracticeTable({
   return (
     <Localized>
       <section
-        className="practice-table"
+        className={`practice-table ${guided ? "guided-table" : ""}`}
         data-phase={s.phase}
         data-editing={editing}
         aria-label="Practice board"
@@ -210,7 +223,8 @@ export function PracticeTable({
                 return (
                   <button
                     key={sq}
-                    className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${selected === sq ? "selected" : ""} ${ghost ? "hologram" : ""} ${target ? "target" : ""} ${revive.includes(ghost?.id ?? "") ? "selected" : ""}`}
+                    disabled={locked}
+                    className={`square ${((sq % 8) + Math.floor(sq / 8)) % 2 ? "light" : "dark"} ${selected === sq ? "selected" : ""} ${focusSquares.includes(sq) && (p || ghost) && !locked ? "coach-square" : ""} ${ghost ? "hologram" : ""} ${target ? "target" : ""} ${revive.includes(ghost?.id ?? "") ? "selected" : ""}`}
                     aria-label={`${squareName(sq)}${p ? `, ${pieceNames[p.type]}` : ghost ? ", ghost " + pieceNames[ghost.type] : ""}${dest ? `, ${translate("legal destination", language)}` : ""}`}
                     onClick={() => click(sq)}
                   >
@@ -327,7 +341,7 @@ export function PracticeTable({
                     );
                   }}
                 >
-                  Try card
+                  {guided ? "Draw card" : "Try card"}
                 </button>
               ) : (
                 <button onClick={reset}>Retry</button>
@@ -372,7 +386,7 @@ export function PracticeTable({
             </div>
           )}
           <div
-            className={`practice-feedback ${message === "Tap Try card to begin." ? "quiet-feedback" : ""}`}
+            className={`practice-feedback ${message === "Tap Try card to begin." ? "quiet-feedback" : ""} ${message === "That action is not available." ? "practice-error" : ""}`}
             aria-live="polite"
           >
             {message}

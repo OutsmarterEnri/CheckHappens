@@ -3,8 +3,8 @@
 Latest UI and language verification: 21 October 2026.
 
 - Strict TypeScript and Vite production build pass.
-- 154 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
-- 39 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
+- 171 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
+- 42 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
 - Initial engine perft remains 20 / 400 / 8902 at depth 1 / 2 / 3.
@@ -75,3 +75,7 @@ Two additional bilingual browser cases inspect every card example at 375×667, t
 ### Separate learning pages and sandbox
 
 Card lab and 14 guided lessons use the same dispatch/engine as real matches. Sandbox positions are validated before testing and never overwrite the game save. Six focused unit cases cover practice isolation, numeric risk, king restriction, colors, resurrection, Skip, defense and emergency effects. Browser cases check every lesson/card, editing and Reverse in EN/IT, plus viewport bounds at 320×568, 375×667, 393×852 and 430×932. Menus and private-room create/join views are checked for overflow too.
+
+### Tutorial rebuilt around actions
+
+Sixteen missions use actual resolver outcomes to unlock Next. Seventeen new unit cases prove each goal starts incomplete, is achievable through real legal commands, and is not satisfied by drawing alone. Three browser journeys play all missions in EN/IT and at 320×568, checking instructions, hints, results, viewport bounds and the untouched offline save. Learning-board grid cells now override toolbar minimum sizing, preventing adjacent small-screen squares from intercepting taps.

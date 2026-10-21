@@ -37,3 +37,10 @@ Initial local release: English iPhone-oriented interface, 4/7/10-minute modes, t
 - Separate card lab with playable examples, 14 guided lessons and a free position Sandbox.
 - Real resolver and chess legality in practice, frozen clocks and isolated saved-match storage.
 - Viewport-sized learning pages without scrolling; paged settings information and separate private create/join views.
+
+### Tutorial rebuilt from scratch
+
+- Sixteen action-based challenges replace the freely skipped lesson carousel.
+- Visible cards, suggested squares, contextual hints, verified objectives and result feedback.
+- Next unlocks on actual game outcomes; retry and a final transition to match setup support the first game.
+- The learning-board grid no longer inherits toolbar minimum sizing on small screens.

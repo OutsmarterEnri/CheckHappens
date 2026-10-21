@@ -2639,3 +2639,149 @@ h2 {
     padding: 6px;
   }
 }
+
+/* Rebuilt tutorial: action → visible consequence → explanation. */
+.coach-page header {
+  font-size: 12px;
+}
+.coach-stage {
+  text-align: center;
+  font-weight: 850;
+  max-width: 150px;
+}
+.coach-progress {
+  display: flex;
+  flex: 0 0 5px;
+  gap: 3px;
+}
+.coach-progress span {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+}
+.coach-progress .done {
+  background: var(--green);
+}
+.coach-brief {
+  flex: 0 0 156px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+}
+.coach-brief .mini-card {
+  flex: 0 0 54px;
+  width: 54px;
+  height: 78px;
+  transform: rotate(-5deg);
+  margin-top: 5px;
+}
+.coach-brief .mini-card strong {
+  font-size: 19px;
+}
+.coach-brief h1 {
+  text-align: left;
+  font-size: 19px;
+  margin: 0 0 7px;
+  line-height: 1.1;
+}
+.coach-brief p {
+  font-size: 14px;
+  line-height: 1.35;
+}
+.coach-success {
+  border-color: var(--green);
+  box-shadow: inset 0 0 0 2px var(--green);
+}
+.guided-table .practice-status,
+.guided-table .practice-promotion,
+.guided-table .practice-feedback {
+  display: none;
+}
+.guided-table .practice-feedback.practice-error {
+  display: flex;
+}
+.practice-board .square.coach-square:not(.selected) {
+  box-shadow: inset 0 0 0 3px var(--purple);
+}
+.guided-table .square:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.coach-page > footer button {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  padding: 5px;
+}
+.coach-finish > section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+.coach-finish h1 {
+  text-align: center;
+  font-size: 30px;
+}
+.coach-finish p {
+  text-align: center;
+  font-size: 17px;
+}
+.coach-finish footer {
+  text-align: center;
+}
+.coach-trophy {
+  font-size: 76px;
+  text-align: center;
+  color: var(--purple);
+  line-height: 1;
+}
+@media (max-width: 360px) {
+  .coach-brief {
+    flex-basis: 174px;
+    gap: 8px;
+    padding: 8px;
+  }
+  .coach-brief .mini-card {
+    flex-basis: 44px;
+    width: 44px;
+    height: 65px;
+  }
+  .coach-brief h1 {
+    font-size: 17px;
+  }
+  .coach-brief p {
+    font-size: 13px;
+  }
+  .coach-page header {
+    font-size: 11px;
+  }
+}
+/* Square hit areas must follow the board grid, not toolbar button sizing. */
+.learn-page .practice-board .board {
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+}
+.learn-page .practice-board .square {
+  min-height: 0;
+  min-width: 0;
+  padding: 1px;
+}
+.practice-board .square.coach-square:not(.selected)::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 2px solid var(--purple);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 2;
+}

@@ -13,12 +13,8 @@ test("English homepage, interactive tutorial and persistent motion preference", 
   await page.screenshot({ path: "docs/v2-home.png" });
   await page.getByRole("button", { name: /Tutorial/ }).click();
   await page.getByRole("button", { name: /Guided tutorial/ }).click();
-  await page.getByRole("button", { name: "Try card", exact: true }).click();
-  await page.getByRole("button", { name: "a2, Pawn", exact: true }).click();
-  await page.getByRole("button", { name: /^a3.*legal destination/ }).click();
-  for (let i = 0; i < 13; i++)
-    await page.getByRole("button", { name: "Next →", exact: true }).click();
-  await page.getByRole("button", { name: "Finish", exact: true }).click();
+  await page.getByRole("button", { name: "Draw card", exact: true }).click();
+  await page.getByRole("button", { name: "← Tutorial", exact: true }).click();
   await page.getByRole("button", { name: "← Home", exact: true }).click();
   await page.getByRole("button", { name: /Settings/ }).click();
   await page.getByRole("checkbox").check();

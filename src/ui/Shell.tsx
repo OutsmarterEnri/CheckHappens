@@ -115,7 +115,7 @@ export function Shell() {
             autoStart={autoStart}
           />
         ) : screen === "tutorial" ? (
-          <Tutorial onHome={home} />
+          <Tutorial onHome={home} onPlay={() => setScreen("choose")} />
         ) : (
           <main className={`menu-screen menu-${screen}`}>
             {screen !== "home" && (
