@@ -25,3 +25,9 @@
 ## 2.0.0
 
 Initial local release: English iPhone-oriented interface, 4/7/10-minute modes, three training bots, card interactions, theatrical finales and deterministic schema-1 match logs.
+
+### Tutorial card lab
+
+- Visible examples of all action cards and safe/risky numbered cards, in English and Italian.
+- Interactive move-risk preview, progressive cracks and explicit king restriction from move five.
+- Expanded color, defense and emergency-turn explanations without touching saved matches.

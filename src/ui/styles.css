@@ -2093,3 +2093,93 @@ h2 {
   background: #ffe0d4;
   color: #6b261b;
 }
+
+/* Card-led tutorial: readable previews and finger-sized example controls. */
+.tutorial-card-lab,
+.tutorial-color-guide {
+  background: var(--panel, #fff);
+  border: 2px solid var(--ink);
+  border-radius: 22px;
+  padding: 16px;
+  flex-shrink: 0;
+}
+.tutorial-card-picker,
+.tutorial-risk-demo [role="group"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.tutorial-card-picker button,
+.tutorial-risk-demo button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--panel, white);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+}
+.tutorial-card-lab button[aria-pressed="true"] {
+  background: var(--yellow);
+  box-shadow: 2px 3px 0 var(--ink);
+}
+.tutorial-card-preview {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 18px 0 8px;
+}
+.tutorial-big-card.mini-card {
+  width: 92px;
+  height: 130px;
+  flex: 0 0 92px;
+  transform: rotate(-6deg);
+}
+.tutorial-big-card strong {
+  font-size: 27px;
+}
+.tutorial-card-preview h3 {
+  font-size: 18px;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+.tutorial-screen .tutorial-card-lab p,
+.tutorial-screen .tutorial-color-guide p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.tutorial-risk-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tutorial-risk-piece {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  display: inline-flex;
+}
+.tutorial-risk-piece > svg {
+  width: 100%;
+  height: 100%;
+}
+.tutorial-king-rule {
+  border-left: 5px solid var(--red);
+  padding-left: 10px;
+  font-weight: 800;
+}
+@media (max-width: 380px) {
+  .tutorial-card-preview {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .tutorial-big-card.mini-card {
+    width: 72px;
+    height: 105px;
+    flex-basis: 72px;
+  }
+}

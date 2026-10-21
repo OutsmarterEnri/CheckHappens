@@ -1,5 +1,50 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "Explore the cards": "Esplora le carte",
+  "Meet your cards.": "Conosci le tue carte.",
+  "Card examples": "Esempi di carte",
+  "Safe 2": "2 sicuro",
+  "Risky 7": "7 rischioso",
+  "Reset 0": "Reset 0",
+  "Two moves, zero break risk.": "Due mosse, nessun rischio di rottura.",
+  "Move two different pieces. Both moves are required and safe. The king may move if the move is legal.":
+    "Muovi due pezzi diversi. Entrambe le mosse sono obbligatorie e sicure. Il re può muoversi se la mossa è legale.",
+  "Four safe moves. Then a choice.": "Quattro mosse sicure. Poi scegli tu.",
+  "A 7 grants seven moves with different pieces. Moves 1–4 are required and safe. From move 5, pieces may break after moving. You may pass unless a yellow capture bonus is still required. The king cannot move from move 5 onward, even with Blue.":
+    "Il 7 concede sette mosse con pezzi diversi. Le mosse 1–4 sono obbligatorie e sicure. Dalla quinta, i pezzi possono rompersi dopo la mossa. Puoi passare, salvo bonus gialli ancora obbligatori. Il re non può muoversi dalla quinta mossa, nemmeno con il blu.",
+  "Bring your team back.": "Riporta in campo la tua squadra.",
+  "Revive up to two eligible lost pieces on their free original squares. Choose as many as possible. With no eligible pieces, continue to the optional move.":
+    "Resuscita fino a due pezzi persi idonei sulle loro caselle originali libere. Scegline il maggior numero possibile. Senza pezzi idonei, prosegui con la mossa opzionale.",
+  "A color and a comeback.": "Un colore e una rimonta.",
+  "Choose a color, then revive up to four eligible lost pieces on their free original squares. It does not mean drawing four cards.":
+    "Scegli un colore, poi resuscita fino a quattro pezzi persi idonei sulle loro caselle originali libere. Non significa pescare quattro carte.",
+  "Choose. Evolve. Surprise.": "Scegli. Evolvi. Sorprendi.",
+  "Choose the active color, then evolve an eligible pawn into a rook, bishop or knight. No queen. With no eligible pawn, continue to the optional move.":
+    "Scegli il colore attivo, poi evolvi un pedone idoneo in torre, alfiere o cavallo. Niente regina. Senza pedoni idonei, prosegui con la mossa opzionale.",
+  "Chain an enemy piece.": "Incatenare un pezzo nemico.",
+  "Choose an eligible enemy piece to freeze for its next controller’s turn. Kings are immune. A frozen piece still attacks squares: it can still give check.":
+    "Scegli un pezzo nemico idoneo da bloccare per il prossimo turno di chi lo controllerà. I re sono immuni. Un pezzo bloccato continua ad attaccare le caselle: può ancora dare scacco.",
+  "The other army is yours.": "L’altro esercito è tuo.",
+  "Swap armies and remaining clocks, rotate the board, then play the received army with the newly drawn color. Your opponent starts a normal turn afterward.":
+    "Scambia eserciti e tempi rimasti, ruota la scacchiera e gioca con l’esercito ricevuto e il colore appena pescato. Poi l’avversario inizia un turno normale.",
+  "Home, surviving pieces!": "A casa, pezzi sopravvissuti!",
+  "Return surviving non-pawn pieces to their original squares. Pawns stay put. Reset does not revive lost pieces; occupied home squares follow the game’s collision rules.":
+    "Riporta i pezzi sopravvissuti diversi dai pedoni alle caselle originali. I pedoni restano fermi. Reset non resuscita i pezzi persi; le caselle occupate seguono le regole di collisione del gioco.",
+  "Move risk examples": "Esempi di rischio per mossa",
+  "The fifth move has 20% risk, then 40%, 60%, 80% and 99%. Blue halves only moves 5 and 6 to 10% and 20%. Risk follows the move index, not the number printed on the card.":
+    "La quinta mossa ha il 20% di rischio, poi 40%, 60%, 80% e 99%. Il blu dimezza solo la quinta e la sesta al 10% e 20%. Il rischio dipende dall’indice della mossa, non dal numero stampato sulla carta.",
+  "The king cannot move from move 5 onward. Choose another unused piece or pass when allowed.":
+    "Il re non può muoversi dalla quinta mossa in poi. Scegli un altro pezzo non ancora usato o passa quando consentito.",
+  "Preview only: no random roll is made here.":
+    "Solo anteprima: qui non viene effettuato alcun sorteggio.",
+  "Special cards normally leave one optional move after their effect. A defense made before drawing consumes that optional move.":
+    "Le carte speciali normalmente lasciano una mossa opzionale dopo l’effetto. Una difesa effettuata prima della pescata consuma quella mossa opzionale.",
+  "Color effects": "Effetti dei colori",
+  "Four colors. Four powers.": "Quattro colori. Quattro poteri.",
+  "Red takes 3 seconds from your opponent. Green adds 3 seconds to your clock. Blue halves break risk on moves 5 and 6. Yellow grants a required extra move after a capture, using another available piece.":
+    "Il rosso toglie 3 secondi all’avversario. Il verde aggiunge 3 secondi al tuo tempo. Il blu dimezza il rischio della quinta e sesta mossa. Il giallo concede una mossa extra obbligatoria dopo una cattura, con un altro pezzo disponibile.",
+  "Under check, defend with the previous color before drawing. This defense does not spend the numbered card’s moves, but consumes a special card’s optional move. In checkmate, draw an emergency card, change color and resolve its effects as a full turn, then evaluate the position.":
+    "Sotto scacco, difenditi con il colore precedente prima di pescare. Questa difesa non consuma le mosse della carta numerica, ma consuma la mossa opzionale di una speciale. Sotto scacco matto, pesca una carta d’emergenza, cambia colore e risolvi gli effetti come turno completo, poi valuta la posizione.",
   "The room server is temporarily unavailable.":
     "Il server della stanza è temporaneamente indisponibile.",
   Home: "Home",
@@ -240,6 +285,7 @@ Object.assign(italian, {
 });
 
 export const italianTemplates: [string, string][] = [
+  ["Move {n}: {bonus}% break risk", "Mossa {n}: {bonus}% di rischio rottura"],
   ["Player {n}", "Giocatore {n}"],
   ["PLAYER {n}", "GIOCATORE {n}"],
   ["{level} bot", "Bot {level}"],
@@ -331,7 +377,8 @@ Object.assign(italian, {
   "Cloudy with a Chance of Check": "Nuvoloso con Scacchi Sparsi",
   "VERSION 2.5 · MADE FOR YOUR POCKET": "VERSIONE 2.5 · DA PORTARE IN TASCA",
   "Experimental · invitation only": "Sperimentale · solo su invito",
-  "Experimental multiplayer · testing only": "Multiplayer sperimentale · solo per test",
+  "Experimental multiplayer · testing only":
+    "Multiplayer sperimentale · solo per test",
   "Private match": "Partita privata",
   "Two devices · invitation only": "Due dispositivi · solo su invito",
   "Waiting for your friend…": "Aspettando il tuo amico…",
