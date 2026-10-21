@@ -44,15 +44,26 @@ export function PieceIcon({ type, army }: { type: PieceType; army: Army }) {
       className={`piece piece-${army}`}
       viewBox="0 0 48 48"
       aria-hidden="true"
-      fill={army === "w" ? "#fffcf1" : "#8360c4"}
-      stroke="#322546"
+      fill={
+        army === "w"
+          ? "var(--piece-white, #fffcf1)"
+          : "var(--piece-black, #8360c4)"
+      }
+      stroke="var(--piece-outline, #322546)"
       strokeWidth="2.3"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
       {paths[type]}
       {type !== "n" && (
-        <g stroke="none" fill={army === "w" ? "#322546" : "#fffcf1"}>
+        <g
+          stroke="none"
+          fill={
+            army === "w"
+              ? "var(--piece-white-eye, #322546)"
+              : "var(--piece-black-eye, #fffcf1)"
+          }
+        >
           <ellipse
             cx="21"
             cy={type === "p" ? 13 : type === "b" ? 23 : 27}
@@ -72,7 +83,11 @@ export function PieceIcon({ type, army }: { type: PieceType; army: Army }) {
           cx="25"
           cy="16"
           r="1.5"
-          fill={army === "w" ? "#322546" : "#fffcf1"}
+          fill={
+            army === "w"
+              ? "var(--piece-white-eye, #322546)"
+              : "var(--piece-black-eye, #fffcf1)"
+          }
           stroke="none"
         />
       )}

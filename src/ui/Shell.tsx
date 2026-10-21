@@ -1,7 +1,8 @@
+import { BrandMark, BrandWordmark, Rooki } from "./Brand";
 import { PrivateRoom } from "./PrivateRoom";
 import { themes, THEME_KEY, validTheme } from "./themes";
 import { Localized, useLanguage } from "./locale";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { App } from "./App";
 import { Tutorial } from "./Tutorial";
 import { PieceIcon } from "./PieceIcon";
@@ -123,13 +124,9 @@ export function Shell() {
                 ← Home
               </button>
             )}
-            <div className="menu-logo" aria-hidden="true">
-              <div className="menu-card">+2</div>
-              <PieceIcon type="n" army="w" />
-              <span>✦</span>
-            </div>
-            <h1>
-              Check <span>Happens.</span>
+            <Rooki theme={theme} />
+            <h1 className="home-wordmark" aria-label="Check Happens.">
+              <BrandWordmark />
             </h1>
             <p className="menu-tagline">In Cards we trust</p>
             {screen === "home" && (
@@ -253,14 +250,28 @@ export function Shell() {
                     <button
                       key={t.id}
                       aria-pressed={theme === t.id}
+                      aria-label={t.name}
                       onClick={() => setTheme(t.id)}
                     >
+                      <span
+                        className="theme-stamp"
+                        aria-hidden="true"
+                        style={
+                          {
+                            "--mascot-body": t.colors[1],
+                            "--mascot-trim": t.colors[2],
+                            "--mascot-outline": "#322546",
+                          } as CSSProperties
+                        }
+                      >
+                        <BrandMark />
+                      </span>
                       <span className="theme-swatches" aria-hidden="true">
                         {t.colors.map((c) => (
                           <i key={c} style={{ background: c }} />
                         ))}
                       </span>
-                      {t.name}
+                      <span className="theme-name">{t.name}</span>
                     </button>
                   ))}
                 </fieldset>

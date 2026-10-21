@@ -127,7 +127,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 42 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 49 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
@@ -166,3 +166,16 @@ clocks during play. Random is resolved once per new match from its random seed.
 Selecting Local match or Train with a bot starts a **3–2–1 countdown** and then
 draws the first card automatically. The game clock starts after the countdown.
 Saved matches resume directly; the laboratory retains a manual start for scenarios.
+
+### Five worlds, one deck
+
+Settings changes the complete visual world: Candy Chaos comic paper, Minty Mayhem
+forest night, Bubblegum Bandit bubble pop, Peach Please desert sunshine, and Cloudy
+with a Chance of Check blueprints. Surfaces, board squares, chess pieces, controls,
+feedback and the Rooki mascot follow the selected world. Drawn card faces, color
+choices and the active-color board frame retain their fixed gameplay colors.
+
+Rooki is the new interactive rook mascot: tap to greet it. The matching wordmark,
+loading screen and installable icons share the same vector identity. Motion follows
+the saved preference and the device's reduced-motion setting. Theme selection is
+saved on this device; all five worlds fit the existing single-screen phone layout.

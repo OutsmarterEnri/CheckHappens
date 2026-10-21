@@ -2,27 +2,27 @@ export const themes = [
   {
     id: "candy",
     name: "Candy Chaos",
-    colors: ["#fff8ed", "#c4aedf", "#ffe176"],
+    colors: ["#fff3d9", "#b49be0", "#ffce52"],
   },
   {
     id: "mint",
     name: "Minty Mayhem",
-    colors: ["#eef9f3", "#9bcdbb", "#f5d96a"],
+    colors: ["#102f2c", "#98ca92", "#cbea77"],
   },
   {
     id: "bubblegum",
     name: "Bubblegum Bandit",
-    colors: ["#fff1f6", "#e7acd0", "#ffd68e"],
+    colors: ["#ffe5ef", "#ed90bd", "#ffb858"],
   },
   {
     id: "peach",
     name: "Peach Please",
-    colors: ["#fff3e8", "#e8b391", "#f3cc79"],
+    colors: ["#ffdbb3", "#db945e", "#ffd379"],
   },
   {
     id: "cloud",
     name: "Cloudy with a Chance of Check",
-    colors: ["#eff6ff", "#adc5eb", "#ffe08a"],
+    colors: ["#e8f3ff", "#83a8da", "#fbdc83"],
   },
 ] as const;
 export type Theme = (typeof themes)[number]["id"];

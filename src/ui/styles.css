@@ -8,8 +8,8 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #322546;
-  background: #fff8ed;
+  color: var(--ink);
+  background: var(--app-background);
   line-height: 1.35;
   --app-background: #fff8ed;
   --ink: #322546;
@@ -57,7 +57,7 @@ button {
     background 0.12s;
 }
 button:hover:not(:disabled) {
-  background: #eee0ff;
+  background: var(--panel);
 }
 button:active:not(:disabled) {
   transform: translateY(2px);
@@ -114,7 +114,7 @@ h2 {
   font-size: 10px;
   font-weight: 850;
   letter-spacing: 1px;
-  color: #705580;
+  color: var(--muted);
 }
 .pill {
   font-size: 9px;
@@ -227,7 +227,7 @@ h2 {
   place-items: center;
   border: 2px solid var(--ink);
   border-radius: 9px;
-  background: #ede0fa;
+  background: var(--panel);
   font-size: 16px;
   font-weight: 850;
 }
@@ -245,7 +245,7 @@ h2 {
 .player-name > span {
   font-size: 9px;
   display: block;
-  color: #705580;
+  color: var(--muted);
 }
 .clock {
   font-size: 25px;
@@ -254,7 +254,7 @@ h2 {
   letter-spacing: -1px;
   font-variant-numeric: tabular-nums;
   padding: 3px 9px;
-  background: #fffdf6;
+  background: var(--paper);
   border: 2px solid var(--ink);
   border-radius: 9px;
   box-shadow: 0 2px 0 var(--ink);
@@ -335,11 +335,11 @@ h2 {
 }
 .square.light {
   background: var(--board-light);
-  color: #7c618b;
+  color: var(--board-label-light);
 }
 .square.dark {
   background: var(--board-dark);
-  color: #59416e;
+  color: var(--board-label-dark);
 }
 .square.selected {
   background: #ffe176;
@@ -374,10 +374,10 @@ h2 {
   pointer-events: none;
 }
 .piece-w {
-  color: #322546;
+  color: var(--ink);
 }
 .piece-b {
-  color: #fffaf0;
+  color: var(--paper);
 }
 .piece-actor {
   animation: piece-pop 0.18s ease-out;
@@ -482,7 +482,7 @@ h2 {
   stroke: #dc4c28;
   stroke-width: 2.6;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 1px #fff);
+  filter: drop-shadow(0 0 1px var(--paper));
 }
 .at-risk .piece-actor {
   animation: crack-shake 0.28s ease-in-out infinite;
@@ -496,7 +496,7 @@ h2 {
   gap: 11px;
   border: 2px solid var(--ink);
   border-radius: 14px;
-  background: #eee0ff;
+  background: var(--panel);
   padding: 9px 11px;
   box-shadow: 0 3px 0 var(--ink);
   min-height: 99px;
@@ -596,7 +596,7 @@ h2 {
   flex: 1;
   border: 1px solid #8e75a2;
   border-radius: 3px;
-  background: #fff9ed;
+  background: var(--paper);
 }
 .move-track span.risky {
   border-color: #ba6245;
@@ -659,7 +659,7 @@ h2 {
   right: -17px;
   top: -25px;
   font-size: 30px;
-  color: #7753bc;
+  color: var(--purple);
 }
 .break-puff {
   position: absolute;
@@ -679,7 +679,7 @@ h2 {
   height: 65%;
   border: 1.5px solid #735c85;
   border-radius: 50%;
-  background: #fffaf0;
+  background: var(--paper);
   top: 30%;
   left: 10%;
   animation: smoke 0.9s both;
@@ -738,12 +738,12 @@ h2 {
 .modal p {
   font-size: 13px;
   line-height: 1.5;
-  color: #705580;
+  color: var(--muted);
   margin: 12px 0;
 }
 .modal > small {
   font-size: 11px;
-  color: #705580;
+  color: var(--muted);
 }
 .modal > .primary,
 .modal > .quiet {
@@ -874,7 +874,7 @@ h2 {
   font-size: 12px;
 }
 .journal-list p {
-  border-bottom: 1px solid #d9c6e3;
+  border-bottom: 1px solid var(--edge);
   font-size: 12px;
   padding: 7px 0;
   margin: 0;
@@ -910,7 +910,7 @@ h2 {
 .menu-tagline {
   font-size: 15px;
   font-weight: 700;
-  color: #705580;
+  color: var(--muted);
   text-align: center;
 }
 .menu-logo {
@@ -967,14 +967,14 @@ h2 {
   padding: 11px 17px;
 }
 .home-menu > button:nth-child(2) {
-  background: #eee0ff;
+  background: var(--panel);
 }
 .home-menu > button:nth-child(3) {
-  background: #fffdf6;
+  background: var(--paper);
 }
 .menu-caption {
   font-size: 9px;
-  color: #8b7196;
+  color: var(--muted);
   letter-spacing: 1px;
   font-weight: 800;
   flex-shrink: 0;
@@ -1017,22 +1017,22 @@ h2 {
 }
 .time-options [aria-pressed="true"],
 .bot-options [aria-pressed="true"] {
-  background: #c5a7e1;
+  background: var(--selection);
   box-shadow: 0 3px var(--ink);
 }
 .rating-note {
   font-size: 10px;
-  color: #705580;
+  color: var(--muted);
   text-align: center;
 }
 .resume-game {
   background: #bfdfa9 !important;
 }
 .online-planned {
-  border: 1.5px dashed #b59acb;
+  border: 1.5px dashed var(--edge);
   border-radius: 12px;
   padding: 11px;
-  color: #7d658c;
+  color: var(--muted);
 }
 .online-planned strong,
 .online-planned small {
@@ -1046,7 +1046,7 @@ h2 {
   width: 100%;
   border: 2px solid var(--ink);
   border-radius: 16px;
-  background: #fffdf6;
+  background: var(--paper);
   padding: 20px;
   box-shadow: 0 3px var(--ink);
 }
@@ -1065,14 +1065,14 @@ h2 {
 }
 .settings-panel small {
   display: block;
-  color: #705580;
+  color: var(--muted);
   font-size: 10px;
   margin-top: 5px;
 }
 .settings-panel p {
   font-size: 12px;
   margin-top: 12px;
-  color: #705580;
+  color: var(--muted);
 }
 .tutorial-screen {
   align-items: stretch;
@@ -1088,7 +1088,7 @@ h2 {
 }
 .tutorial-screen p {
   font-size: 13px;
-  color: #705580;
+  color: var(--muted);
 }
 .tutorial-board {
   width: 100%;
@@ -1103,14 +1103,14 @@ h2 {
   height: 5px;
   flex: 1;
   border-radius: 4px;
-  background: #e2d4ec;
+  background: var(--edge);
 }
 .tutorial-progress .done {
-  background: #8862b7;
+  background: var(--purple);
 }
 .tutorial-screen > small {
   font-size: 10px;
-  color: #8d7596;
+  color: var(--muted);
   text-align: center;
 }
 .tutorial-screen summary {
@@ -1139,9 +1139,9 @@ h2 {
   display: none;
 }
 .reduce-motion .break-puff {
-  background: #fff9e3;
+  background: var(--paper);
   border-radius: 50%;
-  border: 2px dashed #a65135;
+  border: 2px dashed var(--warning-ink);
 }
 .reduce-motion .break-puff i {
   display: none;
@@ -1317,8 +1317,8 @@ h2 {
     display: none;
   }
   .break-puff {
-    background: #fff9e3;
-    border: 2px dashed #a65135;
+    background: var(--paper);
+    border: 2px dashed var(--warning-ink);
     border-radius: 50%;
   }
   .break-puff i {
@@ -1405,7 +1405,7 @@ h2 {
 }
 .finale .finale-reason {
   font-size: 12px;
-  border: 1px dashed #b59acb;
+  border: 1px dashed var(--edge);
   border-radius: 10px;
   padding: 9px;
   margin: 12px 0;
@@ -1471,7 +1471,7 @@ h2 {
 .finale-stat {
   display: block;
   font-size: 11px;
-  color: #705580;
+  color: var(--muted);
 }
 .finale .primary {
   margin: 18px 0 12px;
@@ -1714,7 +1714,7 @@ h2 {
   animation: action-appear 180ms ease-out;
 }
 .countdown small {
-  color: #705580;
+  color: var(--muted);
 }
 @media (prefers-reduced-motion: reduce) {
   .countdown-number {
@@ -1957,7 +1957,7 @@ h2 {
   height: 100%;
   overflow: visible;
   animation: chain-catch 280ms ease-out;
-  filter: drop-shadow(0 1px 0 #fff);
+  filter: drop-shadow(0 1px 0 var(--paper));
 }
 .chain-links {
   fill: #ddd9e280;
@@ -1966,7 +1966,7 @@ h2 {
 }
 .chain-lock {
   fill: #ffe176;
-  stroke: #322546;
+  stroke: var(--ink);
   stroke-width: 2.4;
   stroke-linecap: round;
 }
@@ -2097,7 +2097,7 @@ h2 {
 /* Card-led tutorial: readable previews and finger-sized example controls. */
 .tutorial-card-lab,
 .tutorial-color-guide {
-  background: var(--panel, #fff);
+  background: var(--panel, var(--paper));
   border: 2px solid var(--ink);
   border-radius: 22px;
   padding: 16px;
@@ -2794,4 +2794,592 @@ h2 {
   line-height: 1.1;
   text-align: center;
   color: var(--ink);
+}
+
+/* Whole-world themes. Card faces, color choices and color frames stay semantic. */
+:root {
+  --app-background: #fff3d9;
+  --paper: #fffaf0;
+  --panel: #ead9ff;
+  --ink: #322546;
+  --muted: #654e78;
+  --purple: #7952c3;
+  --yellow: #ffce52;
+  --selection: #d9c1f6;
+  --edge: #bba1d3;
+  --on-accent: #322546;
+  --board-light: #fff1c5;
+  --board-dark: #b49be0;
+  --board-label-light: #755a48;
+  --board-label-dark: #493766;
+  --piece-white: #fff9e9;
+  --piece-black: #8260bc;
+  --piece-outline: #322546;
+  --piece-white-eye: #322546;
+  --piece-black-eye: #fff9e9;
+  --control-radius: 15px;
+  --panel-radius: 20px;
+  --brand-shadow: 4px;
+  --warning-ink: #a65135;
+  --mascot-body: #b49be0;
+  --mascot-trim: #ffce52;
+  --mascot-outline: #322546;
+  --mascot-shine: #fff9e9;
+  --mascot-cheek: #ee8b9d;
+  --mascot-cape: #ed958c;
+  --hero-medallion: #e4cff8;
+  --hero-shadow: #c5a7d1;
+  --pattern-ink: #d6bdb742;
+  --world-pattern: radial-gradient(var(--pattern-ink) 1.2px, transparent 1.2px);
+  --pattern-size: 18px 18px;
+}
+:root[data-theme="mint"] {
+  color-scheme: dark;
+  --app-background: #102f2c;
+  --paper: #20483f;
+  --panel: #29564a;
+  --ink: #f3f8df;
+  --muted: #bbd5c6;
+  --purple: #b8e895;
+  --yellow: #cbea77;
+  --selection: #376d5e;
+  --edge: #629781;
+  --on-accent: #163b2f;
+  --board-light: #dceac2;
+  --board-dark: #4a8d73;
+  --board-label-light: #294b37;
+  --board-label-dark: #e4f4db;
+  --piece-white: #fff4d6;
+  --piece-black: #52ac84;
+  --piece-outline: #153d32;
+  --piece-white-eye: #153d32;
+  --piece-black-eye: #fff4d6;
+  --control-radius: 8px;
+  --panel-radius: 12px;
+  --brand-shadow: 3px;
+  --warning-ink: #ffbc91;
+  --mascot-body: #98ca92;
+  --mascot-trim: #e6c56d;
+  --mascot-outline: #163b2f;
+  --mascot-shine: #fff4d6;
+  --mascot-cheek: #e7a27a;
+  --mascot-cape: #d4a85d;
+  --hero-medallion: #346b50;
+  --hero-shadow: #071c19;
+  --pattern-ink: #9bbd8b18;
+  --world-pattern: repeating-linear-gradient(
+    135deg,
+    transparent 0 27px,
+    var(--pattern-ink) 27px 29px,
+    transparent 29px 56px
+  );
+  --pattern-size: 56px 56px;
+}
+:root[data-theme="bubblegum"] {
+  color-scheme: light;
+  --app-background: #ffe5ef;
+  --paper: #fff7fa;
+  --panel: #ffd0e4;
+  --ink: #54223d;
+  --muted: #8a3e64;
+  --purple: #b13e7a;
+  --yellow: #ffb858;
+  --selection: #f6aacd;
+  --edge: #d58aae;
+  --on-accent: #54223d;
+  --board-light: #fff1dd;
+  --board-dark: #e691b8;
+  --board-label-light: #7b4853;
+  --board-label-dark: #6b234b;
+  --piece-white: #fff9ed;
+  --piece-black: #b34c86;
+  --piece-outline: #54223d;
+  --piece-white-eye: #54223d;
+  --piece-black-eye: #fff9ed;
+  --control-radius: 25px;
+  --panel-radius: 28px;
+  --brand-shadow: 5px;
+  --warning-ink: #a34436;
+  --mascot-body: #ed90bd;
+  --mascot-trim: #ffb858;
+  --mascot-outline: #54223d;
+  --mascot-shine: #fff9ed;
+  --mascot-cheek: #d64f85;
+  --mascot-cape: #cb9aed;
+  --hero-medallion: #ffc1df;
+  --hero-shadow: #e5a0c1;
+  --pattern-ink: #d864a321;
+  --world-pattern: radial-gradient(
+    circle at 5px 5px,
+    var(--pattern-ink) 3px,
+    transparent 3px
+  );
+  --pattern-size: 26px 26px;
+}
+:root[data-theme="peach"] {
+  color-scheme: light;
+  --app-background: #ffdbb3;
+  --paper: #fff0d8;
+  --panel: #f6ba82;
+  --ink: #5c302a;
+  --muted: #8c4d39;
+  --purple: #a64b35;
+  --yellow: #ffd379;
+  --selection: #f0aa71;
+  --edge: #cc8c64;
+  --on-accent: #5c302a;
+  --board-light: #fff0c8;
+  --board-dark: #db945e;
+  --board-label-light: #8c5635;
+  --board-label-dark: #653b28;
+  --piece-white: #fff5da;
+  --piece-black: #a85e3c;
+  --piece-outline: #5c302a;
+  --piece-white-eye: #5c302a;
+  --piece-black-eye: #fff5da;
+  --control-radius: 10px;
+  --panel-radius: 14px;
+  --brand-shadow: 5px;
+  --warning-ink: #9d361f;
+  --mascot-body: #ecad6a;
+  --mascot-trim: #f5d37e;
+  --mascot-outline: #5c302a;
+  --mascot-shine: #fff5da;
+  --mascot-cheek: #d67d54;
+  --mascot-cape: #b65341;
+  --hero-medallion: #f5b374;
+  --hero-shadow: #d79b6d;
+  --pattern-ink: #ad694b17;
+  --world-pattern: repeating-linear-gradient(
+    0deg,
+    transparent 0 21px,
+    var(--pattern-ink) 21px 23px
+  );
+  --pattern-size: 23px 23px;
+}
+:root[data-theme="cloud"] {
+  color-scheme: light;
+  --app-background: #e8f3ff;
+  --paper: #f7fbff;
+  --panel: #c6ddf8;
+  --ink: #233b70;
+  --muted: #48679c;
+  --purple: #4166ad;
+  --yellow: #fbdc83;
+  --selection: #aacaf4;
+  --edge: #8facd5;
+  --on-accent: #233b70;
+  --board-light: #f5f3dc;
+  --board-dark: #83a8da;
+  --board-label-light: #536c87;
+  --board-label-dark: #223f77;
+  --piece-white: #fff8e5;
+  --piece-black: #426eaf;
+  --piece-outline: #233b70;
+  --piece-white-eye: #233b70;
+  --piece-black-eye: #fff8e5;
+  --control-radius: 16px;
+  --panel-radius: 16px;
+  --brand-shadow: 3px;
+  --warning-ink: #9c4b30;
+  --mascot-body: #85b7e3;
+  --mascot-trim: #f1bc62;
+  --mascot-outline: #233b70;
+  --mascot-shine: #fff8e5;
+  --mascot-cheek: #df98a0;
+  --mascot-cape: #e6bc6d;
+  --hero-medallion: #c6ddf8;
+  --hero-shadow: #abc6e4;
+  --pattern-ink: #678db61c;
+  --world-pattern:
+    linear-gradient(var(--pattern-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px);
+  --pattern-size: 28px 28px;
+}
+.menu-screen,
+.learn-page,
+.game-screen {
+  background-color: var(--app-background);
+  background-image: var(--world-pattern);
+  background-size: var(--pattern-size);
+}
+button,
+input,
+select,
+textarea {
+  color: var(--ink);
+}
+button:not(.square):not(.quiet):not(.color-choice),
+select,
+input {
+  border-radius: var(--control-radius);
+}
+button.primary,
+.turn-banner,
+.active .clock,
+.practice-status,
+.tutorial-card-lab button[aria-pressed="true"],
+.private-tabs [aria-pressed="true"] {
+  color: var(--on-accent);
+}
+button:hover:not(:disabled):not(.square):not(.mini-card):not(.color-choice) {
+  background: var(--selection);
+  color: var(--ink);
+}
+button.primary:hover:not(:disabled) {
+  background: var(--yellow);
+  color: var(--on-accent);
+}
+.settings-panel,
+.modal,
+.coach-brief,
+.learn-explanation,
+.learn-hub-options button,
+.play-dock,
+.player-strip {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: var(--panel-radius);
+}
+.modal p,
+.modal small,
+.menu-tagline,
+.settings-panel p,
+.settings-panel small {
+  color: var(--muted);
+}
+.time-options [aria-pressed="true"],
+.bot-options [aria-pressed="true"],
+.side-options [aria-pressed="true"] {
+  background: var(--selection);
+  color: var(--ink);
+}
+.home-menu > button:nth-child(2),
+.home-menu > button:nth-child(3) {
+  background: var(--paper);
+}
+.home-menu > button.primary {
+  background: var(--yellow);
+}
+input,
+select,
+textarea {
+  background: var(--paper);
+  border-color: var(--ink);
+}
+.mini-card {
+  background: #c5a9e2;
+  color: #322546;
+  border-color: #322546;
+  box-shadow: 2px 3px #322546;
+}
+.mini-card.red {
+  background: #f18a85;
+}
+.mini-card.green {
+  background: #a8d4a4;
+}
+.mini-card.blue {
+  background: #93c5ed;
+}
+.mini-card.yellow {
+  background: #ffe176;
+}
+.color-choice.red {
+  background: #f1b2ad;
+}
+.color-choice.green {
+  background: #c1e1ab;
+}
+.color-choice.blue {
+  background: #bbdbf3;
+}
+.color-choice.yellow {
+  background: #ffe176;
+}
+.color-choice,
+.dot,
+.frame-color-label {
+  color: #322546;
+  border-color: #322546;
+}
+.clock.low {
+  color: #322546;
+}
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+}
+.game-header .brand {
+  gap: 4px;
+}
+.brand-wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+  letter-spacing: -1.6px;
+  transform: rotate(-3deg);
+}
+.menu-screen .brand-wordmark > span {
+  font-size: 27px;
+  color: var(--ink);
+  letter-spacing: 3px;
+}
+.brand-wordmark strong {
+  font-size: 44px;
+  font-weight: 950;
+  color: var(--purple);
+  text-shadow: 2px 2px 0 var(--paper);
+}
+.brand-wordmark .brand-period {
+  color: var(--ink);
+}
+.menu-home {
+  gap: 10px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+.menu-home .home-wordmark {
+  margin: 0;
+  flex-shrink: 0;
+}
+.menu-home .menu-tagline {
+  margin: 2px 0 0;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.menu-home .home-menu {
+  gap: 10px;
+  margin-top: 8px;
+}
+.menu-home .home-menu > button {
+  min-height: 52px;
+  padding: 8px 17px;
+  box-shadow: var(--brand-shadow) var(--brand-shadow) 0 var(--ink);
+}
+.rooki-stage.menu-logo {
+  width: min(290px, 80vw);
+  height: clamp(150px, 26dvh, 235px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rooki-button {
+  border: 0;
+  background: none !important;
+  box-shadow: none;
+  padding: 0;
+  width: 100%;
+  height: calc(100% - 24px);
+  min-height: 0;
+  color: var(--ink);
+}
+.rooki-art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.rooki-speech {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+  line-height: 20px;
+}
+.rooki-cheer .rooki-art {
+  animation: rooki-pop 0.45s ease-out;
+}
+.rooki-cheer .rooki-eye {
+  transform: scaleY(0.15);
+  transform-origin: 79px 57px;
+}
+.rooki-cheer .rooki-bubble {
+  transform: scale(1.12);
+  transform-origin: 164px 124px;
+}
+@keyframes rooki-pop {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  35% {
+    transform: translateY(-8px) rotate(-4deg);
+  }
+  70% {
+    transform: translateY(-2px) rotate(3deg);
+  }
+}
+.menu-choose .brand-wordmark,
+.menu-settings .brand-wordmark {
+  flex-direction: row;
+  gap: 7px;
+  transform: none;
+}
+.menu-choose .brand-wordmark > span,
+.menu-settings .brand-wordmark > span {
+  font-size: 17px;
+  letter-spacing: 0;
+}
+.menu-choose .brand-wordmark strong,
+.menu-settings .brand-wordmark strong {
+  font-size: 23px;
+}
+@media (max-height: 650px) {
+  .rooki-stage.menu-logo {
+    height: 140px;
+  }
+  .menu-home {
+    gap: 8px;
+  }
+  .menu-screen .brand-wordmark > span {
+    font-size: 22px;
+  }
+  .brand-wordmark strong {
+    font-size: 36px;
+  }
+  .menu-home .home-menu > button {
+    min-height: 48px;
+  }
+  .menu-home .home-menu {
+    gap: 8px;
+    margin-top: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rooki-cheer .rooki-art {
+    animation: none;
+  }
+}
+.reduce-motion .rooki-cheer .rooki-art {
+  animation: none;
+}
+.boot-splash {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--app-background, #fff3d9);
+  color: var(--ink, #322546);
+}
+.boot-splash img {
+  width: 128px;
+  height: 128px;
+}
+.boot-splash strong {
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+.boot-splash span {
+  font-size: 14px;
+}
+.rooki-stage > .rooki-speech {
+  position: static;
+  font-size: 12px;
+  color: var(--muted);
+}
+.menu-settings .theme-picker button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: center;
+  gap: 6px;
+  min-height: 58px;
+  padding: 6px;
+}
+.theme-stamp .brand-mark {
+  width: 30px;
+  height: 30px;
+}
+.menu-settings .theme-swatches {
+  position: absolute;
+  left: 10px;
+  bottom: 4px;
+  gap: 2px;
+}
+.menu-settings .theme-swatches i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.theme-name {
+  font-size: 11px;
+  line-height: 1.15;
+}
+.move-track span.done {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+.move-track span {
+  border-color: var(--edge);
+}
+.pill {
+  background: var(--paper);
+}
+.break-puff b {
+  color: var(--purple);
+  text-shadow: 0 1px var(--paper);
+}
+.break-puff i {
+  border-color: var(--edge);
+}
+.finale {
+  border-color: var(--yellow);
+  box-shadow: 0 7px var(--purple);
+}
+.finale h2 {
+  color: var(--purple);
+}
+.lose .finale h2 {
+  color: var(--warning-ink);
+}
+.finale-rays {
+  background: var(--yellow);
+}
+.curtain {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--purple) 0 22px,
+    var(--panel) 22px 40px
+  );
+  border-color: var(--yellow);
+}
+.curtain.right {
+  border-color: var(--yellow);
+}
+.risk-label:not(.danger),
+.verification {
+  color: #322546;
+}
+.resume-game {
+  color: #322546;
+}
+@media (max-height: 620px) {
+  .menu-settings .theme-picker button {
+    min-height: 50px;
+    padding: 4px;
+  }
+  .theme-name {
+    font-size: 10px;
+  }
+}
+.rooki-cheer .rooki-eye,
+.rooki-cheer .rooki-bubble {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* Secondary menus reserve their viewport for controls. */
+.menu-settings .rooki-stage.menu-logo,
+.menu-choose .rooki-stage.menu-logo {
+  display: none;
+}
+.comic-fx {
+  color: var(--on-accent);
+}
+.comic-fx.danger {
+  color: #322546;
 }

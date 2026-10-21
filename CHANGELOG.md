@@ -2,6 +2,10 @@
 
 ## 2.5.0
 
+- Rebuilt all five themes as complete visual worlds, including board, pieces, controls and feedback; functional card and color-frame colors remain fixed.
+- Introduced Rooki, an interactive vector rook mascot with theme accessories, plus a new wordmark, branded loading screen and installable icons.
+- Added seven browser regressions for world coverage, four unchanged card/frame colors, small-screen settings, reduced motion and saved-theme loading.
+
 - Four alternative, persisted cartoon palettes in bilingual Settings.
 - Skip chains and five progressive crack stages reflect effective break risk, with reduced-motion support.
 - Private invitations, two-device authoritative play, countdown and reconnect through the included Node server.

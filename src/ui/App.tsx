@@ -1,3 +1,4 @@
+import { BrandMark } from "./Brand";
 import type { RemoteGame } from "../online/protocol";
 import { PieceCracks, SkipChains, crackStage } from "./PieceEffects";
 import { Localized } from "./locale";
@@ -556,7 +557,8 @@ export function App({
               onHome();
             }}
           >
-            CH<span>Check Happens.</span>
+            <BrandMark />
+            <span>Check Happens.</span>
           </button>
           <span className="format-label">
             {s.mode === "classical"
