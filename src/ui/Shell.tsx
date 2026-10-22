@@ -134,7 +134,6 @@ export function Shell() {
             ) : (
               <>
                 <header className="menu-masthead">
-                  <span className="menu-overline">CHESS + CARDS</span>
                   <h1 className="home-wordmark" aria-label="Check Happens.">
                     <BrandWordmark />
                   </h1>

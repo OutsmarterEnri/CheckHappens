@@ -63,13 +63,11 @@ export function Rooki({ theme }: { theme: Theme }) {
             />
           </span>
         </button>
-        <span className="rooki-speech" role="status">
-          {
-            ["Small rook. Big trouble.", "Trust the cards.", "Check happens!"][
-              mood
-            ]
-          }
-        </span>
+        {mood > 0 && (
+          <span className="rooki-speech" role="status">
+            {["", "Trust the cards.", "Check happens!"][mood]}
+          </span>
+        )}
       </div>
     </Localized>
   );
