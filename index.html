@@ -13,7 +13,10 @@
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Check Happens." />
     <link rel="preload" as="image" href="./brand/mascot-sheet.png" />
     <link rel="manifest" href="./manifest.webmanifest" />
@@ -24,24 +27,35 @@
     />
     <title>Check Happens. — In Cards we trust</title>
     <script>
+      // Apply the saved canvas before CSS/React: iOS can sample it at launch.
+      const checkHappensLaunchColors = {
+        candy: "#fff3d9",
+        mint: "#102f2c",
+        bubblegum: "#ffe5ef",
+        peach: "#ffdbb3",
+        cloud: "#e8f3ff",
+        halloween: "#1d142b",
+      };
+      let checkHappensLaunchTheme = "candy";
       try {
-        const checkHappensTheme = JSON.parse(
-          localStorage.getItem("check-happens-theme") || '"candy"',
-        );
-        if (
-          [
-            "candy",
-            "mint",
-            "bubblegum",
-            "peach",
-            "cloud",
-            "halloween",
-          ].includes(checkHappensTheme)
-        )
-          document.documentElement.dataset.theme = checkHappensTheme;
+        const saved = JSON.parse(localStorage.getItem("check-happens-theme"));
+        if (Object.hasOwn(checkHappensLaunchColors, saved))
+          checkHappensLaunchTheme = saved;
       } catch {}
+      const checkHappensLaunchColor =
+        checkHappensLaunchColors[checkHappensLaunchTheme];
+      document.documentElement.dataset.theme = checkHappensLaunchTheme;
+      document.documentElement.style.setProperty(
+        "--launch-background",
+        checkHappensLaunchColor,
+      );
+      document.querySelector('meta[name="theme-color"]').content =
+        checkHappensLaunchColor;
     </script>
     <style>
+      html {
+        background: var(--app-background, var(--launch-background, #fff3d9));
+      }
       .boot-splash {
         height: 100dvh;
         display: flex;
@@ -49,7 +63,7 @@
         align-items: center;
         justify-content: center;
         gap: 12px;
-        background: var(--app-background, #fff3d9);
+        background: var(--app-background, var(--launch-background, #fff3d9));
         color: var(--ink, #322546);
         font-family: ui-rounded, system-ui, sans-serif;
       }

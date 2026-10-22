@@ -29,6 +29,14 @@ for (const theme of themes)
         .locator("main")
         .evaluate((e) => e.scrollHeight <= e.clientHeight + 1),
     ).toBe(true);
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
+      "content",
+      theme.colors[0],
+    );
+    const canvas = await page
+      .locator("html")
+      .evaluate((e) => getComputedStyle(e).backgroundColor);
+    await expect(page.locator("body")).toHaveCSS("background-color", canvas);
     const home = await page.locator("main").evaluate((e) => ({
       pattern: getComputedStyle(e).backgroundImage,
       bg: getComputedStyle(e).backgroundColor,
@@ -167,4 +175,37 @@ test("framed mascot turns halfway every 3.5 seconds without moving menu controls
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.locator("html").evaluate((e) => e.classList.add("reduce-motion"));
   await expect(frame).toHaveCSS("animation-name", "none");
+});
+
+test("saved themes paint the launch canvas before the app module loads", async ({
+  page,
+}) => {
+  await page.route("**/src/main.tsx", (route) => route.abort());
+  for (const theme of themes) {
+    await page.addInitScript(
+      (id) => localStorage.setItem("check-happens-theme", JSON.stringify(id)),
+      theme.id,
+    );
+    await page.goto("/");
+    await expect(
+      page.locator('meta[name="apple-mobile-web-app-status-bar-style"]'),
+    ).toHaveAttribute("content", "black-translucent");
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
+      "content",
+      theme.colors[0],
+    );
+    const expected = await page.evaluate((hex) => {
+      const element = document.createElement("div");
+      element.style.color = hex;
+      document.body.append(element);
+      const rgb = getComputedStyle(element).color;
+      element.remove();
+      return rgb;
+    }, theme.colors[0]);
+    await expect(page.locator("html")).toHaveCSS("background-color", expected);
+    await expect(page.locator(".boot-splash")).toHaveCSS(
+      "background-color",
+      expected,
+    );
+  }
 });

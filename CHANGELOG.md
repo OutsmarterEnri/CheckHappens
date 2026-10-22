@@ -2,6 +2,8 @@
 
 ## 2.5.0
 
+- Draw the app behind the installed iOS status area and apply the saved palette before React loads, retaining opaque safe-area headers and the notch blur workaround.
+
 - Extended the confirmed iOS standalone opaque-header notch workaround to home, setup, settings, invitations and all learning screens without moving their controls.
 
 - Rebuilt the menus around a comic clubhouse: layered chess/card mascot stage, a dominant Play action, paired learning/settings shortcuts and themed SVG icons.
