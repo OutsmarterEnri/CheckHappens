@@ -49,13 +49,15 @@ export function Rooki({ theme }: { theme: Theme }) {
             setBouncing(true);
           }}
         >
-          <span
-            className={`rooki-art rooki-illustration rooki-${theme}`}
-            role="img"
-            aria-label="Rooki, the chaos rook"
-            data-look={theme}
-            style={{ backgroundImage: `url("${asset("mascot-sheet.png")}")` }}
-          />
+          <span className="rooki-orbit">
+            <span
+              className={`rooki-art rooki-illustration rooki-${theme}`}
+              role="img"
+              aria-label="Rooki, the chaos rook"
+              data-look={theme}
+              style={{ backgroundImage: `url("${asset("mascot-sheet.png")}")` }}
+            />
+          </span>
         </button>
         <span className="rooki-speech" role="status">
           {

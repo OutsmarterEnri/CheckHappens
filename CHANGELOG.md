@@ -2,6 +2,8 @@
 
 ## 2.5.0
 
+- Framed the menu mascot like the board and added a stationary-then-half-turn idle every 3.5 seconds, plus a subtle non-game page glimmer. Both respect system and saved reduced-motion preferences.
+
 - Replaced the initial vector mascot with the owner-supplied illustrated identity, five theme variants, splash art and iPhone icons.
 
 - Rebuilt all five themes as complete visual worlds, including board, pieces, controls and feedback; functional card and color-frame colors remain fixed.

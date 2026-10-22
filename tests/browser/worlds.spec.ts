@@ -129,3 +129,42 @@ test("branded loading screen uses the saved world before React loads", async ({
       .evaluate((e) => (e as HTMLImageElement).naturalWidth > 0),
   ).toBe(true);
 });
+test("framed mascot turns halfway every 3.5 seconds without moving menu controls", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto("/");
+  const frame = page.locator(".rooki-orbit");
+  await expect(frame).toHaveCSS("animation-name", "rooki-idle-turn");
+  await expect(frame).toHaveCSS("border-top-width", "3px");
+  const menu = await page
+    .getByRole("navigation", { name: "Main menu" })
+    .boundingBox();
+  const transforms = await frame.evaluate((element) => {
+    const animation = element.getAnimations()[0];
+    animation.pause();
+    return [0, 3220, 3500, 6720, 7000].map((time) => {
+      animation.currentTime = time;
+      const box = element.getBoundingClientRect();
+      return {
+        matrix: getComputedStyle(element).transform,
+        fits:
+          box.top >= 0 &&
+          box.bottom <= innerHeight &&
+          box.left >= 0 &&
+          box.right <= innerWidth,
+      };
+    });
+  });
+  expect(transforms.every((t) => t.fits)).toBe(true);
+  expect(transforms[2].matrix).toBe("matrix(-1, 0, 0, -1, 0, 0)");
+  expect(transforms[4].matrix).toBe(transforms[0].matrix);
+  expect(
+    await page.getByRole("navigation", { name: "Main menu" }).boundingBox(),
+  ).toEqual(menu);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(frame).toHaveCSS("animation-name", "none");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.locator("html").evaluate((e) => e.classList.add("reduce-motion"));
+  await expect(frame).toHaveCSS("animation-name", "none");
+});

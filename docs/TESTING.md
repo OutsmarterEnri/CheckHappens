@@ -4,7 +4,7 @@ Latest UI and theme verification: 22 October 2026.
 
 - Strict TypeScript and Vite production build pass.
 - 176 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
-- 49 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
+- 50 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
 - Initial engine perft remains 20 / 400 / 8902 at depth 1 / 2 / 3.
@@ -95,3 +95,7 @@ The existing game, tutorial, sandbox, finale, bilingual and offline regressions
 continue to run. The app icons use the owner-supplied mascot. Theme art is displayed directly from
 the supplied sheet; the isolated main character is used for loading and compact marks.
 No runtime dependencies were added.
+
+The mascot idle regression samples paused animation frames at 0, 3.5 and 7 seconds,
+checks the half-turn and 320×568 containment, unchanged menu positions, and both
+reduced-motion controls. Gameplay does not receive the menu idle animation.
