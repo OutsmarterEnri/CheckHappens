@@ -1,3 +1,4 @@
+import { BrandMark } from "./Brand";
 import { useCallback, useMemo, useState } from "react";
 import { tutorialMissions, tutorialCardView } from "../domain/tutorial";
 import type { State } from "../domain/types";
@@ -51,7 +52,9 @@ export function GuidedTutorial({
       <Localized>
         <main className="learn-page coach-finish">
           <header>
-            <button onClick={onBack}>← Tutorial</button>
+            <button onClick={onBack}>
+              <BrandMark />← Tutorial
+            </button>
           </header>
           <section>
             <div className="coach-trophy" aria-hidden="true">
@@ -84,7 +87,7 @@ export function GuidedTutorial({
       <main className="learn-page coach-page" data-mission={mission.id}>
         <header>
           <button className="quiet" onClick={onBack}>
-            ← Tutorial
+            <BrandMark />← Tutorial
           </button>
           <span className="coach-stage">{mission.group}</span>
           <span>

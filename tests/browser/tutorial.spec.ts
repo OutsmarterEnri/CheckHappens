@@ -194,3 +194,40 @@ for (const [width, height] of [
     await page.getByRole("button", { name: /Sandbox/ }).click();
     await fits(page);
   });
+for (const [width, height, top, bottom] of [
+  [320, 568, 0, 0],
+  [393, 852, 59, 34],
+  [428, 926, 59, 34],
+])
+  test(`settings and learning share the table margins at ${width} with safe areas`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await page.addStyleTag({
+      content: `.menu-settings,.learn-page{padding-top:${Math.max(6, top)}px;padding-bottom:${Math.max(8, bottom)}px}`,
+    });
+    await page.getByRole("button", { name: "Settings", exact: true }).click();
+    const header = await page.locator(".back-menu").boundingBox();
+    const panel = await page.locator(".settings-panel").boundingBox();
+    expect(header!.y).toBeGreaterThanOrEqual(top);
+    expect(header!.y).toBeLessThan(top + 16);
+    expect(panel!.y).toBeLessThan(top + 62);
+    expect(panel!.x).toBe(12);
+    expect(panel!.width).toBe(width - 24);
+    expect(panel!.y + panel!.height).toBeLessThanOrEqual(height - bottom);
+    expect(
+      await page
+        .locator("main")
+        .evaluate((e) => e.scrollHeight <= e.clientHeight + 1),
+    ).toBe(true);
+    await page.getByRole("button", { name: "← Home", exact: true }).click();
+    await page.getByRole("button", { name: "Tutorial", exact: true }).click();
+    await page.getByRole("button", { name: /Card lab/ }).click();
+    await expect(page.locator(".practice-board .frame-color-label")).toHaveText(
+      "Green",
+    );
+    await fits(page);
+    await page.getByRole("button", { name: "Try card", exact: true }).click();
+    await fits(page);
+  });

@@ -1,3 +1,4 @@
+import { BrandMark } from "./Brand";
 import { GuidedTutorial } from "./GuidedTutorial";
 import { useState } from "react";
 import { Localized, useLanguage, translate } from "./locale";
@@ -31,7 +32,7 @@ export function Tutorial({
         <main className="learn-page learn-hub">
           <header>
             <button className="quiet" onClick={onHome}>
-              ← Home
+              <BrandMark />← Home
             </button>
             <h1>Learn the chaos.</h1>
           </header>
@@ -64,7 +65,7 @@ export function Tutorial({
       <main className={`learn-page learn-${page}`}>
         <header>
           <button className="quiet" onClick={back}>
-            ← Tutorial
+            <BrandMark />← Tutorial
           </button>
           <h1>{page === "cards" ? "Card lab" : "Sandbox"}</h1>
         </header>

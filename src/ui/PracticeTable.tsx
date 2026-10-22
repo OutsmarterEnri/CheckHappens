@@ -195,7 +195,7 @@ export function PracticeTable({
         data-editing={editing}
         aria-label="Practice board"
       >
-        <div className="practice-status" role="status">
+        <div className="practice-status turn-banner" role="status">
           <strong>
             {editing
               ? "Edit position"
@@ -211,6 +211,9 @@ export function PracticeTable({
           <div
             className={`board-frame practice-board color-${s.color ?? color} ${s.orientation === "b" ? "practice-flipped" : ""}`}
           >
+            <span className="frame-color-label">
+              {colorNames[s.color ?? color]}
+            </span>
             <div className="board">
               {squares.map((sq) => {
                 const p = s.pieces.find((p) => p.square === sq),
@@ -231,7 +234,14 @@ export function PracticeTable({
                     onClick={() => click(sq)}
                   >
                     <span className="practice-coordinate">
-                      {squareName(sq)}
+                      {(s.orientation === "w" ? sq % 8 === 0 : sq % 8 === 7)
+                        ? squareName(sq)[1]
+                        : ""}
+                      {(s.orientation === "w" ? sq < 8 : sq >= 56) && (
+                        <span className="practice-file">
+                          {squareName(sq)[0]}
+                        </span>
+                      )}
                     </span>
                     {(p || ghost) && (
                       <PieceIcon
