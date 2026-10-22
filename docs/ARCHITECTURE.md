@@ -30,3 +30,8 @@ Learning is isolated in `Tutorial.tsx`, `PracticeTable.tsx` and `domain/practice
 Sandbox removal retains a non-king in the lost pile so resurrection can be tested; Clear pieces removes the extra inventory. New palette pieces remember their placement square as home. King count, pawn ranks, king adjacency and the inactive side’s check status are validated before starting.
 
 The rebuilt guided path uses `domain/tutorial.ts` for mission setup and predicates, `GuidedTutorial.tsx` for coaching/progression, and `PracticeTable.onSnapshot` to observe real resolver outcomes. Completion freezes board input until Next or Retry; neither the goal model nor coach dispatches synthetic successful actions. The card lab and sandbox remain independent practice spaces.
+
+`ui/useEdgeBack.ts` owns a cleaned-up, edge-only touch recognizer. Each active
+page supplies its own parent action, so nested learning pages and game drawers
+return one level without mutating domain state. The Shell listener is inactive
+while a child page owns navigation; joined private rooms delegate to App.

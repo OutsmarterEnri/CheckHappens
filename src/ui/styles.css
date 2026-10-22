@@ -3780,3 +3780,98 @@ textarea {
   border-color: var(--yellow);
   box-shadow: 0 5px var(--edge);
 }
+/* Shared secondary-menu shell: only the home screen is vertically centered. */
+.menu-secondary {
+  height: 100dvh;
+  max-width: 480px;
+  margin: auto;
+  padding: max(6px, env(safe-area-inset-top)) 12px
+    max(8px, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: 44px auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  align-content: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+}
+.menu-secondary > .back-menu {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  height: 44px;
+  min-height: 44px;
+  align-self: center;
+}
+.menu-secondary > .home-wordmark {
+  grid-column: 2;
+  grid-row: 1;
+  display: block;
+  margin: 0;
+  justify-self: end;
+  align-self: center;
+}
+.menu-secondary .brand-wordmark {
+  gap: 4px;
+}
+.menu-secondary .brand-wordmark > span {
+  font-size: 12px;
+}
+.menu-secondary .brand-wordmark strong {
+  font-size: 16px;
+}
+.menu-secondary > .mode-menu {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.menu-secondary > .menu-caption {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  text-align: center;
+  align-self: end;
+}
+.menu-choose .mode-menu h2 {
+  display: none;
+}
+.private-menu {
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: max(6px, env(safe-area-inset-top)) 12px
+    max(8px, env(safe-area-inset-bottom));
+}
+.private-menu > .back-menu {
+  margin: 0;
+  min-height: 44px;
+  height: 44px;
+}
+.private-menu > h1 {
+  font-size: 22px;
+  text-align: left;
+}
+@media (max-height: 620px) {
+  .menu-secondary {
+    gap: 5px;
+  }
+  .menu-choose .mode-menu {
+    gap: 5px;
+  }
+  .menu-choose .mode-menu > button {
+    min-height: 44px;
+    padding: 4px 10px;
+    font-size: 15px;
+  }
+  .menu-choose .mode-menu > button small {
+    font-size: 10px;
+    margin: 0;
+  }
+  .menu-choose .rating-note {
+    display: none;
+  }
+  .menu-choose .side-options {
+    gap: 4px;
+  }
+}

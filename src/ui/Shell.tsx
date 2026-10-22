@@ -1,3 +1,4 @@
+import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark, BrandWordmark, Rooki } from "./Brand";
 import { PrivateRoom } from "./PrivateRoom";
 import { themes, THEME_KEY, validTheme } from "./themes";
@@ -89,6 +90,7 @@ export function Shell() {
     history.replaceState(null, "", location.pathname);
     setScreen("home");
   };
+  useEdgeBack(home, screen === "choose" || screen === "settings");
   const start = (newMode: OpponentMode) => {
     try {
       localStorage.removeItem(SAVE_KEY);
@@ -104,7 +106,12 @@ export function Shell() {
     <Localized>
       <div className={prefs.reduceMotion ? "reduce-motion" : ""}>
         {screen === "private" ? (
-          <PrivateRoom minutes={minutes} side={side} onHome={home} />
+          <PrivateRoom
+            minutes={minutes}
+            side={side}
+            onHome={home}
+            onBack={() => setScreen("choose")}
+          />
         ) : screen === "game" ? (
           <App
             key={gameKey}
@@ -118,7 +125,9 @@ export function Shell() {
         ) : screen === "tutorial" ? (
           <Tutorial onHome={home} onPlay={() => setScreen("choose")} />
         ) : (
-          <main className={`menu-screen menu-${screen}`}>
+          <main
+            className={`menu-screen menu-${screen} ${screen !== "home" ? "menu-secondary" : ""}`}
+          >
             {screen !== "home" && (
               <button className="quiet back-menu" onClick={home}>
                 ← Home

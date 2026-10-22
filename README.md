@@ -127,7 +127,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 54 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 61 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
@@ -178,3 +178,8 @@ choices and the active-color board frame retain their fixed gameplay colors.
 Rooki uses the owner-supplied illustrated mascot, five original theme variants and a new Halloween costume: tap to greet it. The wordmark, loading screen and installable icons share the illustrated identity. Motion follows
 the saved preference and the device's reduced-motion setting. Theme selection is
 saved on this device; all six worlds fit the existing single-screen phone layout.
+
+Menu and learning navigation supports a rightward swipe starting within 24px of
+the left edge, alongside the visible Back/Home buttons. Forms and chessboard
+touches are excluded. Match navigation preserves the existing save/clock behavior;
+leaving the table does not pause a running clock. See [project status](docs/STATUS.md).

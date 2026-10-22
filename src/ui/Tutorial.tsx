@@ -1,3 +1,4 @@
+import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
 import { GuidedTutorial } from "./GuidedTutorial";
 import { useState } from "react";
@@ -24,6 +25,7 @@ export function Tutorial({
     [revision, setRevision] = useState(0);
   const [draft, setDraft] = useState(() => practiceSetup().pieces);
   const back = () => setPage("hub");
+  useEdgeBack(page === "hub" ? onHome : back, page !== "guided");
   if (page === "guided")
     return <GuidedTutorial onBack={back} onPlay={onPlay} />;
   if (page === "hub")

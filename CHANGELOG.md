@@ -2,6 +2,10 @@
 
 ## 2.5.0
 
+- Replaced centered match-choice layout with the shared top-aligned secondary-menu shell, including resumable matches and invitation forms.
+- Added edge-swipe Back through menus, learning pages and game drawers; form, board, vertical, short, cancelled and multitouch gestures are excluded.
+- Audited every menu/learning template in six themes, EN/IT and phone/safe-area layouts.
+
 - Added Boo Happens (Dolcetto o Scacchetto), a sixth Halloween world with a witch-rook mascot, plum night surfaces and pumpkin-orange accents; card colors stay fixed.
 
 - Anchored Settings to the game’s top header and 12px side margins; added safe-area layout regressions.

@@ -1,3 +1,4 @@
+import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
 import type { RemoteGame } from "../online/protocol";
 import { PieceCracks, SkipChains, crackStage } from "./PieceEffects";
@@ -145,6 +146,13 @@ export function App({
   const [drawer, setDrawer] = useState<
     "more" | "help" | "lab" | "log" | "targets" | null
   >(null);
+  useEdgeBack(
+    () => {
+      if (drawer) setDrawer(drawer === "more" ? null : "more");
+      else onHome?.();
+    },
+    !!onHome || drawer !== null,
+  );
   const [puff, setPuff] = useState<{
     square: number;
     type: State["pieces"][number]["type"];

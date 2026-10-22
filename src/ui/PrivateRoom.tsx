@@ -1,3 +1,4 @@
+import { useEdgeBack } from "./useEdgeBack";
 import { useEffect, useRef, useState } from "react";
 import { App } from "./App";
 import { Localized } from "./locale";
@@ -31,10 +32,12 @@ export function PrivateRoom({
   minutes,
   side,
   onHome,
+  onBack = onHome,
 }: {
   minutes: Minutes;
   side: SidePreference;
   onHome: () => void;
+  onBack?: () => void;
 }) {
   const fragment = new URLSearchParams(location.hash.slice(1));
   const [address, setAddress] = useState(
@@ -151,6 +154,14 @@ export function PrivateRoom({
       if (alive.current) setPending(false);
     }
   };
+  useEdgeBack(
+    () => {
+      if (session) onHome();
+      else if (joining) setJoining(false);
+      else onBack();
+    },
+    !pending && !(session && view?.joined),
+  );
   if (session && view && view.joined)
     return (
       <App

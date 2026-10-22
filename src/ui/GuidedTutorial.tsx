@@ -1,3 +1,4 @@
+import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
 import { useCallback, useMemo, useState } from "react";
 import { tutorialMissions, tutorialCardView } from "../domain/tutorial";
@@ -13,6 +14,7 @@ export function GuidedTutorial({
   onBack: () => void;
   onPlay: () => void;
 }) {
+  useEdgeBack(onBack);
   const [index, setIndex] = useState(0),
     [complete, setComplete] = useState(false),
     [hint, setHint] = useState(false),

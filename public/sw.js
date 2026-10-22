@@ -1,5 +1,5 @@
 // Shell updates wait for open games to close; no forced activation.
-const CACHE = "check-happens-v2-5-0-boo-happens";
+const CACHE = "check-happens-v2-5-0-menu-navigation";
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
