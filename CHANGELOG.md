@@ -2,6 +2,10 @@
 
 ## 2.5.0
 
+- Rebuilt the menus around a comic clubhouse: layered chess/card mascot stage, a dominant Play action, paired learning/settings shortcuts and themed SVG icons.
+- Match setup now groups clock/side controls, local/private play cards and training in distinct surfaces. Settings uses an illustrated six-theme gallery and native accessible motion toggle.
+- Added shared menu navigation chrome, restyled invitation and learning-hub menus, and four six-world regressions for home hierarchy, text fit and touch targets in EN/IT.
+
 - Replaced centered match-choice layout with the shared top-aligned secondary-menu shell, including resumable matches and invitation forms.
 - Added edge-swipe Back through menus, learning pages and game drawers; form, board, vertical, short, cancelled and multitouch gestures are excluded.
 - Audited every menu/learning template in six themes, EN/IT and phone/safe-area layouts.

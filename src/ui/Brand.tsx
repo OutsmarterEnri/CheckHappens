@@ -10,7 +10,9 @@ export function BrandMark({ theme }: { theme?: Theme } = {}) {
       <span
         className={`brand-mark rooki-illustration rooki-${theme}`}
         aria-hidden="true"
-        style={{ backgroundImage: `url("${mascotAsset(theme)}")` }}
+        style={{
+          backgroundImage: `url("${mascotAsset(theme)}")${theme === "halloween" ? `, url("${asset("mascot-main.png")}")` : ""}`,
+        }}
       />
     );
   return (

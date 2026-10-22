@@ -1,9 +1,10 @@
+import { MenuHeader, MenuIcon } from "./MenuUI";
 import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark, BrandWordmark, Rooki } from "./Brand";
 import { PrivateRoom } from "./PrivateRoom";
 import { themes, THEME_KEY, validTheme } from "./themes";
 import { Localized, useLanguage } from "./locale";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { App } from "./App";
 import { Tutorial } from "./Tutorial";
 import { PieceIcon } from "./PieceIcon";
@@ -126,79 +127,121 @@ export function Shell() {
           <Tutorial onHome={home} onPlay={() => setScreen("choose")} />
         ) : (
           <main
-            className={`menu-screen menu-${screen} ${screen !== "home" ? "menu-secondary" : ""}`}
+            className={`menu-screen menu-${screen} menu-v3 ${screen !== "home" ? "menu-secondary" : ""}`}
           >
-            {screen !== "home" && (
-              <button className="quiet back-menu" onClick={home}>
-                ← Home
-              </button>
+            {screen !== "home" ? (
+              <MenuHeader onHome={home} />
+            ) : (
+              <>
+                <header className="menu-masthead">
+                  <span className="menu-overline">CHESS + CARDS</span>
+                  <h1 className="home-wordmark" aria-label="Check Happens.">
+                    <BrandWordmark />
+                  </h1>
+                  <p className="menu-tagline">In Cards we trust</p>
+                </header>
+                <section
+                  className="home-showcase"
+                  aria-label="Rooki's clubhouse"
+                >
+                  <span className="showcase-board" aria-hidden="true" />
+                  <Rooki theme={theme} />
+                </section>
+              </>
             )}
-            <Rooki theme={theme} />
-            <h1 className="home-wordmark" aria-label="Check Happens.">
-              <BrandWordmark />
-            </h1>
-            <p className="menu-tagline">In Cards we trust</p>
             {screen === "home" && (
               <nav className="home-menu" aria-label="Main menu">
-                <button className="primary" onClick={() => setScreen("choose")}>
-                  Play <span aria-hidden="true">→</span>
+                <button
+                  className="primary home-play"
+                  aria-label="Play"
+                  onClick={() => setScreen("choose")}
+                >
+                  <span className="home-action-icon">
+                    <MenuIcon kind="play" />
+                  </span>
+                  <span>
+                    <strong>Play</strong>
+                    <small>Make it happen.</small>
+                  </span>
+                  <MenuIcon kind="arrow" />
                 </button>
-                <button onClick={() => setScreen("tutorial")}>
-                  Tutorial <span aria-hidden="true">?</span>
+                <button
+                  className="home-shortcut"
+                  aria-label="Tutorial"
+                  onClick={() => setScreen("tutorial")}
+                >
+                  <MenuIcon kind="cards" />
+                  <strong>Tutorial</strong>
+                  <small>Learn the chaos.</small>
                 </button>
-                <button onClick={() => setScreen("settings")}>
-                  Settings <span aria-hidden="true">···</span>
+                <button
+                  className="home-shortcut"
+                  aria-label="Settings"
+                  onClick={() => setScreen("settings")}
+                >
+                  <MenuIcon kind="settings" />
+                  <strong>Settings</strong>
+                  <small>Make it yours.</small>
                 </button>
               </nav>
             )}
             {screen === "choose" && (
               <section className="home-menu mode-menu">
-                <h2>Make it happen.</h2>
-                <div
-                  className="time-options"
-                  role="group"
-                  aria-label="Time control"
-                >
-                  {timeControls.map((t) => (
-                    <button
-                      key={t.minutes}
-                      aria-pressed={minutes === t.minutes}
-                      onClick={() => setMinutes(t.minutes)}
-                    >
-                      <strong>{t.minutes} min</strong>
-                      <small>{t.label}</small>
-                    </button>
-                  ))}
-                </div>
-                <div
-                  className="side-options"
-                  role="group"
-                  aria-label="Starting side"
-                >
-                  <span>Play as</span>
-                  {(["white", "random", "black"] as const).map((value) => (
-                    <button
-                      key={value}
-                      aria-pressed={side === value}
-                      onClick={() => setSide(value)}
-                    >
-                      <span aria-hidden="true">
-                        {value === "random" ? (
-                          "?"
-                        ) : (
-                          <PieceIcon
-                            type="p"
-                            army={value === "white" ? "w" : "b"}
-                          />
-                        )}
-                      </span>
-                      {value === "white"
-                        ? "White"
-                        : value === "black"
-                          ? "Black"
-                          : "Random"}
-                    </button>
-                  ))}
+                <h2 className="menu-page-title">
+                  Make it happen.
+                  <MenuIcon kind="play" />
+                </h2>
+                <div className="match-config">
+                  <span className="choice-label">
+                    <MenuIcon kind="clock" />
+                    Time control
+                  </span>
+                  <div
+                    className="time-options"
+                    role="group"
+                    aria-label="Time control"
+                  >
+                    {timeControls.map((t) => (
+                      <button
+                        key={t.minutes}
+                        aria-pressed={minutes === t.minutes}
+                        onClick={() => setMinutes(t.minutes)}
+                      >
+                        <strong>{t.minutes} min</strong>
+                        <small>{t.label}</small>
+                      </button>
+                    ))}
+                  </div>
+                  <div
+                    className="side-options"
+                    role="group"
+                    aria-label="Starting side"
+                  >
+                    <span>Play as</span>
+                    {(["white", "random", "black"] as const).map((value) => (
+                      <button
+                        key={value}
+                        aria-pressed={side === value}
+                        onClick={() => setSide(value)}
+                      >
+                        <span aria-hidden="true">
+                          {value === "random" ? (
+                            "?"
+                          ) : (
+                            <PieceIcon
+                              type="p"
+                              army={value === "white" ? "w" : "b"}
+                            />
+                          )}
+                        </span>
+                        {value === "white"
+                          ? "White"
+                          : value === "black"
+                            ? "Black"
+                            : "Random"}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 {saved && saved.phase !== "READY" && !saved.outcome && (
                   <button
@@ -213,46 +256,66 @@ export function Shell() {
                     Resume match<small>Your clock keeps running</small>
                   </button>
                 )}
-                <button className="primary" onClick={() => start("local")}>
-                  Local match <small>Two players · one phone</small>
-                </button>
-                <div
-                  className="bot-options"
-                  role="group"
-                  aria-label="Training level"
-                >
-                  {(Object.keys(botProfiles) as BotLevel[]).map((k) => (
-                    <button
-                      key={k}
-                      aria-pressed={level === k}
-                      onClick={() => setLevel(k)}
-                    >
-                      {botProfiles[k].label}
-                      <small>~{botProfiles[k].elo} Elo</small>
-                    </button>
-                  ))}
-                </div>
-                <button onClick={() => start("computer")}>
-                  Train with a bot{" "}
-                  <small>
-                    {botProfiles[level].label} · estimated{" "}
-                    {botProfiles[level].elo} Elo
-                  </small>
-                </button>
-                <small className="rating-note">
-                  Training labels are estimates, not calibrated ratings.
-                </small>
                 <button
-                  className="private-play"
+                  className="primary local-play launch-card"
+                  onClick={() => start("local")}
+                >
+                  <MenuIcon kind="people" />
+                  <strong>Local match</strong>
+                  <small>Two players · one phone</small>
+                </button>
+                <button
+                  className="private-play launch-card"
                   onClick={() => setScreen("private")}
                 >
-                  Private match<small>Experimental · invitation only</small>
+                  <MenuIcon kind="cards" />
+                  <strong>Private match</strong>
+                  <small>Experimental · invitation only</small>
                 </button>
+                <section className="training-card">
+                  <span className="choice-label">
+                    <MenuIcon kind="bot" />
+                    Training level
+                  </span>
+                  <div
+                    className="bot-options"
+                    role="group"
+                    aria-label="Training level"
+                  >
+                    {(Object.keys(botProfiles) as BotLevel[]).map((k) => (
+                      <button
+                        key={k}
+                        aria-pressed={level === k}
+                        onClick={() => setLevel(k)}
+                      >
+                        {botProfiles[k].label}
+                        <small>~{botProfiles[k].elo} Elo</small>
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    className="train-play"
+                    onClick={() => start("computer")}
+                  >
+                    <MenuIcon kind="bot" />
+                    Train with a bot{" "}
+                    <small>
+                      {botProfiles[level].label} · estimated{" "}
+                      {botProfiles[level].elo} Elo
+                    </small>
+                  </button>
+                  <small className="rating-note">
+                    Training labels are estimates, not calibrated ratings.
+                  </small>
+                </section>
               </section>
             )}
             {screen === "settings" && (
               <section className="settings-panel">
-                <h2>Just the essentials.</h2>
+                <h2 className="menu-page-title">
+                  Just the essentials.
+                  <MenuIcon kind="settings" />
+                </h2>
                 <fieldset className="theme-picker">
                   <legend>Theme</legend>
                   {themes.map((t) => (
@@ -262,17 +325,7 @@ export function Shell() {
                       aria-label={t.name}
                       onClick={() => setTheme(t.id)}
                     >
-                      <span
-                        className="theme-stamp"
-                        aria-hidden="true"
-                        style={
-                          {
-                            "--mascot-body": t.colors[1],
-                            "--mascot-trim": t.colors[2],
-                            "--mascot-outline": "#322546",
-                          } as CSSProperties
-                        }
-                      >
+                      <span className="theme-stamp" aria-hidden="true">
                         <BrandMark theme={t.id} />
                       </span>
                       <span className="theme-swatches" aria-hidden="true">
@@ -281,37 +334,48 @@ export function Shell() {
                         ))}
                       </span>
                       <span className="theme-name">{t.name}</span>
+                      <span className="theme-selected" aria-hidden="true">
+                        {theme === t.id && <MenuIcon kind="check" />}
+                      </span>
                     </button>
                   ))}
                 </fieldset>
-                <label className="language-picker">
-                  <span>Language</span>
-                  <select
-                    aria-label="Language"
-                    value={language}
-                    onChange={(e) =>
-                      setLanguage(e.target.value === "it" ? "it" : "en")
-                    }
-                  >
-                    <option value="en">English</option>
-                    <option value="it">Italiano</option>
-                  </select>
-                </label>
-                <label>
-                  <span>
-                    Reduce motion
-                    <small>We also respect your phone’s preference.</small>
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={prefs.reduceMotion}
-                    onChange={(e) => {
-                      const next = { reduceMotion: e.target.checked };
-                      setPrefs(next);
-                      writePreference(PREFS_KEY, next);
-                    }}
-                  />
-                </label>
+                <div className="preferences-card">
+                  <label className="language-picker">
+                    <span className="preference-label">
+                      <MenuIcon kind="globe" />
+                      Language
+                    </span>
+                    <select
+                      aria-label="Language"
+                      value={language}
+                      onChange={(e) =>
+                        setLanguage(e.target.value === "it" ? "it" : "en")
+                      }
+                    >
+                      <option value="en">English</option>
+                      <option value="it">Italiano</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>
+                      <span className="preference-label">
+                        <MenuIcon kind="moon" />
+                        Reduce motion
+                      </span>
+                      <small>We also respect your phone’s preference.</small>
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={prefs.reduceMotion}
+                      onChange={(e) => {
+                        const next = { reduceMotion: e.target.checked };
+                        setPrefs(next);
+                        writePreference(PREFS_KEY, next);
+                      }}
+                    />
+                  </label>
+                </div>
                 <div className="settings-info" aria-live="polite">
                   <p>
                     {
@@ -332,7 +396,12 @@ export function Shell() {
               </section>
             )}
             <small className="menu-caption">
-              VERSION 2.5 · MADE FOR YOUR POCKET
+              <span>
+                {screen === "home"
+                  ? themes.find((t) => t.id === theme)?.name
+                  : "In Cards we trust"}
+              </span>
+              <span>MADE FOR YOUR POCKET · 2.5</span>
             </small>
           </main>
         )}

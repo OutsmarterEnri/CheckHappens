@@ -127,7 +127,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 61 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 65 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
@@ -183,3 +183,8 @@ Menu and learning navigation supports a rightward swipe starting within 24px of
 the left edge, alongside the visible Back/Home buttons. Forms and chessboard
 touches are excluded. Match navigation preserves the existing save/clock behavior;
 leaving the table does not pause a running clock. See [project status](docs/STATUS.md).
+
+The clubhouse menus share the table’s illustrated, tactile style: a layered chess/card
+hero, a dominant Play action, compact mode cards and an illustrated theme gallery.
+Local/private play, training, clock/side selection and all saved preferences retain
+their existing behavior.

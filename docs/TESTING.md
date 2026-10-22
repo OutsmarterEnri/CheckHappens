@@ -4,7 +4,7 @@ Latest UI and theme verification: 22 October 2026.
 
 - Strict TypeScript and Vite production build pass.
 - 176 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
-- 61 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
+- 65 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
 - Initial engine perft remains 20 / 400 / 8902 at depth 1 / 2 / 3.
@@ -126,3 +126,13 @@ return from the table, board/form exclusions and rejection of short, non-edge,
 vertical, leftward, cancelled and multitouch drags. Visible buttons remain the
 alternative. Physical iPhone/Safari and Home Screen gesture behavior still need
 user testing; Chromium touch-event simulation does not certify native gestures.
+
+### Clubhouse menu rebuild
+
+Four additional cases check the new home hierarchy across all six themes at
+320×568 and 393×852, in English and Italian, including simulated phone safe areas.
+They verify section separation, unclipped button text, 44px touch areas and no
+page scrolling. Existing navigation matrices still cover match selection, saved
+matches, invitation waiting/reconnect, settings, learning and edge Back.
+The 65-case browser suite also verifies that all functional card/frame colors,
+countdown, bot profiles, saves and teaching interactions remain unchanged.

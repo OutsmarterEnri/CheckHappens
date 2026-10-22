@@ -35,3 +35,8 @@ The rebuilt guided path uses `domain/tutorial.ts` for mission setup and predicat
 page supplies its own parent action, so nested learning pages and game drawers
 return one level without mutating domain state. The Shell listener is inactive
 while a child page owns navigation; joined private rooms delegate to App.
+
+`ui/MenuUI.tsx` supplies localized menu navigation and code-native SVG symbols.
+`ui/menus.css` scopes the clubhouse presentation to `.menu-v3`; it is loaded after
+the shared table stylesheet and does not style game boards or change the resolver.
+The Shell retains ownership of match preferences and launch/resume behavior.

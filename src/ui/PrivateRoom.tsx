@@ -1,3 +1,4 @@
+import { MenuHeader, MenuIcon } from "./MenuUI";
 import { useEdgeBack } from "./useEdgeBack";
 import { useEffect, useRef, useState } from "react";
 import { App } from "./App";
@@ -222,11 +223,12 @@ export function PrivateRoom({
     );
   return (
     <Localized>
-      <main className="menu-screen private-menu">
-        <button className="quiet back-menu" onClick={onHome}>
-          ← Home
-        </button>
-        <h1>Private match</h1>
+      <main className="menu-screen private-menu menu-v3">
+        <MenuHeader onHome={onHome} />
+        <h1>
+          <MenuIcon kind="people" />
+          Private match
+        </h1>
         <p role="note">Experimental multiplayer · testing only</p>
         {session ? (
           <>

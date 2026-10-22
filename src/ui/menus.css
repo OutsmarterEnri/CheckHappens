@@ -1,0 +1,889 @@
+/* Clubhouse menus share the table's palette, outlines and tactile surfaces.
+   Scoped here so presentation changes never alter a live game or practice board. */
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.menu-v3.menu-screen {
+  padding-inline: 12px;
+}
+.menu-topbar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.menu-topbar .back-menu {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 4px 10px 4px 4px;
+  border: 0;
+  box-shadow: none;
+  font-size: 13px;
+  background: none;
+}
+.menu-topbar .back-menu .menu-icon {
+  width: 20px;
+}
+.menu-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: -0.45px;
+  white-space: nowrap;
+}
+.menu-topbar-brand .brand-mark {
+  width: 26px;
+  height: 30px;
+}
+.menu-v3.menu-screen > .menu-caption {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  font-size: 8px;
+  letter-spacing: 0.45px;
+  color: var(--muted);
+}
+.menu-v3.menu-home {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: stretch;
+  gap: 12px;
+  padding-block: max(14px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-bottom));
+}
+.menu-masthead {
+  text-align: center;
+}
+.menu-overline {
+  display: inline-flex;
+  padding: 4px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: var(--paper);
+  box-shadow: 0 2px var(--ink);
+}
+.menu-home.menu-v3 .home-wordmark {
+  margin: 12px 0 6px;
+}
+.menu-home.menu-v3 .brand-wordmark {
+  transform: rotate(-3deg);
+}
+.menu-home.menu-v3 .brand-wordmark > span {
+  font-size: 23px;
+  letter-spacing: 3px;
+}
+.menu-home.menu-v3 .brand-wordmark strong {
+  font-size: clamp(42px, 11.8vw, 56px);
+  letter-spacing: -2.5px;
+  line-height: 0.98;
+  text-shadow: 2px 3px var(--paper);
+}
+.menu-home.menu-v3 .menu-tagline {
+  font-size: 12px;
+  margin: 10px 0 0;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+.home-showcase {
+  min-height: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+.showcase-board {
+  position: absolute;
+  width: min(74%, 255px);
+  height: min(72%, 220px);
+  border: 2px solid var(--ink);
+  border-radius: 24px;
+  background: conic-gradient(
+      var(--board-light) 25%,
+      var(--board-dark) 0 50%,
+      var(--board-light) 0 75%,
+      var(--board-dark) 0
+    )
+    0 0 / 44px 44px;
+  transform: rotate(-9deg);
+  box-shadow: 5px 6px var(--ink);
+  z-index: -1;
+}
+.home-showcase::after {
+  content: "";
+  position: absolute;
+  width: min(62%, 218px);
+  height: min(78%, 232px);
+  border: 2px solid var(--ink);
+  border-radius: 24px;
+  background: var(--yellow);
+  transform: rotate(10deg);
+  z-index: -1;
+}
+.menu-home.menu-v3 .rooki-stage.menu-logo {
+  margin: 0;
+  width: 100%;
+  height: min(100%, 254px);
+  min-height: 0;
+}
+.menu-home.menu-v3 .rooki-button {
+  height: calc(100% - 24px);
+}
+.menu-home.menu-v3 .rooki-speech {
+  font-size: 11px;
+  line-height: 24px;
+  padding-inline: 9px;
+  background: var(--app-background);
+  border-radius: 12px;
+  z-index: 1;
+}
+.menu-home.menu-v3 .rooki-orbit {
+  max-height: 230px;
+  padding: 3px;
+  box-shadow: 0 5px var(--ink);
+}
+.menu-home.menu-v3 .home-menu {
+  max-width: none;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+.menu-home.menu-v3 .home-menu > button {
+  min-width: 0;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 0 4px var(--ink);
+  text-align: left;
+}
+.menu-home.menu-v3 .home-play {
+  grid-column: 1 / -1;
+  min-height: 78px;
+  display: grid;
+  grid-template-columns: 48px 1fr 28px;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--yellow);
+  color: var(--on-accent);
+}
+.home-action-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 2px solid currentColor;
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  transform: rotate(-5deg);
+  box-shadow: 2px 2px currentColor;
+}
+.home-action-icon .menu-icon {
+  width: 30px;
+  height: 30px;
+}
+.home-play strong {
+  display: block;
+  font-size: 28px;
+  letter-spacing: -0.9px;
+  line-height: 1.05;
+}
+.home-play small {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.menu-home.menu-v3 .home-shortcut {
+  min-height: 94px;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  column-gap: 9px;
+  row-gap: 4px;
+  padding: 12px;
+  align-items: center;
+  background: var(--paper);
+}
+.home-shortcut > .menu-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--purple);
+}
+.home-shortcut strong {
+  font-size: 16px;
+  letter-spacing: -0.5px;
+}
+.home-shortcut small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+.menu-v3.menu-secondary {
+  gap: 12px;
+}
+.menu-v3 .menu-page-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-size: 26px;
+  letter-spacing: -0.8px;
+  line-height: 1.08;
+  margin: 4px 0 6px;
+}
+.menu-page-title .menu-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--purple);
+  transform: rotate(8deg);
+}
+.menu-v3 .mode-menu {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+.menu-v3 .mode-menu > h2,
+.menu-v3 .match-config,
+.menu-v3 .resume-game,
+.menu-v3 .training-card {
+  grid-column: 1 / -1;
+}
+.match-config,
+.training-card {
+  min-width: 0;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  padding: 10px;
+  background: var(--paper);
+  box-shadow: 0 3px var(--ink);
+}
+.choice-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 850;
+  margin-bottom: 7px;
+}
+.choice-label .menu-icon {
+  width: 17px;
+  height: 17px;
+}
+.menu-v3 .time-options {
+  gap: 7px;
+}
+.menu-v3 .time-options button {
+  min-height: 54px;
+  padding: 6px 3px;
+  border-radius: 12px;
+  box-shadow: 0 2px var(--ink);
+  font-size: 14px;
+  background: var(--app-background);
+}
+.menu-v3 .time-options small {
+  font-size: 10px;
+  margin-top: 2px;
+}
+.menu-v3 .side-options {
+  gap: 7px;
+  margin-top: 10px;
+}
+.menu-v3 .side-options > span {
+  font-size: 11px;
+  font-weight: 850;
+  color: var(--muted);
+}
+.menu-v3 .side-options button {
+  border-radius: 12px;
+  min-height: 44px;
+  box-shadow: none;
+  font-size: 12px;
+  padding: 4px;
+  background: var(--app-background);
+}
+.menu-v3 .time-options [aria-pressed="true"],
+.menu-v3 .side-options [aria-pressed="true"],
+.menu-v3 .bot-options [aria-pressed="true"] {
+  background: var(--selection);
+  border-color: var(--purple);
+  box-shadow: inset 0 0 0 1px var(--purple);
+}
+.menu-v3 .mode-menu > .launch-card {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  align-content: start;
+  gap: 5px;
+  min-height: 89px;
+  padding: 10px;
+  border-radius: 18px;
+  box-shadow: 0 3px var(--ink);
+  font-size: 15px;
+}
+.launch-card .menu-icon {
+  width: 24px;
+  height: 24px;
+}
+.launch-card strong {
+  align-self: center;
+  font-size: 15px;
+  line-height: 1.1;
+}
+.menu-v3 .mode-menu > .launch-card small {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  line-height: 1.2;
+  margin: 0;
+}
+.training-card {
+  display: grid;
+  gap: 8px;
+}
+.training-card .choice-label {
+  margin: 0;
+}
+.menu-v3 .bot-options {
+  gap: 6px;
+}
+.menu-v3 .bot-options button {
+  min-height: 46px;
+  border-radius: 10px;
+  box-shadow: none;
+  background: var(--app-background);
+  font-size: 12px;
+  padding: 5px 2px;
+}
+.menu-v3 .bot-options small {
+  margin-top: 1px;
+  font-size: 10px;
+}
+.menu-v3 .train-play {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: 7px;
+  padding: 8px 10px;
+  min-height: 54px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 13px;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: none;
+}
+.train-play > small {
+  display: block;
+  width: 100%;
+  font-size: 10px;
+  font-weight: 500;
+  padding-left: 31px;
+}
+.menu-v3 .train-play:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--paper);
+}
+.menu-v3 .resume-game {
+  min-height: 48px;
+  padding: 7px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+.menu-v3 .resume-game small {
+  font-size: 10px;
+}
+.menu-v3.menu-settings > .settings-panel {
+  display: flex;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.menu-v3 .settings-panel .menu-page-title {
+  font-size: 24px;
+  margin: 2px 0 0;
+}
+.menu-v3.menu-settings .theme-picker {
+  gap: 8px;
+}
+.menu-v3 .theme-picker legend {
+  font-size: 12px;
+  font-weight: 850;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+.menu-v3.menu-settings .theme-picker button {
+  min-height: 76px;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-content: center;
+  gap: 7px;
+  padding: 8px 16px 8px 7px;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 0 3px var(--ink);
+  background: var(--paper);
+}
+.menu-v3 .theme-stamp .brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--edge);
+  margin: 0;
+}
+.menu-v3 .theme-name {
+  font-size: 12px;
+  line-height: 1.15;
+  font-weight: 800;
+}
+.menu-v3.menu-settings .theme-swatches {
+  left: 13px;
+  bottom: 5px;
+  gap: 1px;
+}
+.menu-v3 .theme-selected {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  background: var(--purple);
+  color: var(--app-background);
+}
+.menu-v3 .theme-selected:empty {
+  display: none;
+}
+.theme-selected .menu-icon {
+  width: 13px;
+  height: 13px;
+  stroke-width: 3;
+}
+.menu-v3 .theme-picker button[aria-pressed="true"] {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow:
+    inset 0 0 0 1px var(--purple),
+    0 3px var(--ink);
+  background: var(--selection);
+}
+.preferences-card {
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  padding: 0 10px;
+  background: var(--paper);
+  box-shadow: 0 3px var(--ink);
+}
+.menu-v3 .preferences-card label {
+  min-height: 56px;
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--edge);
+}
+.menu-v3 .preferences-card label:last-child {
+  border: 0;
+}
+.preference-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 750;
+}
+.preference-label .menu-icon {
+  width: 19px;
+  height: 19px;
+  color: var(--purple);
+}
+.menu-v3 .language-picker select {
+  min-height: 44px;
+  max-width: 46%;
+  padding: 4px 8px;
+  font-size: 16px;
+  border-radius: 11px;
+}
+.menu-v3 .preferences-card small {
+  font-size: 10px;
+  margin-top: 3px;
+}
+.menu-v3 .preferences-card input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  min-width: 44px;
+  min-height: 26px;
+  height: 26px;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  background: var(--panel);
+  position: relative;
+  cursor: pointer;
+}
+.menu-v3 .preferences-card input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+}
+.menu-v3 .preferences-card input:checked {
+  background: var(--yellow);
+}
+.menu-v3 .preferences-card input:checked::before {
+  left: 21px;
+}
+.menu-v3 .settings-info {
+  border-top: 1px solid var(--edge);
+  padding-top: 8px;
+  margin: 0;
+}
+.menu-v3 .settings-info p {
+  min-height: 0;
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 0;
+}
+.menu-v3 .settings-info button {
+  padding: 3px 0;
+  margin-top: 4px;
+  min-height: 44px;
+  font-size: 11px;
+  color: var(--purple);
+}
+.private-menu.menu-v3 {
+  gap: 10px;
+}
+.private-menu.menu-v3 > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 27px;
+  margin: 7px 0 0;
+}
+.private-menu.menu-v3 > h1 .menu-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--purple);
+}
+.private-menu.menu-v3 > p[role="note"] {
+  font-size: 11px;
+  color: var(--muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--edge);
+}
+.private-menu.menu-v3 label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.private-menu.menu-v3 input {
+  width: 100%;
+  min-height: 44px;
+  background: var(--paper);
+}
+.private-menu.menu-v3 .private-tabs {
+  padding: 4px;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  background: var(--paper);
+  gap: 4px;
+}
+.private-menu.menu-v3 .private-tabs button {
+  min-width: 0;
+  min-height: 44px;
+  border-radius: 11px;
+  border: 0;
+  box-shadow: none;
+  font-size: 12px;
+}
+.menu-v3.learn-hub .learn-hub-options {
+  gap: 14px;
+}
+.menu-v3.learn-hub .learn-hub-options button {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 6px 12px;
+  padding: 16px;
+  text-align: left;
+  align-items: center;
+}
+.hub-choice-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: grid !important;
+  place-items: center;
+  width: 44px;
+  height: 48px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--ink);
+  transform: rotate(-4deg);
+}
+.hub-choice-icon .menu-icon {
+  width: 29px;
+  height: 29px;
+}
+.menu-v3.learn-hub .learn-hub-options strong {
+  margin: 0;
+  font-size: 20px;
+}
+.menu-v3.learn-hub .learn-hub-options button > span:last-child {
+  grid-column: 2;
+  font-size: 13px;
+}
+@media (max-height: 720px) {
+  .menu-home.menu-v3 {
+    gap: 9px;
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+  .menu-home.menu-v3 .menu-overline {
+    font-size: 9px;
+    padding: 3px 10px;
+  }
+  .menu-home.menu-v3 .home-wordmark {
+    margin-top: 9px;
+  }
+  .menu-home.menu-v3 .brand-wordmark > span {
+    font-size: 20px;
+  }
+  .menu-home.menu-v3 .brand-wordmark strong {
+    font-size: 42px;
+  }
+  .menu-home.menu-v3 .home-play {
+    min-height: 68px;
+    padding: 8px 12px;
+  }
+  .menu-home.menu-v3 .home-shortcut {
+    min-height: 76px;
+    padding: 9px 10px;
+  }
+  .menu-v3 .menu-page-title {
+    font-size: 22px;
+    margin: 0;
+  }
+  .menu-v3 .mode-menu {
+    gap: 9px;
+  }
+  .menu-v3.menu-secondary {
+    gap: 8px;
+  }
+  .menu-v3 .match-config,
+  .menu-v3 .training-card {
+    padding: 8px;
+  }
+  .menu-v3 .mode-menu > .launch-card {
+    min-height: 74px;
+  }
+  .menu-v3.menu-settings > .settings-panel {
+    gap: 10px;
+  }
+  .menu-v3.menu-settings .theme-picker button {
+    min-height: 66px;
+    padding-block: 6px;
+  }
+  .menu-v3 .theme-name {
+    font-size: 11px;
+  }
+}
+@media (max-height: 620px) {
+  .menu-home.menu-v3 {
+    gap: 7px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .menu-home.menu-v3 .home-wordmark {
+    margin: 7px 0 4px;
+  }
+  .menu-home.menu-v3 .brand-wordmark > span {
+    font-size: 17px;
+  }
+  .menu-home.menu-v3 .brand-wordmark strong {
+    font-size: 37px;
+  }
+  .menu-home.menu-v3 .menu-tagline {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+  .menu-home.menu-v3 .home-shortcut small {
+    font-size: 10px;
+  }
+  .menu-home.menu-v3 .home-shortcut strong {
+    font-size: 14px;
+  }
+  .menu-v3 .mode-menu {
+    gap: 7px;
+  }
+  .menu-v3 .mode-menu > h2 {
+    display: none;
+  }
+  .menu-v3 .match-config,
+  .menu-v3 .training-card {
+    padding: 6px;
+    border-radius: 16px;
+  }
+  .menu-v3 .match-config > .choice-label,
+  .menu-v3 .training-card > .choice-label {
+    display: none;
+  }
+  .menu-v3 .time-options button {
+    min-height: 46px;
+    padding: 4px 1px;
+  }
+  .menu-v3 .side-options {
+    margin-top: 6px;
+    gap: 4px;
+  }
+  .menu-v3 .side-options > span {
+    font-size: 10px;
+  }
+  .menu-v3 .side-options button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .menu-v3 .mode-menu > .launch-card {
+    min-height: 70px;
+    padding: 7px;
+    gap: 4px;
+  }
+  .menu-v3 .launch-card strong {
+    font-size: 13px;
+  }
+  .menu-v3 .mode-menu > .launch-card small {
+    font-size: 10px;
+  }
+  .menu-v3 .bot-options button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .menu-v3 .train-play {
+    min-height: 46px;
+    padding: 5px 8px;
+    font-size: 14px;
+  }
+  .menu-v3 .train-play > small {
+    font-size: 9px;
+  }
+  .menu-v3 .resume-game {
+    min-height: 44px;
+    padding: 4px 8px;
+  }
+  .menu-v3 .training-card {
+    gap: 6px;
+  }
+  .menu-v3.menu-secondary {
+    gap: 5px;
+  }
+  .menu-v3.menu-settings > .settings-panel {
+    gap: 8px;
+  }
+  .menu-v3 .settings-panel .menu-page-title {
+    font-size: 20px;
+  }
+  .menu-v3.menu-settings .theme-picker {
+    gap: 6px;
+  }
+  .menu-v3 .theme-picker legend {
+    margin-bottom: 5px;
+  }
+  .menu-v3.menu-settings .theme-picker button {
+    min-height: 58px;
+    grid-template-columns: 36px minmax(0, 1fr);
+    padding: 5px 13px 5px 5px;
+    gap: 5px;
+    border-radius: 13px;
+  }
+  .menu-v3 .theme-stamp .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+  .menu-v3 .theme-name {
+    font-size: 10px;
+  }
+  .menu-v3.menu-settings .theme-swatches {
+    left: 9px;
+    bottom: 2px;
+  }
+  .menu-v3 .preferences-card label {
+    padding: 6px 0;
+    min-height: 50px;
+  }
+  .menu-v3 .preference-label {
+    font-size: 13px;
+  }
+  .menu-v3 .settings-info {
+    padding-top: 6px;
+  }
+  .menu-v3 .settings-info p {
+    font-size: 11px;
+  }
+  .menu-v3 .settings-info button {
+    margin-top: 0;
+  }
+  .private-menu.menu-v3 {
+    gap: 6px;
+  }
+  .private-menu.menu-v3 > h1 {
+    font-size: 22px;
+    margin: 0;
+  }
+  .private-menu.menu-v3 > p {
+    font-size: 12px;
+  }
+  .private-menu.menu-v3 > p[role="note"] {
+    padding-bottom: 4px;
+  }
+  .private-menu.menu-v3 .private-tabs {
+    padding: 3px;
+  }
+  .menu-v3.learn-hub .learn-hub-options button {
+    padding: 12px;
+  }
+}
+.menu-v3.menu-choose .mode-menu > h2 {
+  display: flex;
+}
+@media (max-height: 620px) {
+  .menu-v3.menu-choose .mode-menu > h2 {
+    display: none;
+  }
+}
+
+.menu-v3 :is(button, input, select):focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 3px;
+}

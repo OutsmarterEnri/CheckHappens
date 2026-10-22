@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import { LanguageProvider } from "./ui/locale";
 import { Shell } from "./ui/Shell";
 import "./ui/styles.css";
+import "./ui/menus.css";
 document.documentElement.dataset.theme = validTheme(
   readPreference(THEME_KEY, "candy"),
 );

@@ -1,3 +1,4 @@
+import { MenuIcon } from "./MenuUI";
 import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
 import { GuidedTutorial } from "./GuidedTutorial";
@@ -31,7 +32,7 @@ export function Tutorial({
   if (page === "hub")
     return (
       <Localized>
-        <main className="learn-page learn-hub">
+        <main className="learn-page learn-hub menu-v3">
           <header>
             <button className="quiet" onClick={onHome}>
               <BrandMark />← Home
@@ -40,14 +41,23 @@ export function Tutorial({
           </header>
           <section className="learn-hub-options">
             <button className="primary" onClick={() => setPage("guided")}>
+              <span className="hub-choice-icon">
+                <MenuIcon kind="play" />
+              </span>
               <strong>Guided tutorial</strong>
               <span>One challenge at a time. You play, we guide.</span>
             </button>
             <button onClick={() => setPage("cards")}>
+              <span className="hub-choice-icon">
+                <MenuIcon kind="cards" />
+              </span>
               <strong>Card lab</strong>
               <span>See every card. Try every effect.</span>
             </button>
             <button onClick={() => setPage("sandbox")}>
+              <span className="hub-choice-icon">
+                <MenuIcon kind="settings" />
+              </span>
               <strong>Sandbox</strong>
               <span>Place pieces. Change cards. Experiment.</span>
             </button>
