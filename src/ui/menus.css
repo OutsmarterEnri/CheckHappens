@@ -887,3 +887,43 @@
   outline: 3px solid var(--purple);
   outline-offset: 3px;
 }
+
+/* iOS standalone notch: the opaque sticky header must start at the viewport
+   edge. Move the existing inset into it, preserving every control's position.
+   Keep this after compact menu overrides; the live table has its own fix. */
+@media (display-mode: standalone) {
+  @supports (-webkit-touch-callout: none) {
+    .menu-screen.menu-v3,
+    .learn-page {
+      --menu-top-inset: max(6px, env(safe-area-inset-top));
+      padding-top: 0;
+    }
+    .menu-v3.menu-home {
+      --menu-top-inset: max(14px, env(safe-area-inset-top));
+    }
+    .menu-secondary.menu-v3 {
+      grid-template-rows: calc(44px + var(--menu-top-inset)) auto minmax(0, 1fr);
+    }
+    .menu-masthead,
+    .menu-topbar,
+    .learn-page > header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      isolation: isolate;
+      background: var(--app-background);
+      padding-top: var(--menu-top-inset);
+    }
+    .menu-topbar,
+    .learn-page > header {
+      height: calc(44px + var(--menu-top-inset));
+      min-height: calc(44px + var(--menu-top-inset));
+      flex-basis: calc(44px + var(--menu-top-inset));
+    }
+    @media (max-height: 720px) {
+      .menu-v3.menu-home {
+        --menu-top-inset: max(8px, env(safe-area-inset-top));
+      }
+    }
+  }
+}

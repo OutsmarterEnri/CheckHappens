@@ -2,6 +2,8 @@
 
 ## 2.5.0
 
+- Extended the confirmed iOS standalone opaque-header notch workaround to home, setup, settings, invitations and all learning screens without moving their controls.
+
 - Rebuilt the menus around a comic clubhouse: layered chess/card mascot stage, a dominant Play action, paired learning/settings shortcuts and themed SVG icons.
 - Match setup now groups clock/side controls, local/private play cards and training in distinct surfaces. Settings uses an illustrated six-theme gallery and native accessible motion toggle.
 - Added shared menu navigation chrome, restyled invitation and learning-hub menus, and four six-world regressions for home hierarchy, text fit and touch targets in EN/IT.
