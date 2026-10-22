@@ -11,7 +11,9 @@ Project-authored code and assets remain reserved under the root LICENSE.
 - Sixteen guided missions, a card laboratory and an isolated position Sandbox using the real resolver.
 - On-device save/resume, compact JSON recording, replay verification and CLI analysis.
 - Edge-swipe navigation, explicit Back/Home buttons, single-screen menu and learning templates.
-- GitHub verification and manually dispatched Pages deployment; 176 unit and 68 Chromium browser tests.
+- GitHub verification and manually dispatched Pages deployment; 195 unit and 68 Chromium browser tests.
+
+The 22 October review batch is included in this release: validated imports, shared command validation, ordered room responses, sandbox checks, CLI correction and development-tool updates. See [review report](REVIEW_2026-10-22.md).
 
 ## Still experimental or limited
 

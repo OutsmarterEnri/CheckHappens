@@ -128,9 +128,40 @@ export function assertInvariants(s: State): void {
   if (
     !Array.isArray(s.pieces) ||
     s.pieces.length > 32 ||
-    !Array.isArray(s.events)
+    !Array.isArray(s.events) ||
+    !s.events.every(
+      (e) =>
+        e &&
+        Number.isSafeInteger(e.seq) &&
+        e.seq >= 0 &&
+        typeof e.type === "string" &&
+        typeof e.text === "string" &&
+        e.data &&
+        typeof e.data === "object" &&
+        !Array.isArray(e.data),
+    ) ||
+    !Array.isArray(s.used) ||
+    !s.used.every((id) => typeof id === "string") ||
+    !Array.isArray(s.ep) ||
+    !Array.isArray(s.discards)
   )
     throw new Error("Invalid pieces or events");
+  if (
+    ![
+      s.preDefense,
+      s.specialConsumed,
+      s.optionalSpecial,
+      s.transitionPending,
+    ].every((v) => typeof v === "boolean") ||
+    ![null, "mate", "stalemate"].includes(s.rescue) ||
+    !s.repetitions ||
+    typeof s.repetitions !== "object" ||
+    Array.isArray(s.repetitions) ||
+    !Object.values(s.repetitions).every(
+      (n) => Number.isSafeInteger(n) && n >= 0,
+    )
+  )
+    throw new Error("Invalid turn flags or repetition counters");
   const sq = (n: number) => Number.isInteger(n) && n >= 0 && n < 64;
   if (
     s.pieces.some(
@@ -140,6 +171,10 @@ export function assertInvariants(s: State): void {
         !["w", "b"].includes(p.army) ||
         !["p", "n", "b", "r", "q", "k"].includes(p.type) ||
         !["p", "n", "b", "r", "q", "k"].includes(p.original) ||
+        typeof p.moved !== "boolean" ||
+        typeof p.blocked !== "boolean" ||
+        (p.blockedAtTurn !== undefined &&
+          !Number.isSafeInteger(p.blockedAtTurn)) ||
         !sq(p.home) ||
         (p.square !== null && !sq(p.square)),
     )
@@ -164,7 +199,21 @@ export function assertInvariants(s: State): void {
     !Number.isFinite(s.seed)
   )
     throw new Error("Invalid deck or random state");
-  for (const c of s.deck) {
+  for (const ep of s.ep)
+    if (
+      !ep ||
+      typeof ep.pawnId !== "string" ||
+      !sq(ep.target) ||
+      !["w", "b"].includes(ep.eligibleArmy) ||
+      !Number.isSafeInteger(ep.expiresAfterTurn) ||
+      ep.expiresAfterTurn < 0
+    )
+      throw new Error("Invalid en passant state");
+  for (const c of [
+    ...s.deck,
+    ...s.discards,
+    ...(s.current === null ? [] : [s.current]),
+  ]) {
     if (
       !c ||
       typeof c.id !== "string" ||
@@ -192,7 +241,9 @@ export function assertInvariants(s: State): void {
     throw new Error("Invalid control or color");
   if (
     (s.phase === "GAME_OVER") !== !!s.outcome ||
-    (s.outcome && ![null, "P1", "P2"].includes(s.outcome.winner))
+    (s.outcome &&
+      (![null, "P1", "P2"].includes(s.outcome.winner) ||
+        typeof s.outcome.reason !== "string"))
   )
     throw new Error("Invalid outcome");
 

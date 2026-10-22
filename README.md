@@ -1,60 +1,133 @@
+<div align="center">
+
+<img src="public/icons/icon-192.png" alt="Rooki, the Check Happens mascot" width="112" />
+
 # Check Happens.
 
-### In Cards we trust
+**In Cards we trust.**
 
-**Chess, action cards, and plans that rarely survive the next draw.**
+Your opening was brilliant. Then someone drew Reverse.
 
-Check Happens is an independent experimental web game for two players on one device, one player against a local training bot, or two devices through a private room server. It combines legal chess moves with colored cards that change move budgets, clocks and even who controls each army.
+La tua apertura era geniale. Poi qualcuno ha pescato Reverse.
 
-The interface supports English and Italian, designed around a single iPhone portrait screen, with a playful cartoon style and direct touch controls. Local and bot games run entirely in the browser. Private invitations use the included authoritative Node server; no account system is required.
+[Play / Gioca](https://outsmarterenri.github.io/CheckHappens/) · [English](#english--meet-the-chaos) · [Italiano](#italiano--benvenuti-nel-caos) · [Technical / Tecnica](#technical-details--dettagli-tecnici) · [Roadmap](#next-milestones--prossime-tappe)
 
-<img src="docs/v2-game-iphone.png" alt="Check Happens portrait game table: clocks, colored chessboard frame and remaining moves" width="340" />
+**Playable prototype / Prototipo giocabile · v2.5.0 · iPhone-first · EN / IT**
 
-**Status:** playable prototype, version 2.5.0. **Project code:** reserved, not open source. **GitHub Pages:** frontend published; private Internet matches require a separately hosted HTTPS server.
+</div>
 
-## What you can play
+## English — meet the chaos
 
-- **Local match:** two people pass one phone between turns.
-- **Training:** Easy, Medium and Hard bots, with approximate labels of 120, 200 and 500 Elo. Their strategies differ; these are not measured ratings.
-- **Private match:** invitation link, two devices, authoritative clocks and reconnect. [Server setup](docs/PRIVATE_MATCHES.md).
-- **Themes:** Candy Chaos plus five alternative worlds, saved in Settings.
-- **Time controls:** 4-minute Bullet, 7-minute Blitz and 10-minute Rapid, per player. These are this game's custom mode names.
-- **Learning hub:** separate card lab, 16 interactive challenges with goals, hints and outcome feedback and a free position sandbox; all fit the phone viewport without scrolling.
-- Reduced-motion settings, automatic on-device saving and match JSON export/analysis.
+Chess teaches you to plan ahead. **Check Happens teaches you to remain emotionally flexible.**
 
-The board frame remembers the active card color. The turn banner identifies the player and controlled army. The move counter separates remaining actions and required bonuses. Skip chains lock the affected piece. Risky pieces show progressively stronger cracks based on their effective break chance and shake before a move; a broken piece disappears with a puff. Win/Lose/Draw finales offer review, replay export and a rematch.
+Play legal chess moves, draw action cards and try to keep your army, your clock and your dignity in roughly the same place. A knight may crack under pressure. A captured rook may return to work. A Reverse may hand your carefully ruined position to your opponent. Rooki approves. Your chess coach has questions.
 
-## How a turn works
+### Pick your kind of trouble
 
-Normally, a player automatically draws a card, adopts its color, resolves its effect and makes the available moves. A piece can be used only once within an action-card turn. Giving check ends the current turn after resolving the move and its effects.
+- **Local:** two people, one phone. Pass the device; take responsibility for your moves.
+- **Training:** three bots — Easy ~120, Medium ~200 and Hard ~500 Elo. These are playful estimates, not measured ratings or professional coaching credentials.
+- **Private invitations, experimental:** two devices can share a room through the included Node server. **No public multiplayer backend is configured yet.** The Pages site alone cannot connect Internet matches.
+- **Learn before blaming the deck:** 16 guided missions, a hands-on card lab and a sandbox for building your own positions.
 
-| Card | Effect |
-|---|---|
-| Number 1–9 | Grants that many moves with different pieces. The first four are safe and required; later moves may be passed unless a required bonus remains. |
-| 0 / Reset | Returns surviving non-pawn pieces home; ordinary pawns stay. It does not resurrect pieces. |
-| Skip | Freezes an eligible enemy piece for its next controller's turn. |
-| Reverse | Exchanges armies and remaining clocks, rotates the board, and lets the active player use the received army. |
-| +2 / +4 | Revives as many eligible lost pieces as possible, up to two/four, on free original squares. +4 also asks for a color. |
-| Wild | Chooses a color and evolves an eligible pawn into a rook, bishop or knight. |
+Choose **4-minute Bullet, 7-minute Blitz or 10-minute Rapid**, then White, Black or Random. These are our custom time-control names. Local and bot matches begin after **3–2–1**; the clock starts after the countdown. White opens, so selecting Black against a bot means the bot moves first.
 
-Special cards normally leave one optional move after their effect; defending check can make a remaining action mandatory.
+The interface is built for a single phone screen: card above the board, readable clocks, immediate color/target choices and a very visible Pass button when passing is legal. Six worlds change the scenery — Candy Chaos, Minty Mayhem, Bubblegum Bandit, Peach Please, Cloudy with a Chance of Check and Boo Happens. **Card colors keep their gameplay meaning in every theme.**
 
-| Active color | Effect per completed move |
-|---|---|
-| Red | Removes 3 seconds from the opponent. |
-| Green | Adds 3 seconds to the active player. |
-| Blue | Halves break risk on moves 5 and 6. |
-| Yellow | A capture grants another required move with a different available piece. |
+### The deck has opinions
 
-Break risk starts at move 5: **20%, 40%, 60%, 80%, then 99%**. A risky move and its capture resolve before the break roll. The king cannot be used from move 5 onward. Breaking ends the turn.
+| Card          | What happens to your excellent plan                                                                                       |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **1–9**       | That many moves, using different pieces. Up to the first four are required and safe; later moves tempt fate.              |
+| **0 / Reset** | Surviving non-pawn pieces return home. Ordinary pawns stay put. The lost pieces do not get an invitation.                 |
+| **Skip**      | Chains an eligible enemy piece for its next controller's turn. It still attacks its squares.                              |
+| **Reverse**   | Swaps armies and remaining clocks and rotates the board. Congratulations on your new management position.                 |
+| **+2 / +4**   | Revives the maximum available eligible pieces, up to two/four, on free home squares. +4 also lets you choose a color.     |
+| **Wild**      | Choose a color and evolve an eligible pawn into a rook, bishop or knight. Queens must use the ordinary promotion process. |
 
-**Under check:** defend before drawing, with the previous color still active. This defense does not reduce a following number card's move budget or advance its risk index, but it consumes a special card's optional move. **Under checkmate:** while cards remain, one emergency draw can rescue the position; it is a full turn, not an unlimited redraw. A Reverse can transfer a losing army to the other player. When the deck is exhausted, play transitions to ordinary single-move chess.
+Special cards normally leave one optional move after their effect. A preliminary check defense consumes that optional move.
 
-The in-app tutorial introduces the controls. [Original detailed rule notes](docs/REGOLE.md) and [archived specification](docs/SPECIFICA.md) remain in Italian and include historical defaults superseded by the modes listed above.
+**Red** takes 3 seconds from your opponent per completed move. **Green** adds 3 seconds to your clock. **Blue** halves break risk on moves 5 and 6. **Yellow** rewards a surviving capturing piece with another required move, using a different available piece.
 
-## Run locally
+Move 5 starts the danger zone: **20%, 40%, 60%, 80%, then 99%** break risk. The move and capture happen before the roll. The king cannot move from move 5 onward. Cracks warn you; a puff confirms that your piece has chosen early retirement. Breaking ends the turn. Giving check also ends the turn after the move and its effects resolve.
 
-Requires **Node.js 22 or newer** and npm. No API keys are required.
+**Check:** defend before drawing, keeping the previous card color. That defense does not spend the next number card's moves or advance its risk index, but the defending piece has already been used. **Checkmate:** while cards remain, one emergency draw gives you a full rescue turn; it is not an unlimited second-chance machine. After the last card's turn finishes, ordinary single-move chess takes over.
+
+Leaving the table **does not pause the clock**. The device remembers one local match; export its JSON before starting a replacement. Your opponent is not obliged to remind you.
+
+## Italiano — benvenuti nel caos
+
+Gli scacchi ti insegnano a pianificare. **Check Happens ti insegna ad affezionarti meno ai tuoi piani.**
+
+Muovi secondo le regole degli scacchi, pesca carte e cerca di tenere insieme esercito, cronometro e autostima. Una torre catturata può tornare in servizio. Un cavallo può andare letteralmente in pezzi. Un Reverse può trasformare il disastro che stavi costruendo nel problema del tuo avversario. Rooki è soddisfatto. Il tuo maestro di scacchi un po' meno.
+
+### Scegli come metterti nei guai
+
+- **Locale:** due persone e un telefono. Passatevi il dispositivo, senza attribuire al touchscreen le mosse discutibili.
+- **Allenamento:** tre bot — Facile ~120, Medio ~200 e Difficile ~500 Elo. Sono stime indicative, non valutazioni misurate.
+- **Inviti privati, sperimentali:** due dispositivi possono condividere una stanza tramite il server Node incluso. **Non è ancora configurato un backend pubblico.** Il solo sito Pages non ospita partite su Internet.
+- **Prima impara, poi accusa il mazzo:** 16 missioni guidate, laboratorio delle carte interattivo e sandbox per creare posizioni da provare.
+
+Scegli **Bullet da 4 minuti, Blitz da 7 o Rapid da 10**, poi Bianco, Nero o Casuale. Sono i nomi delle modalità del nostro gioco. Le partite locali e contro i bot partono con un **3–2–1**; il tempo comincia a scorrere dopo il countdown. Apre sempre il Bianco: scegliendo il Nero contro un bot, comincia lui.
+
+L'interfaccia è pensata per stare tutta nello schermo del telefono: carta sopra la scacchiera, cronometri leggibili, scelte rapide e pulsante Passa evidente quando è consentito usarlo. Sei temi cambiano l'atmosfera, compresa una versione Halloween. **I colori delle carte mantengono sempre lo stesso significato.** Lingua e movimento ridotto si scelgono nelle Impostazioni.
+
+### Le carte non rispettano il tuo piano
+
+| Carta         | Il piccolo imprevisto                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **1–9**       | Concede quel numero di mosse con pezzi diversi. Fino alle prime quattro sono obbligatorie e sicure; dopo comincia la tentazione.      |
+| **0 / Reset** | Riporta a casa i pezzi superstiti che non sono più pedoni. I pedoni normali restano dove sono. Nessuna resurrezione.                  |
+| **Skip**      | Incatena un pezzo nemico idoneo per il prossimo turno del suo controllore. Il pezzo continua ad attaccare le proprie caselle.         |
+| **Reverse**   | Scambia eserciti e tempi residui e ruota la scacchiera. Ora quella posizione è affar tuo.                                             |
+| **+2 / +4**   | Resuscita il massimo numero di pezzi idonei possibile, fino a due/quattro, sulle case iniziali libere. Con +4 scegli anche il colore. |
+| **Wild**      | Scegli un colore ed evolvi un pedone idoneo in torre, alfiere o cavallo. Per la donna resta la promozione normale.                    |
+
+Le carte speciali lasciano normalmente una mossa facoltativa dopo l'effetto. Un'eventuale difesa preliminare dallo scacco la consuma.
+
+**Rosso:** toglie 3 secondi all'avversario per ogni mossa completata. **Verde:** ne aggiunge 3 a te. **Blu:** dimezza il rischio di rottura sulle mosse 5 e 6. **Giallo:** una cattura, se il pezzo sopravvive, aggiunge un'altra mossa obbligatoria con un diverso pezzo disponibile.
+
+Dalla quinta mossa il rischio sale: **20%, 40%, 60%, 80%, poi 99%**. Prima si risolvono mossa e cattura, poi si tira la sorte. Il re non può muoversi dalla quinta mossa in avanti. Le crepe sono un avviso; il puff è la lettera di dimissioni del pezzo. La rottura termina il turno. Anche dare scacco termina il turno, dopo aver risolto mossa ed effetti.
+
+**Sotto scacco:** prima difendi il re usando ancora il colore precedente, poi peschi. La difesa non sottrae mosse alla carta numerica successiva e non aumenta l'indice di rischio; il pezzo difensore, però, è già stato usato. **Sotto matto:** finché restano carte, una sola pescata d'emergenza concede un turno completo per tentare di salvarsi. Finito il turno dell'ultima carta, si prosegue a scacchi classici con una mossa per turno.
+
+Tornare al menu **non ferma il tempo**. Il dispositivo conserva una sola partita locale: esporta il JSON prima di sostituirla. Rooki non risponde dei ripensamenti.
+
+## Play on iPhone / Gioca su iPhone
+
+Open [Check Happens](https://outsmarterenri.github.io/CheckHappens/) in Safari → **Share → Add to Home Screen**.
+
+Apri [Check Happens](https://outsmarterenri.github.io/CheckHappens/) in Safari → **Condividi → Aggiungi alla schermata Home**.
+
+This is an installable web app, not an App Store package. After an online visit and successful service-worker installation, the cached app supports offline local/bot play. Private rooms require a connection. Updates wait for open app windows to close; finish/export your match, close all windows, then reopen.
+
+È una web app installabile, non un'app dell'App Store. Dopo una visita online e l'installazione del service worker, la versione memorizzata permette di giocare offline in locale o contro i bot. Le stanze private richiedono connessione. Per aggiornare, termina/esporta la partita, chiudi tutte le finestre dell'app e riaprila.
+
+[iPhone notes / Note iPhone](docs/IPHONE.md)
+
+## Technical details / Dettagli tecnici
+
+React 19, strict TypeScript, Vite 6 and a local chess engine behind an adapter. No external chess service or AI API is required. Local/bot matches run entirely in the browser.
+
+React 19, TypeScript strict, Vite 6 e motore scacchistico locale dietro un adapter. Nessun servizio scacchistico esterno né API di IA necessari; partite locali e bot funzionano nel browser.
+
+| Area          | Responsibility / Responsabilità                                                                                                               |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/engine/` | Legal moves, king safety, castling, promotion and en passant / Mosse legali e sicurezza del re.                                               |
+| `src/domain/` | State, commands, turn resolver, cards, clocks, bots and deterministic recording / Stato, regole, carte, clock e registrazione deterministica. |
+| `src/ui/`     | Phone UI, themes, language, learning and persistence / Interfaccia, temi, lingue, tutorial e salvataggi.                                      |
+| `src/online/` | Validated protocol and room client / Protocollo validato e client delle stanze.                                                               |
+| `server/`     | Authoritative room server, invitation/seat credentials and disk persistence / Server autoritativo e persistenza.                              |
+| `tests/`      | Rule, import, transport, CLI and browser regressions / Test di regole, dati, rete, CLI e browser.                                             |
+
+Human moves, bot choices and clock updates go through the same dispatcher/resolver. Tutorials use the real rules on isolated states. Imported state is checked before use; network commands and replay share a validator. Late room responses cannot replace a newer revision.
+
+Mosse umane, scelte dei bot e aggiornamenti del tempo passano dallo stesso dispatcher/resolver. Il tutorial usa le regole reali su stati separati. Gli import vengono validati; rete e replay condividono il controllo dei comandi. Le risposte di rete in ritardo non sostituiscono revisioni più recenti.
+
+[Architecture](docs/ARCHITECTURE.md) · [Detailed rules / Regole](docs/REGOLE.md) · [Review report / Revisione](docs/REVIEW_2026-10-22.md) · [Changelog](CHANGELOG.md)
+
+### Run locally / Avvio locale
+
+Requires / Richiede **Node.js 22.12+ on 22.x, 24.x or 26+**, and npm.
 
 ```sh
 git clone https://github.com/OutsmarterEnri/CheckHappens.git
@@ -63,128 +136,94 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. Choose **Play**, a time control, and local play or a bot.
-
-For the production build:
+Open the Vite URL / Apri l'indirizzo mostrato da Vite.
 
 ```sh
 npm run build
-node scripts/serve.mjs
+node scripts/serve.mjs          # Local production preview / Anteprima locale
+node scripts/serve.mjs --lan    # Same Wi-Fi iPhone test / Prova iPhone sulla stessa rete
 ```
 
-Windows launchers: `DEV.cmd` installs dependencies and starts development; `PLAY.cmd` serves an existing build; `IPHONE.cmd` serves an existing build on the local network. The original launcher names remain as aliases.
+For LAN testing, keep the computer running. Ordinary HTTP allows gameplay; reliable offline installation needs HTTPS. Windows launchers: `DEV.cmd`, `PLAY.cmd`, `IPHONE.cmd`.
 
-## Play on iPhone
+Per le prove in Wi-Fi il computer deve restare acceso. HTTP permette di giocare; per un'installazione offline affidabile serve HTTPS. Launcher Windows: `DEV.cmd`, `PLAY.cmd`, `IPHONE.cmd`.
 
-For local Wi-Fi testing, build first and run:
+### Match logs / Log delle partite
 
-```sh
-node scripts/serve.mjs --lan
-```
+**Game options → Save match JSON / Opzioni partita → Salva partita JSON.**
 
-Open the printed LAN address in Safari while the phone and computer share Wi-Fi. The computer must remain running. Ordinary LAN HTTP supports gameplay, but secure HTTPS hosting is needed for reliable service-worker offline caching on iPhone.
+Commands, choices, rejected actions and exact clock samples are recorded. Schema 2 compacts clock samples without dropping their durations/fingerprints. Schema-1 logs and legacy saves remain readable. Session metadata records local/bot context and the build revision. No automatic upload occurs in local/bot play.
 
-For a hosted test, use the **GitHub Pages guide below**. Once published, open the HTTPS site in Safari and use **Share → Add to Home Screen** if desired. This is a web app, not a native App Store package. See [iPhone notes](docs/IPHONE.md).
-
-## Publish a test build on GitHub Pages
-
-Expected address after the first successful deployment:
-
-`https://outsmarterenri.github.io/CheckHappens/`
-
-The included [Deploy Check Happens to Pages workflow](.github/workflows/pages.yml) runs **manually**, on `main`. It verifies and builds the project, then publishes **only `dist/`**. A normal push does not deploy the game.
-
-1. Commit and push these prepared files to `main`.
-2. In the repository, open **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-3. Open **Actions → Deploy Check Happens to Pages → Run workflow**, select `main`, then run it.
-4. Wait for the verification/build and deployment jobs to finish successfully. Open the URL shown by the `github-pages` environment.
-5. On iPhone, test a local match, a bot match, JSON export, resume, and a reload after visiting online once.
-
-For each later test release, push the reviewed changes and run that workflow again. No custom domain or paid hosting is required for a public repository on GitHub Free. Pages availability for private repositories depends on the GitHub plan. **A standard Pages URL is publicly reachable; it is not a private invite-only beta.**
-
-Detailed setup, permissions, update behavior and troubleshooting: [GitHub Pages publication guide](docs/PAGES.md).
-
-## Match logs and diagnostics
-
-Open **Game options → Save match JSON**, **Verify this match**, or **Analyze JSON file**.
-
-Every resolver command is recorded, including card choices, bot actions, rejected moves and exact clock samples. Compact schema 2 groups consecutive clock samples without discarding their durations or fingerprints, and omits duplicated checkpoints. Original schema-1 logs and legacy saves remain readable.
-
-Recording sessions identify local/computer mode, bot difficulty and the build's application version, Git revision and source fingerprint. Unknown context from older logs stays unknown. Exported logs remain on the device until shared.
+Il JSON registra comandi, scelte, azioni rifiutate e campioni esatti del clock. Lo schema 2 compatta i campioni senza perdere durate o impronte dello stato. Restano leggibili schema 1 e vecchi salvataggi. I metadati identificano sessione e build; nelle partite locali/contro bot non ci sono upload automatici.
 
 ```sh
 npm run analyze:match -- path/to/match.json
 npm run analyze:match -- --compact old.json compact.json
+npm run analyze:match -- --example example.json
 ```
 
-The analyzer re-executes the covered actions and reports the first divergence, plus a summary derived from verified replay. Consistent replay checks this implementation; it does not prove every game rule is correct or establish anti-cheat authenticity. See [log format and limits](docs/MATCH_LOGS.md).
+Replay verification checks reproducibility with this implementation; it is neither an independent proof of every rule nor a signed anti-cheat record.
 
-## Development and verification
+La verifica dimostra la riproducibilità con questa implementazione: non è una prova indipendente di tutte le regole né un risultato firmato contro le alterazioni.
+
+[Log format / Formato dei log](docs/MATCH_LOGS.md)
+
+### Checks and deployment / Verifiche e pubblicazione
 
 ```sh
 npm run check
+npm run build:server
 npx playwright install chromium
 npx playwright test --workers=2
+npm audit
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 68 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+Verified baseline / Verifiche effettuate: **195 unit tests + 68 Chromium browser tests**, strict TypeScript, production/server builds and historical replay fixtures. Real iPhone/Safari testing is still needed for native status bars, gestures and accessibility text sizes.
 
-The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
+Pushes to `main` run verification. Publishing uses the manual **Deploy Check Happens to Pages** workflow, which verifies the code and publishes only `dist/`. Pages hosts the frontend, not the Node server.
 
-## Current limits and data
+I push su `main` avviano le verifiche. Il deploy usa il workflow manuale **Deploy Check Happens to Pages**, che verifica il codice e pubblica solo `dist/`. Pages ospita il frontend, non il server Node.
 
-- Private rooms are implemented and tested locally with two browser clients. No public backend is configured yet. GitHub Pages serves only the frontend; use the included server on your LAN or deploy it separately with HTTPS. [Private matches](docs/PRIVATE_MATCHES.md).
-- Leaving the table does not pause the clock. Resume accounts for elapsed time. A new match replaces the single local save: export before replacing it.
-- Storage is best-effort. Clearing browser data, changing browser/device/origin, or exhausting storage can lose the on-device save. The local development URL and Pages URL have separate saves.
-- Local/bot games do not upload matches. Private mode sends commands to the selected room server, which stores game logs and hashed seat credentials. No analytics or accounts are implemented. GitHub and the chosen backend host may process connection information, including IP addresses.
-- The local engine's dead-position/timeout material evaluator is conservative and does not cover every exceptional chess position. Bots are heuristic training opponents, not certified Elo engines.
-- Lab fixtures and ordered decks are debugging starting positions. They replace the current table and are not ordinary match history.
+[Pages guide / Guida Pages](docs/PAGES.md) · [Test notes / Note di verifica](docs/TESTING.md) · [Private-room setup / Stanze private](docs/PRIVATE_MATCHES.md)
 
-Report rule or interface problems through [GitHub Issues](https://github.com/OutsmarterEnri/CheckHappens/issues). Include expected behavior, device/browser, build context and an exported match log when relevant. Review files before posting: issues and attached logs may be public. Do not submit secrets or unrelated personal information.
+## Next milestones / Prossime tappe
 
-## License, ownership and third-party rights
+These are planned directions, not shipped features or promised dates.
 
-**The project owner has chosen to keep project-authored code, documentation and assets reserved for now.** The root [LICENSE](LICENSE) is a rights notice, not an open-source license; `package.json` declares `UNLICENSED`. This does not mean the public repository is confidential, revoke GitHub's viewing/forking permissions, or prevent users from downloading browser-delivered JavaScript. No MIT/GPL reuse grant is made for project-authored materials.
+Sono obiettivi di sviluppo, non funzionalità già disponibili o date promesse.
 
-Third-party licenses continue to apply separately. React, React DOM and Scheduler use MIT; their copyright and permission notices are preserved. Vite's core license and supplied bundled-tool notices are also retained. See [third-party notices](THIRD_PARTY_NOTICES.md), [the dependency inventory](docs/DEPENDENCY_LICENSES.md), and the deployed `THIRD_PARTY_NOTICES.txt` file.
+| Priority                     | English                                                                                                                                 | Italiano                                                                                                                                |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **1 — Real phones**          | Playtest full matches on iPhone, including install/update, notch, safe areas, gestures and larger text.                                 | Provare partite complete su iPhone: installazione, aggiornamenti, notch, gesti e testo ingrandito.                                      |
+| **2 — Rules under pressure** | Analyze real match logs and add independent regressions for rare card/check/material combinations.                                      | Analizzare i log reali e aggiungere regressioni indipendenti per combinazioni rare di carte, scacco e materiale.                        |
+| **3 — Public private rooms** | Host the existing backend with HTTPS and persistent storage; test proxy limits, invitation recovery and reconnect across real networks. | Ospitare il backend con HTTPS e disco persistente; verificare limiti del proxy, recupero degli inviti e riconnessioni tra reti diverse. |
+| **4 — Better training**      | Improve bot decisions from playtests and measure difficulty before treating Elo labels as ratings.                                      | Migliorare le decisioni dei bot e misurare la difficoltà prima di attribuire valore alle etichette Elo.                                 |
+| **5 — Release polish**       | Continue accessibility checks and simplify UI modules where a concrete maintenance problem appears.                                     | Proseguire le verifiche di accessibilità e semplificare i moduli UI dove emerge una necessità concreta.                                 |
 
-This is an independent prototype, not an official or endorsed Mattel product. UNO is a Mattel brand; references describe inspiration and terminology, not a license to use its branding, artwork or trade dress. The availability of source code or the choice of a software license does not clear trademark, asset or commercial-distribution rights. The name **Check Happens** has not undergone a trademark-clearance review. See [rights and release notes](docs/RIGHTS.md) before wider distribution or monetization.
+## Limits and data / Limiti e dati
 
-### Language and phone controls
+- **One local save / Un salvataggio locale:** device and origin specific. No account or cloud sync. Export before replacing it or clearing browser data. / Legato a dispositivo e origine; nessun account o cloud. Esporta prima di sostituirlo o cancellare i dati.
+- **Clocks keep running / Il tempo continua:** menus and leaving the app do not pause an active match. / Menu e uscita dall'app non mettono in pausa la partita.
+- **Experimental multiplayer / Multiplayer sperimentale:** single-process Node server, disk snapshots and limited room capacity. No public backend configured; public-load guarantees have not been established. / Server a processo singolo, snapshot su disco e capacità limitata; nessun backend pubblico configurato o garanzia di carico pubblico.
+- **Known approximations / Approssimazioni dichiarate:** conservative dead-position/timeout material evaluation in exceptional chess positions; heuristic bots with uncalibrated Elo. / Valutazione conservativa di posizioni morte/materiale nei casi eccezionali e bot con Elo non calibrato.
+- **Privacy:** local/bot games do not upload match data. Private rooms send commands to the selected server, which stores match data and hashed credentials. No analytics are implemented; hosting providers may process connection data. / Nessun upload nelle partite locali/contro bot. Le stanze private inviano comandi al server scelto, che conserva dati e credenziali in forma hash. Nessuna analytics implementata; gli host possono trattare dati di connessione.
 
-Choose **Settings → Language → English / Italiano**. The choice is saved on this
-device and applies to menus, the tutorial, card choices, turn feedback and results.
-Match JSON diagnostics remain in English for reproducible analysis. The card panel
-sits above the board; larger clocks and highlighted Pass/List actions keep the
-board and turn controls within easier thumb reach. The installed iOS safe-area
-header workaround is preserved.
+Found a bug? [Open an issue](https://github.com/OutsmarterEnri/CheckHappens/issues) with expected/actual behavior, device/browser and a relevant JSON log. Check attachments before posting: issues may be public.
 
-Before starting, choose **White / Black / Random**. In a local game this sets
-Player 1's starting army; against a bot it sets your army. White always opens,
-so the bot goes first when you choose Black. Reverse still swaps armies and
-clocks during play. Random is resolved once per new match from its random seed.
-Selecting Local match or Train with a bot starts a **3–2–1 countdown** and then
-draws the first card automatically. The game clock starts after the countdown.
-Saved matches resume directly; the laboratory retains a manual start for scenarios.
+Hai trovato un bug? [Apri una issue](https://github.com/OutsmarterEnri/CheckHappens/issues) indicando comportamento atteso/reale, dispositivo/browser e, se utile, il JSON della partita. Controlla gli allegati: le issue possono essere pubbliche.
 
-### Six worlds, one deck
+## Rights and licenses / Diritti e licenze
 
-Settings changes the complete visual world: Candy Chaos comic paper, Minty Mayhem
-forest night, Bubblegum Bandit bubble pop, Peach Please desert sunshine, and Cloudy
-with a Chance of Check blueprints, plus Boo Happens Halloween nights. Surfaces, board squares, chess pieces, controls,
-feedback and the Rooki mascot follow the selected world. Drawn card faces, color
-choices and the active-color board frame retain their fixed gameplay colors.
+**Project-authored code, documentation and assets remain reserved. This is not an open-source release.** The root [LICENSE](LICENSE) is a rights notice; `package.json` declares `UNLICENSED`. Publishing the repository or website does not grant MIT/GPL reuse rights. Public browser-delivered code remains downloadable, and GitHub's platform terms still apply.
 
-Rooki uses the owner-supplied illustrated mascot, five original theme variants and a new Halloween costume: tap to greet it. The wordmark, loading screen and installable icons share the illustrated identity. Motion follows
-the saved preference and the device's reduced-motion setting. Theme selection is
-saved on this device; all six worlds fit the existing single-screen phone layout.
+**Codice, documentazione e asset del progetto restano riservati. Non è una pubblicazione open source.** [LICENSE](LICENSE) contiene l'avviso sui diritti; `package.json` dichiara `UNLICENSED`. La disponibilità del repository o del sito non concede una licenza MIT/GPL di riutilizzo. Il codice inviato al browser resta scaricabile e si applicano i termini della piattaforma GitHub.
 
-Menu and learning navigation supports a rightward swipe starting within 24px of
-the left edge, alongside the visible Back/Home buttons. Forms and chessboard
-touches are excluded. Match navigation preserves the existing save/clock behavior;
-leaving the table does not pause a running clock. See [project status](docs/STATUS.md).
+Third-party licenses apply separately. React, React DOM and Scheduler use MIT. Their notices and Vite's supplied license notices are preserved; development skills and review tools are not game runtime dependencies.
 
-The clubhouse menus share the table’s illustrated, tactile style: a layered chess/card
-hero, a dominant Play action, compact mode cards and an illustrated theme gallery.
-Local/private play, training, clock/side selection and all saved preferences retain
-their existing behavior.
+Le licenze dei componenti di terzi restano applicabili separatamente. React, React DOM e Scheduler usano MIT; gli avvisi e le licenze fornite da Vite sono conservati. Skill e strumenti di revisione non sono dipendenze runtime del gioco.
+
+[Third-party notices](THIRD_PARTY_NOTICES.md) · [Dependency license inventory](docs/DEPENDENCY_LICENSES.md) · [Rights notes / Note sui diritti](docs/RIGHTS.md)
+
+An independent prototype, not an official or endorsed Mattel product. UNO is a Mattel brand; inspiration does not grant trademark or artwork rights. The Check Happens name has not undergone trademark-clearance review.
+
+Prototipo indipendente, non ufficiale né approvato da Mattel. UNO è un marchio Mattel: l'ispirazione non concede diritti sul marchio o sui suoi asset. Il nome Check Happens non è stato sottoposto a una verifica di disponibilità del marchio.

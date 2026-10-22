@@ -88,6 +88,8 @@ export function beginPractice(input: State, risky = false): State {
 }
 export function positionError(pieces: Piece[]): string | null {
   if (pieces.length > 32) return "Use at most 32 pieces.";
+  if (new Set(pieces.map((p) => p.home)).size !== pieces.length)
+    return "Each piece needs a different home square. Clear pieces to rebuild the position.";
   for (const army of ["w", "b"])
     if (
       pieces.filter(

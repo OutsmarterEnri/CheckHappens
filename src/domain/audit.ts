@@ -1,3 +1,4 @@
+import { isCommand } from "./commands";
 import {
   packJournal,
   unpackJournal,
@@ -125,39 +126,6 @@ export function exportMatch(s: State): CompactMatchLog {
     final: withoutEvents(s),
   };
 }
-function validCommand(c: Command): boolean {
-  if (!c || typeof c !== "object") return false;
-  const square = (n: unknown) =>
-    Number.isInteger(n) && Number(n) >= 0 && Number(n) < 64;
-  switch (c.type) {
-    case "StartGame":
-    case "AdvanceTime":
-    case "EndOptionalMoves":
-      return true;
-    case "SubmitMove":
-      return (
-        square(c.from) &&
-        square(c.to) &&
-        (!c.promotion || ["q", "r", "b", "n"].includes(c.promotion))
-      );
-    case "ChooseUnoColor":
-      return ["red", "green", "blue", "yellow"].includes(c.color);
-    case "ChooseSkipTarget":
-      return typeof c.pieceId === "string";
-    case "ChooseEvolution":
-      return (
-        typeof c.pieceId === "string" && ["r", "b", "n"].includes(c.pieceType)
-      );
-    case "ChooseResurrections":
-      return (
-        Array.isArray(c.pieceIds) &&
-        c.pieceIds.length <= 4 &&
-        c.pieceIds.every((x) => typeof x === "string")
-      );
-    default:
-      return false;
-  }
-}
 function inspectMatch(
   value: unknown,
   success?: (state: State) => void,
@@ -206,7 +174,7 @@ function inspectMatch(
       if (
         e.seq !== checked ||
         !Number.isFinite(e.elapsedMs) ||
-        !validCommand(e.command)
+        !isCommand(e.command)
       )
         return bad("Malformed action.");
       if (

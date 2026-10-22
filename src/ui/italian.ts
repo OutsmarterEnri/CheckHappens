@@ -1,5 +1,7 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "Each piece needs a different home square. Clear pieces to rebuild the position.":
+    "Ogni pezzo deve avere una casella iniziale diversa. Svuota la scacchiera per ricreare la posizione.",
   "CHESS + CARDS": "SCACCHI + CARTE",
   "Make it yours.": "A modo tuo.",
   "Rooki's clubhouse": "Il club di Rooki",

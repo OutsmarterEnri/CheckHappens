@@ -93,4 +93,13 @@ describe("isolated real-engine practice", () => {
     expect(e.events.some((ev) => ev.type === "ResetApplied")).toBe(true);
     expect(e.outcome).toBeNull();
   });
+  it("rejects editor pieces sharing a home before Reset or resurrection can collide", () => {
+    const s = practiceSetup();
+    const original = s.pieces.find((p) => p.id === "w-8")!;
+    original.square = null;
+    original.death = "capture";
+    s.pieces = s.pieces.filter((p) => p.id !== "w-0");
+    s.pieces.push({ ...original, id: "editor-rook", type: "r", original: "r" });
+    expect(positionError(s.pieces)).toMatch(/different home/);
+  });
 });

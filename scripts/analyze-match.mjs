@@ -89,8 +89,7 @@ try {
     ).state;
     s = engine.dispatch(s, { type: "AdvanceTime" }, 500000, "clock").state;
     await writeFile(
-      args[1] ??
-        "example.json\n       npm run analyze:match -- --compact INPUT.json OUTPUT.json",
+      args[1] ?? "example.json",
       JSON.stringify(api.exportMatch(s), null, 2) + "\n",
     );
     console.log("Example match written.");

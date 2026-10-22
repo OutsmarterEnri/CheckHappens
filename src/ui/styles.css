@@ -1847,57 +1847,6 @@ h2 {
   font-size: 10px;
 }
 
-/* Palettes change the table, not the four gameplay color meanings. */
-:root {
-  --board-light: #fff1ca;
-  --board-dark: #c4aedf;
-  --panel: #eee0ff;
-  --muted: #705580;
-}
-:root[data-theme="mint"] {
-  --app-background: #eef9f3;
-  --paper: #fbfffa;
-  --ink: #203e3b;
-  --purple: #357868;
-  --yellow: #f5d96a;
-  --board-light: #f0f4d6;
-  --board-dark: #9bcdbb;
-  --panel: #d8eee3;
-  --muted: #395f58;
-}
-:root[data-theme="bubblegum"] {
-  --app-background: #fff1f6;
-  --paper: #fffafc;
-  --ink: #48283e;
-  --purple: #a13c78;
-  --yellow: #ffd68e;
-  --board-light: #ffe9da;
-  --board-dark: #e7acd0;
-  --panel: #f6dcea;
-  --muted: #77435e;
-}
-:root[data-theme="peach"] {
-  --app-background: #fff3e8;
-  --paper: #fffdf4;
-  --ink: #493128;
-  --purple: #a45332;
-  --yellow: #f3cc79;
-  --board-light: #ffedc9;
-  --board-dark: #e8b391;
-  --panel: #f7dfcb;
-  --muted: #79513d;
-}
-:root[data-theme="cloud"] {
-  --app-background: #eff6ff;
-  --paper: #fcfdff;
-  --ink: #263553;
-  --purple: #4f65a3;
-  --yellow: #ffe08a;
-  --board-light: #f8efd9;
-  --board-dark: #adc5eb;
-  --panel: #dce7fa;
-  --muted: #4c6086;
-}
 .play-dock {
   background: var(--panel);
 }
@@ -2821,14 +2770,6 @@ h2 {
   --panel-radius: 20px;
   --brand-shadow: 4px;
   --warning-ink: #a65135;
-  --mascot-body: #b49be0;
-  --mascot-trim: #ffce52;
-  --mascot-outline: #322546;
-  --mascot-shine: #fff9e9;
-  --mascot-cheek: #ee8b9d;
-  --mascot-cape: #ed958c;
-  --hero-medallion: #e4cff8;
-  --hero-shadow: #c5a7d1;
   --pattern-ink: #d6bdb742;
   --world-pattern: radial-gradient(var(--pattern-ink) 1.2px, transparent 1.2px);
   --pattern-size: 18px 18px;
@@ -2858,14 +2799,6 @@ h2 {
   --panel-radius: 12px;
   --brand-shadow: 3px;
   --warning-ink: #ffbc91;
-  --mascot-body: #98ca92;
-  --mascot-trim: #e6c56d;
-  --mascot-outline: #163b2f;
-  --mascot-shine: #fff4d6;
-  --mascot-cheek: #e7a27a;
-  --mascot-cape: #d4a85d;
-  --hero-medallion: #346b50;
-  --hero-shadow: #071c19;
   --pattern-ink: #9bbd8b18;
   --world-pattern: repeating-linear-gradient(
     135deg,
@@ -2900,14 +2833,6 @@ h2 {
   --panel-radius: 28px;
   --brand-shadow: 5px;
   --warning-ink: #a34436;
-  --mascot-body: #ed90bd;
-  --mascot-trim: #ffb858;
-  --mascot-outline: #54223d;
-  --mascot-shine: #fff9ed;
-  --mascot-cheek: #d64f85;
-  --mascot-cape: #cb9aed;
-  --hero-medallion: #ffc1df;
-  --hero-shadow: #e5a0c1;
   --pattern-ink: #d864a321;
   --world-pattern: radial-gradient(
     circle at 5px 5px,
@@ -2941,14 +2866,6 @@ h2 {
   --panel-radius: 14px;
   --brand-shadow: 5px;
   --warning-ink: #9d361f;
-  --mascot-body: #ecad6a;
-  --mascot-trim: #f5d37e;
-  --mascot-outline: #5c302a;
-  --mascot-shine: #fff5da;
-  --mascot-cheek: #d67d54;
-  --mascot-cape: #b65341;
-  --hero-medallion: #f5b374;
-  --hero-shadow: #d79b6d;
   --pattern-ink: #ad694b17;
   --world-pattern: repeating-linear-gradient(
     0deg,
@@ -2982,14 +2899,6 @@ h2 {
   --panel-radius: 16px;
   --brand-shadow: 3px;
   --warning-ink: #9c4b30;
-  --mascot-body: #85b7e3;
-  --mascot-trim: #f1bc62;
-  --mascot-outline: #233b70;
-  --mascot-shine: #fff8e5;
-  --mascot-cheek: #df98a0;
-  --mascot-cape: #e6bc6d;
-  --hero-medallion: #c6ddf8;
-  --hero-shadow: #abc6e4;
   --pattern-ink: #678db61c;
   --world-pattern:
     linear-gradient(var(--pattern-ink) 1px, transparent 1px),
@@ -3754,14 +3663,6 @@ textarea {
   --panel-radius: 22px;
   --brand-shadow: 4px;
   --warning-ink: #ffc286;
-  --mascot-body: #ab86d7;
-  --mascot-trim: #ffad4d;
-  --mascot-outline: #291b3b;
-  --mascot-shine: #fff1dc;
-  --mascot-cheek: #f49b98;
-  --mascot-cape: #ed8b43;
-  --hero-medallion: #49305c;
-  --hero-shadow: #110a1e;
   --pattern-ink: #cc9ef51c;
   --world-pattern:
     radial-gradient(

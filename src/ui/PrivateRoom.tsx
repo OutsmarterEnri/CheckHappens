@@ -12,6 +12,7 @@ import {
   ROOM_SERVER,
   ROOM_SESSION,
   roomError,
+  newerRoomView,
 } from "../online/client";
 import type { RoomCredentials, RoomView } from "../online/protocol";
 import type { Minutes, SidePreference } from "../domain/match";
@@ -86,7 +87,7 @@ export function PrivateRoom({
       try {
         const state = await viewRoom(session, controller.signal);
         if (stopped) return;
-        setView(state);
+        setView((current) => newerRoomView(current, state));
         setConnected(true);
         setError("");
       } catch (e) {
@@ -187,7 +188,7 @@ export function PrivateRoom({
                 view.actionRevision,
               );
               if (alive.current) {
-                setView(next);
+                setView((current) => newerRoomView(current, next));
                 setConnected(true);
                 setError("");
               }

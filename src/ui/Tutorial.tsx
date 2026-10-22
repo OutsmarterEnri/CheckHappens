@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Localized, useLanguage, translate } from "./locale";
 import { PracticeTable } from "./PracticeTable";
 import { practiceCards } from "./learningCards";
-import { practiceSetup } from "../domain/practice";
+import { practiceSetup, practiceCard } from "../domain/practice";
 import { colors } from "../domain/cards";
 import { colorNames, type UnoColor } from "../domain/types";
 export function Tutorial({
@@ -118,7 +118,7 @@ export function Tutorial({
           {page === "cards" ? (
             <section className="learn-card-info" aria-label="Card explanation">
               <div
-                className={`mini-card ${["draw4", "wild"].includes(["number", "number", "draw2", "draw4", "wild", "skip", "reverse", "reset"][index]) ? "neutral" : color}`}
+                className={`mini-card ${practiceCard(index, color).color ?? "neutral"}`}
               >
                 <strong>{card.symbol}</strong>
               </div>

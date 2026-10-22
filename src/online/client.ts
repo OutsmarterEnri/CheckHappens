@@ -57,12 +57,19 @@ export async function roomRequest<T>(
     signal?.removeEventListener("abort", abort);
   }
 }
-function validateView(value: RoomView): RoomView {
+function validateView(value: RoomView, roomId: string): RoomView {
   if (
     !value ||
     typeof value !== "object" ||
+    value.roomId !== roomId ||
     !Number.isSafeInteger(value.revision) ||
+    value.revision < 0 ||
     !Number.isSafeInteger(value.actionRevision) ||
+    value.actionRevision < 0 ||
+    value.actionRevision > value.revision ||
+    !Number.isSafeInteger(value.totalMoves) ||
+    value.totalMoves < 0 ||
+    typeof value.opponentOnline !== "boolean" ||
     !Number.isFinite(value.serverNow) ||
     typeof value.joined !== "boolean" ||
     (value.startsAt !== null && !Number.isFinite(value.startsAt))
@@ -84,6 +91,7 @@ export const viewRoom = async (c: RoomCredentials, signal?: AbortSignal) =>
       c.token,
       signal,
     ),
+    c.roomId,
   );
 export async function sendRoomCommand(
   c: RoomCredentials,
@@ -103,6 +111,7 @@ export async function sendRoomCommand(
         body,
         c.token,
       ),
+      c.roomId,
     );
   } catch (error) {
     if (
@@ -116,6 +125,7 @@ export async function sendRoomCommand(
           body,
           c.token,
         ),
+        c.roomId,
       );
     throw error;
   }
@@ -155,4 +165,16 @@ export function roomError(error: unknown): string {
     return "Connection lost. Please reconnect.";
   const text = error instanceof Error ? error.message : "SERVER_ERROR";
   return errors[text] ?? text;
+}
+
+/** A poll started before a command may finish after its newer response. */
+export function newerRoomView(
+  current: RoomView | null,
+  next: RoomView,
+): RoomView {
+  return current &&
+    current.roomId === next.roomId &&
+    current.revision > next.revision
+    ? current
+    : next;
 }

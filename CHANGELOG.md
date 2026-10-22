@@ -2,6 +2,15 @@
 
 ## 2.5.0
 
+- Rewrote the README in English and Italian with a playful game introduction, accurate card/color rules, technical architecture, setup, diagnostics, roadmap and reserved-rights notices.
+
+- Review batch: validate imported state collections, flags, cards and en passant data; share the strict command validator between replay and private-room transport.
+- Prevent slow room polls from overwriting newer command acknowledgements; reject wrong-room or malformed response metadata.
+- Reject ambiguous sandbox home squares before testing a position; fix the default filename for CLI `--example`.
+- Remove obsolete theme palettes and unused mascot variables, and derive card-lab face colors from the actual practice-card factory.
+- Update Vitest to 5.0.5 and Vite to 6.4.5, refresh license metadata and document Node compatibility; add 19 unit regressions.
+
+
 - Simplified home branding, removed the CHESS + CARDS badge and default mascot slogan, and balanced the upright logo, mascot stage and centered action group. Mascot messages appear only on tap.
 
 - Draw the app behind the installed iOS status area and apply the saved palette before React loads, retaining opaque safe-area headers and the notch blur workaround.
