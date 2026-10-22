@@ -4,7 +4,7 @@ Latest UI and theme verification: 22 October 2026.
 
 - Strict TypeScript and Vite production build pass.
 - 176 Vitest tests pass: 22 new room, HTTP, theme, crack and viewer-finale cases, alongside 80 rule/engine cases, 5 persistence cases, 4 existing computer cases and 19 audit/time/bot cases, 9 compact-log/storage/metadata cases and 1 source-build fingerprint case, plus 3 language formatting regressions.
-- 53 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
+- 54 Chromium browser tests pass. Four new cases cover persisted themes, Skip chains, progressive cracks and a two-client invitation/reconnect match. The suite covers English menus/tutorial/settings, 4/7/10-minute matches, three training profiles, turn changes, Reverse, defense before draw, color choice, +2/+4 ghosts, Wild evolution, Skip, pre-move cracks, destruction puff, JSON download/analysis, altered-log rejection, clock expiry and theatrical Win/Lose/Draw dialogs.
 - Portrait viewport checks: 375×667, 393×852, 430×932 and 768×1024. Main action and menu touch targets are checked. Landscape shows a portrait-orientation hint.
 - Reduced-motion risk/finale feedback and production service-worker offline reload are exercised. Browser tests fail on unhandled JavaScript errors.
 - Initial engine perft remains 20 / 400 / 8902 at depth 1 / 2 / 3.
@@ -86,7 +86,7 @@ The Yellow lesson now shows the actual 1 card and requests a quiet knight move a
 
 ### Rooki and complete visual themes
 
-Seven browser cases exercise all five worlds, their distinct background patterns,
+World browser cases exercise all six worlds, their distinct background patterns,
 matching mascot variants, four fixed card-face and active-frame colors, and
 viewport-contained settings at 320×568. Additional cases verify that tapping Rooki
 changes its phrase without layout shift under reduced motion, and that the initial
@@ -108,3 +108,7 @@ and edge-only coordinates. Three new browser cases check 320×568, 393×852 and
 428×926, including simulated 59px top / 34px bottom safe areas, Settings panel
 position and containment, and the card laboratory’s active-color frame label.
 Real Safari safe-area rendering remains a physical-device check.
+
+Boo Happens adds a sixth world to the shared card-color, frame-color, image-loading
+and small-screen checks. Saved-theme loading is exercised with Halloween before
+React starts. The six Settings choices still occupy three rows.

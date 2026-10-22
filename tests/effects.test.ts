@@ -15,7 +15,8 @@ describe("2.5 visual feedback", () => {
     expect(crackStage(risk(9, "blue") * 100)).toBe(5);
   });
   it("keeps known themes and safely falls back for old or corrupted preferences", () => {
-    expect(themes).toHaveLength(5);
+    expect(themes).toHaveLength(6);
+    expect(validTheme("halloween")).toBe("halloween");
     expect(validTheme("mint")).toBe("mint");
     expect(validTheme("unknown")).toBe("candy");
     expect(validTheme(null)).toBe("candy");

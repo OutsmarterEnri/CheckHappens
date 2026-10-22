@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { Localized } from "./locale";
 import type { Theme } from "./themes";
 const asset = (name: string) => `${import.meta.env.BASE_URL}brand/${name}`;
+const mascotAsset = (theme: Theme) =>
+  asset(theme === "halloween" ? "mascot-halloween.png" : "mascot-sheet.png");
 export function BrandMark({ theme }: { theme?: Theme } = {}) {
   if (theme)
     return (
       <span
         className={`brand-mark rooki-illustration rooki-${theme}`}
         aria-hidden="true"
-        style={{ backgroundImage: `url("${asset("mascot-sheet.png")}")` }}
+        style={{ backgroundImage: `url("${mascotAsset(theme)}")` }}
       />
     );
   return (
@@ -55,7 +57,7 @@ export function Rooki({ theme }: { theme: Theme }) {
               role="img"
               aria-label="Rooki, the chaos rook"
               data-look={theme}
-              style={{ backgroundImage: `url("${asset("mascot-sheet.png")}")` }}
+              style={{ backgroundImage: `url("${mascotAsset(theme)}")` }}
             />
           </span>
         </button>

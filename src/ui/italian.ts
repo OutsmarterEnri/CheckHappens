@@ -1,5 +1,6 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "Boo Happens": "Dolcetto o Scacchetto",
   "Say hello to Rooki": "Saluta Rooki",
   "Rooki, the chaos rook": "Rooki, la torre del caos",
   "Small rook. Big trouble.": "Piccola torre. Grandi guai.",

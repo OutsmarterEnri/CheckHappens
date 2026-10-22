@@ -17,7 +17,7 @@ The interface supports English and Italian, designed around a single iPhone port
 - **Local match:** two people pass one phone between turns.
 - **Training:** Easy, Medium and Hard bots, with approximate labels of 120, 200 and 500 Elo. Their strategies differ; these are not measured ratings.
 - **Private match:** invitation link, two devices, authoritative clocks and reconnect. [Server setup](docs/PRIVATE_MATCHES.md).
-- **Themes:** Candy Chaos plus four alternative palettes, saved in Settings.
+- **Themes:** Candy Chaos plus five alternative worlds, saved in Settings.
 - **Time controls:** 4-minute Bullet, 7-minute Blitz and 10-minute Rapid, per player. These are this game's custom mode names.
 - **Learning hub:** separate card lab, 16 interactive challenges with goals, hints and outcome feedback and a free position sandbox; all fit the phone viewport without scrolling.
 - Reduced-motion settings, automatic on-device saving and match JSON export/analysis.
@@ -127,7 +127,7 @@ npx playwright install chromium
 npx playwright test --workers=2
 ```
 
-`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 53 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
+`npm run check` runs strict TypeScript, domain tests and a production build. Browser tests start their own servers and exercise phone layouts, tutorial, three bot profiles, card interactions, logs, finales and offline reload. The last verified baseline has **176 unit tests and 54 Chromium browser tests**. Physical iPhone/Safari release testing remains necessary.
 
 The implementation uses React, TypeScript and Vite, with a local chess-engine adapter and a deterministic turn resolver. [Architecture](docs/ARCHITECTURE.md) · [verification report](docs/TESTING.md) · [changelog](CHANGELOG.md).
 
@@ -167,14 +167,14 @@ Selecting Local match or Train with a bot starts a **3–2–1 countdown** and t
 draws the first card automatically. The game clock starts after the countdown.
 Saved matches resume directly; the laboratory retains a manual start for scenarios.
 
-### Five worlds, one deck
+### Six worlds, one deck
 
 Settings changes the complete visual world: Candy Chaos comic paper, Minty Mayhem
 forest night, Bubblegum Bandit bubble pop, Peach Please desert sunshine, and Cloudy
-with a Chance of Check blueprints. Surfaces, board squares, chess pieces, controls,
+with a Chance of Check blueprints, plus Boo Happens Halloween nights. Surfaces, board squares, chess pieces, controls,
 feedback and the Rooki mascot follow the selected world. Drawn card faces, color
 choices and the active-color board frame retain their fixed gameplay colors.
 
-Rooki uses the owner-supplied illustrated mascot and five original theme variants: tap to greet it. The wordmark, loading screen and installable icons share the illustrated identity. Motion follows
+Rooki uses the owner-supplied illustrated mascot, five original theme variants and a new Halloween costume: tap to greet it. The wordmark, loading screen and installable icons share the illustrated identity. Motion follows
 the saved preference and the device's reduced-motion setting. Theme selection is
-saved on this device; all five worlds fit the existing single-screen phone layout.
+saved on this device; all six worlds fit the existing single-screen phone layout.

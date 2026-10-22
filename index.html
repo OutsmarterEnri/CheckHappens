@@ -18,7 +18,10 @@
     <link rel="preload" as="image" href="./brand/mascot-sheet.png" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" type="image/png" href="./icons/icon-192.png" />
-    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png?v=owner-mascot" />
+    <link
+      rel="apple-touch-icon"
+      href="./icons/apple-touch-icon.png?v=owner-mascot"
+    />
     <title>Check Happens. — In Cards we trust</title>
     <script>
       try {
@@ -26,9 +29,14 @@
           localStorage.getItem("check-happens-theme") || '"candy"',
         );
         if (
-          ["candy", "mint", "bubblegum", "peach", "cloud"].includes(
-            checkHappensTheme,
-          )
+          [
+            "candy",
+            "mint",
+            "bubblegum",
+            "peach",
+            "cloud",
+            "halloween",
+          ].includes(checkHappensTheme)
         )
           document.documentElement.dataset.theme = checkHappensTheme;
       } catch {}
@@ -60,7 +68,8 @@
   <body>
     <div id="root">
       <div class="boot-splash" role="status">
-        <img src="./brand/mascot-main.png" alt="" /><strong>Check Happens.</strong
+        <img src="./brand/mascot-main.png" alt="" /><strong
+          >Check Happens.</strong
         ><span>In Cards we trust</span>
       </div>
     </div>

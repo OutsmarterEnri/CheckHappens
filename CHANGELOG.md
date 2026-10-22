@@ -2,6 +2,8 @@
 
 ## 2.5.0
 
+- Added Boo Happens (Dolcetto o Scacchetto), a sixth Halloween world with a witch-rook mascot, plum night surfaces and pumpkin-orange accents; card colors stay fixed.
+
 - Anchored Settings to the game’s top header and 12px side margins; added safe-area layout regressions.
 - Unified learning headers, card panels, turn banners, board frames, active-color labels and edge coordinates with the game presentation.
 

@@ -43,3 +43,6 @@ The owner supplied the illustrated mascot/theme sheet in October 2026.
 and app icons display regions of it. The transparent main mascot was prepared
 with imagegen from the supplied reference. These assets inherit the project’s
 reserved-rights policy; this record does not assert third-party clearance.
+
+The Halloween mascot variant was created with imagegen using the owner-supplied
+main mascot as its reference, for the Boo Happens theme.

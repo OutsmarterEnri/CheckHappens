@@ -24,6 +24,11 @@ export const themes = [
     name: "Cloudy with a Chance of Check",
     colors: ["#e8f3ff", "#83a8da", "#fbdc83"],
   },
+  {
+    id: "halloween",
+    name: "Boo Happens",
+    colors: ["#1d142b", "#ab86d7", "#ffad4d"],
+  },
 ] as const;
 export type Theme = (typeof themes)[number]["id"];
 export const THEME_KEY = "check-happens-theme";

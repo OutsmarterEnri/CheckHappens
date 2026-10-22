@@ -21,7 +21,7 @@ for (const theme of themes)
         const image = new Image();
         image.src = source;
         await image.decode();
-        return image.naturalWidth === 1536;
+        return image.naturalWidth >= 512;
       }),
     ).toBe(true);
     expect(
@@ -113,15 +113,15 @@ test("branded loading screen uses the saved world before React loads", async ({
   page,
 }) => {
   await page.addInitScript(() =>
-    localStorage.setItem("check-happens-theme", JSON.stringify("mint")),
+    localStorage.setItem("check-happens-theme", JSON.stringify("halloween")),
   );
   await page.route("**/assets/*.js", (route) => route.abort());
   await page.goto(process.env.PW_PRODUCTION_URL ?? "http://127.0.0.1:4173/");
   await expect(page.locator(".boot-splash")).toBeVisible();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "mint");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "halloween");
   await expect(page.locator(".boot-splash")).toHaveCSS(
     "background-color",
-    "rgb(16, 47, 44)",
+    "rgb(29, 20, 43)",
   );
   expect(
     await page

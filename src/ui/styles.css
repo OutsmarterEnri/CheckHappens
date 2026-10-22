@@ -3728,3 +3728,55 @@ textarea {
     line-height: 1.1;
   }
 }
+/* Boo Happens: a friendly haunted chess club, with fixed gameplay colors. */
+:root[data-theme="halloween"] {
+  color-scheme: dark;
+  --app-background: #1d142b;
+  --paper: #30213f;
+  --panel: #49305c;
+  --ink: #fff1dc;
+  --muted: #d2b9e4;
+  --purple: #d6abff;
+  --yellow: #ffad4d;
+  --selection: #61407b;
+  --edge: #a178bd;
+  --on-accent: #281631;
+  --board-light: #f9d5a0;
+  --board-dark: #725291;
+  --board-label-light: #563754;
+  --board-label-dark: #fff0d4;
+  --piece-white: #fff1dc;
+  --piece-black: #c887e3;
+  --piece-outline: #291b3b;
+  --piece-white-eye: #291b3b;
+  --piece-black-eye: #fff1dc;
+  --control-radius: 17px;
+  --panel-radius: 22px;
+  --brand-shadow: 4px;
+  --warning-ink: #ffc286;
+  --mascot-body: #ab86d7;
+  --mascot-trim: #ffad4d;
+  --mascot-outline: #291b3b;
+  --mascot-shine: #fff1dc;
+  --mascot-cheek: #f49b98;
+  --mascot-cape: #ed8b43;
+  --hero-medallion: #49305c;
+  --hero-shadow: #110a1e;
+  --pattern-ink: #cc9ef51c;
+  --world-pattern:
+    radial-gradient(
+      ellipse at 50% 50%,
+      var(--pattern-ink) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(ellipse at 50% 50%, #ffad4d13 0 1px, transparent 2px);
+  --pattern-size: 32px 32px, 19px 23px;
+}
+.rooki-halloween {
+  background-size: cover;
+  background-position: center;
+}
+:root[data-theme="halloween"] .rooki-orbit {
+  border-color: var(--yellow);
+  box-shadow: 0 5px var(--edge);
+}
