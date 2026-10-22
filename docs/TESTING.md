@@ -92,5 +92,6 @@ viewport-contained settings at 320×568. Additional cases verify that tapping Ro
 changes its phrase without layout shift under reduced motion, and that the initial
 loading screen uses the saved theme even when the React bundle is blocked.
 The existing game, tutorial, sandbox, finale, bilingual and offline regressions
-continue to run. The app icons are rasterized locally from the project-authored
-vector mascot; no external artwork or runtime dependencies were added.
+continue to run. The app icons use the owner-supplied mascot. Theme art is displayed directly from
+the supplied sheet; the isolated main character is used for loading and compact marks.
+No runtime dependencies were added.

@@ -16,6 +16,15 @@ for (const theme of themes)
       theme.id,
     );
     expect(
+      await page.locator(".rooki-art").evaluate(async (element) => {
+        const source = getComputedStyle(element).backgroundImage.slice(5, -2);
+        const image = new Image();
+        image.src = source;
+        await image.decode();
+        return image.naturalWidth === 1536;
+      }),
+    ).toBe(true);
+    expect(
       await page
         .locator("main")
         .evaluate((e) => e.scrollHeight <= e.clientHeight + 1),

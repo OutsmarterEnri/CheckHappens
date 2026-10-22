@@ -3383,3 +3383,33 @@ textarea {
 .comic-fx.danger {
   color: #322546;
 }
+/* Original artwork supplied by the owner; windows show each exact theme tile. */
+.rooki-illustration {
+  display: block;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1;
+  margin: auto;
+  border-radius: 22px;
+  background-repeat: no-repeat;
+  background-size: 568.889% 387.879%;
+  background-position-y: 79.474%;
+}
+.rooki-candy {
+  background-position-x: 4.107%;
+}
+.rooki-mint {
+  background-position-x: 27.172%;
+}
+.rooki-bubblegum {
+  background-position-x: 50.158%;
+}
+.rooki-peach {
+  background-position-x: 73.223%;
+}
+.rooki-cloud {
+  background-position-x: 96.446%;
+}
+.brand-mark {
+  object-fit: contain;
+}

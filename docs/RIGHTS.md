@@ -35,3 +35,11 @@ The app has no accounts or analytics integration. Local and bot games stay on-de
 A public prototype is not a promise of general legal/privacy compliance. If accounts, telemetry, payments, advertising, additional multiplayer data collection or other data collection is introduced, revisit the privacy information and applicable obligations for the actual deployment.
 
 Reference: [GitHub Pages data collection](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection).
+
+## Mascot asset provenance
+
+The owner supplied the illustrated mascot/theme sheet in October 2026.
+`public/brand/mascot-sheet.png` preserves that supplied image; theme illustrations
+and app icons display regions of it. The transparent main mascot was prepared
+with imagegen from the supplied reference. These assets inherit the project’s
+reserved-rights policy; this record does not assert third-party clearance.

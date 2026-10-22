@@ -264,7 +264,7 @@ export function Shell() {
                           } as CSSProperties
                         }
                       >
-                        <BrandMark />
+                        <BrandMark theme={t.id} />
                       </span>
                       <span className="theme-swatches" aria-hidden="true">
                         {t.colors.map((c) => (

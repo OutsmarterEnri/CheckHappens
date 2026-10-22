@@ -2,6 +2,8 @@
 
 ## 2.5.0
 
+- Replaced the initial vector mascot with the owner-supplied illustrated identity, five theme variants, splash art and iPhone icons.
+
 - Rebuilt all five themes as complete visual worlds, including board, pieces, controls and feedback; functional card and color-frame colors remain fixed.
 - Introduced Rooki, an interactive vector rook mascot with theme accessories, plus a new wordmark, branded loading screen and installable icons.
 - Added seven browser regressions for world coverage, four unchanged card/frame colors, small-screen settings, reduced motion and saved-theme loading.

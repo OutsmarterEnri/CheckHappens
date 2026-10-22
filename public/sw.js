@@ -1,5 +1,5 @@
 // Shell updates wait for open games to close; no forced activation.
-const CACHE = "check-happens-v2-5-0-rooki-worlds";
+const CACHE = "check-happens-v2-5-0-owner-mascot";
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -19,7 +19,8 @@ self.addEventListener("install", (event) => {
           "index.html",
           "manifest.webmanifest",
           "THIRD_PARTY_NOTICES.txt",
-          "icon.svg",
+          "brand/mascot-main.png",
+          "brand/mascot-sheet.png",
           "icons/icon-192.png",
           "icons/icon-512.png",
           "icons/apple-touch-icon.png",

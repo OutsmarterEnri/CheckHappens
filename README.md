@@ -175,7 +175,6 @@ with a Chance of Check blueprints. Surfaces, board squares, chess pieces, contro
 feedback and the Rooki mascot follow the selected world. Drawn card faces, color
 choices and the active-color board frame retain their fixed gameplay colors.
 
-Rooki is the new interactive rook mascot: tap to greet it. The matching wordmark,
-loading screen and installable icons share the same vector identity. Motion follows
+Rooki uses the owner-supplied illustrated mascot and five original theme variants: tap to greet it. The wordmark, loading screen and installable icons share the illustrated identity. Motion follows
 the saved preference and the device's reduced-motion setting. Theme selection is
 saved on this device; all five worlds fit the existing single-screen phone layout.
