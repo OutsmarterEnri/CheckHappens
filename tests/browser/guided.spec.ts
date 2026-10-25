@@ -1,206 +1,238 @@
 import { test, expect } from "./fixtures";
 import type { Page } from "@playwright/test";
-async function move(page: Page, from: string, to: string) {
-  const board = page.locator(".practice-board");
-  await board
-    .getByRole("button", { name: new RegExp(`^${from}(?:,|$)`) })
-    .click();
-  await board
-    .getByRole("button", { name: new RegExp(`^${to}(?:,|$)`) })
-    .click();
-}
+const moves: Record<string, [string, string][]> = {
+  board: [["a2", "a3"]],
+  pawn: [["d2", "e3"]],
+  rook: [["d4", "d6"]],
+  bishop: [["c1", "f4"]],
+  knight: [["e4", "g5"]],
+  queen: [["d1", "g4"]],
+  king: [["e1", "d1"]],
+  "chess-check": [["e1", "d1"]],
+  "chess-mate": [["g6", "g7"]],
+  castle: [["e1", "g1"]],
+  "en-passant": [["e5", "d6"]],
+  promotion: [["a7", "a8"]],
+  stalemate: [["g5", "g6"]],
+  number: [
+    ["a2", "a3"],
+    ["b2", "b3"],
+  ],
+  clocks: [["a2", "a3"]],
+  blue: [["a2", "a3"]],
+  yellow: [
+    ["b1", "b3"],
+    ["e3", "f5"],
+  ],
+  defense: [["e1", "d1"]],
+  last: [
+    ["a2", "a3"],
+    ["b2", "b3"],
+  ],
+};
+const square = (page: Page, name: string) =>
+  page
+    .locator(".practice-board")
+    .getByRole("button", { name: new RegExp("^" + name + "(?:,|$)") });
 async function fit(page: Page) {
-  expect(
-    await page
-      .locator(".learn-page")
-      .evaluate(
-        (e) =>
-          e.scrollHeight <= e.clientHeight + 1 &&
-          e.scrollWidth <= e.clientWidth + 1,
-      ),
-  ).toBe(true);
-  expect(
-    await page
-      .locator(".coach-brief")
-      .evaluate((e) => e.scrollHeight <= e.clientHeight + 1),
-  ).toBe(true);
-  const footer = await page.locator(".coach-page>footer").boundingBox();
+  for (const s of [".learn-page", ".academy-copy"])
+    expect(
+      await page
+        .locator(s)
+        .evaluate(
+          (e) =>
+            e.scrollHeight <= e.clientHeight + 1 &&
+            e.scrollWidth <= e.clientWidth + 1,
+        ),
+      s,
+    ).toBe(true);
+  const board = await page.locator(".practice-board").boundingBox();
+  expect(board!.width).toBeGreaterThan(155);
+  const footer = await page.locator("main>footer").boundingBox();
   expect(footer!.y + footer!.height).toBeLessThanOrEqual(
-    (page.viewportSize()?.height ?? 0) + 1,
+    page.viewportSize()!.height + 1,
   );
 }
 for (const [lang, width, height] of [
   ["en", 375, 667],
   ["it", 375, 667],
   ["en", 320, 568],
-] as const) {
-  test(`action-based tutorial completes every real mission in ${lang} at ${width}`, async ({
-    page,
-  }) => {
-    test.setTimeout(90000);
-    await page.setViewportSize({ width, height });
-    await page.addInitScript(
-      (language) =>
-        localStorage.setItem(
-          "check-happens-language",
-          JSON.stringify(language),
-        ),
-      lang,
-    );
-    await page.goto("/");
-    await page.getByRole("button", { name: "Tutorial", exact: true }).click();
-    await page
-      .getByRole("button", {
-        name: lang === "en" ? /Guided tutorial/ : /Tutorial guidato/,
-      })
-      .click();
-    for (let i = 0; i < 16; i++) {
-      const next = page.getByRole("button", {
-        name:
-          i === 15
-            ? lang === "en"
-              ? "Finish"
-              : "Fine"
-            : lang === "en"
-              ? "Next →"
-              : "Avanti →",
-        exact: true,
-      });
-      await expect(next).toBeDisabled();
-      if (i === 5)
-        await expect(
-          page.locator(".coach-brief [data-card-value]"),
-        ).toHaveAttribute("data-card-value", "1");
-      if (i === 12)
-        await expect(
-          page.locator(".coach-brief [data-card-kind]"),
-        ).toHaveAttribute("data-card-kind", "hidden");
-      await fit(page);
-      const hint = page.getByRole("button", {
-        name: lang === "en" ? "Hint" : "Aiuto",
-        exact: true,
-      });
-      await hint.click();
-      await fit(page);
-      await page
-        .getByRole("button", {
-          name: lang === "en" ? "Show task" : "Mostra obiettivo",
-          exact: true,
-        })
-        .click();
-      await page
-        .getByRole("button", {
-          name: [12, 13].includes(i)
-            ? lang === "en"
-              ? "Begin turn"
-              : "Inizia turno"
-            : lang === "en"
-              ? "Draw card"
-              : "Pesca carta",
-          exact: true,
-        })
-        .click();
-      if ([0, 1, 2, 4, 15].includes(i)) {
-        await move(page, "a2", "a3");
-        if (i === 0 || i === 15) await move(page, "b2", "b3");
-      }
-      if (i === 3) {
-        // A wrong attempt must explain how to retry, never silently unlock Next.
-        await move(page, "a2", "a3");
-        const pass = page.getByRole("button", {
-          name: lang === "en" ? "Pass →" : "Passa →",
+  ["it", 320, 568],
+] as const)
+  for (const course of ["chess", "variant"] as const)
+    test(`${course} course is playable in ${lang} at ${width}`, async ({
+      page,
+    }) => {
+      test.setTimeout(120000);
+      await page.setViewportSize({ width, height });
+      await page.addInitScript(
+        (l) =>
+          localStorage.setItem("check-happens-language", JSON.stringify(l)),
+        lang,
+      );
+      await page.goto("/");
+      await page.getByRole("button", { name: "Tutorial", exact: true }).click();
+      await page.locator(`[data-course-link="${course}"]`).click();
+      const total = course === "chess" ? 13 : 14;
+      for (let i = 0; i < total; i++) {
+        const id = await page.locator("main").getAttribute("data-mission");
+        const next = page.getByRole("button", {
+          name:
+            i === total - 1
+              ? lang === "en"
+                ? "Finish"
+                : "Fine"
+              : lang === "en"
+                ? "Next →"
+                : "Avanti →",
           exact: true,
         });
-        if (await pass.count()) await pass.click();
         await expect(next).toBeDisabled();
-        await expect(page.locator(".coach-brief p")).toContainText(
-          lang === "en" ? "fresh attempt" : "nuovo tentativo",
-        );
+        await fit(page);
         await page
           .getByRole("button", {
-            name: lang === "en" ? "Retry" : "Riprova",
+            name: lang === "en" ? "Hint" : "Aiuto",
+            exact: true,
+          })
+          .click();
+        await fit(page);
+        await page
+          .getByRole("button", {
+            name: lang === "en" ? "Show lesson" : "Mostra lezione",
             exact: true,
           })
           .click();
         await page
           .getByRole("button", {
-            name: lang === "en" ? "Draw card" : "Pesca carta",
+            name:
+              course === "chess"
+                ? lang === "en"
+                  ? "Try move"
+                  : "Prova la mossa"
+                : ["defense", "emergency"].includes(id!)
+                  ? lang === "en"
+                    ? "Begin turn"
+                    : "Inizia turno"
+                  : lang === "en"
+                    ? "Draw card"
+                    : "Pesca carta",
             exact: true,
           })
           .click();
-        await pass.click();
-      }
-      if (i === 5) {
-        await move(page, "b1", "b3");
-        await expect(
-          page.getByRole("button", {
-            name: lang === "en" ? "Pass →" : "Passa →",
-            exact: true,
-          }),
-        ).toHaveCount(0);
-        await move(page, "e3", "f5");
-      }
-      if (i === 6)
-        await page
-          .locator(".practice-board")
-          .getByRole("button", { name: /^a7,/ })
-          .click();
-      if (i === 8 || i === 9)
-        await page
-          .getByRole("button", {
-            name: lang === "en" ? "Blue" : "Blu",
-            exact: true,
-          })
-          .click();
-      if (i === 7 || i === 8) {
-        for (const sq of i === 7 ? ["a1", "b1"] : ["a1", "b1", "c1", "a2"])
+        if (id === "risk")
           await page
-            .locator(".practice-board")
-            .getByRole("button", { name: new RegExp(`^${sq},`) })
+            .getByRole("button", {
+              name: lang === "en" ? "Pass →" : "Passa →",
+              exact: true,
+            })
             .click();
+        if (id === "skip") await square(page, "a7").click();
+        if (id === "revive4" || id === "wild")
+          await page
+            .getByRole("button", {
+              name:
+                lang === "en"
+                  ? id === "wild"
+                    ? "Green"
+                    : "Blue"
+                  : id === "wild"
+                    ? "Verde"
+                    : "Blu",
+              exact: true,
+            })
+            .click();
+        if (id === "revive2" || id === "revive4")
+          for (const sq of id === "revive2"
+            ? ["a1", "b1"]
+            : ["a1", "b1", "c1", "a2"])
+            await square(page, sq).click();
+        if (id === "wild") {
+          await square(page, "a2").click();
+          await page
+            .getByRole("button", {
+              name: lang === "en" ? "Rook" : "Torre",
+              exact: true,
+            })
+            .click();
+        }
+        for (const [from, to] of moves[id!] ?? []) {
+          await square(page, from).click();
+          await square(page, to).click();
+        }
+        await expect(next).toBeEnabled();
+        await fit(page);
+        await next.click();
       }
-      if (i === 9) {
-        await page
-          .locator(".practice-board")
-          .getByRole("button", { name: /^a2,/ })
-          .click();
-        await page
-          .getByRole("button", {
-            name: lang === "en" ? "Rook" : "Torre",
-            exact: true,
-          })
-          .click();
-      }
-      if (i === 12) {
-        await move(page, "e1", "d1");
-        await expect(
-          page.locator(".coach-brief [data-card-value]"),
-        ).toHaveAttribute("data-card-value", "4");
-      }
-      if (i === 14) await move(page, "b1", "b8");
-      await expect(next).toBeEnabled();
-      await expect(page.locator(".coach-success")).toBeVisible();
-      await fit(page);
-      await next.click();
-    }
-    await expect(
-      page.getByRole("heading", {
-        name: lang === "en" ? "You know the chaos." : "Ora conosci il caos.",
-      }),
-    ).toBeVisible();
-    expect(
-      await page.evaluate(() => localStorage.getItem("scacchi-uno-pocket-v1")),
-    ).toBeNull();
-    await page
-      .getByRole("button", {
-        name: lang === "en" ? "Ready to play →" : "Pronto a giocare →",
-        exact: true,
-      })
-      .click();
-    await expect(
-      page.getByRole("group", {
-        name: lang === "en" ? "Time control" : "Tempo di gioco",
-      }),
-    ).toBeVisible();
-  });
-}
+      await expect(page.locator(".academy-finish")).toBeVisible();
+      expect(
+        await page.evaluate(() =>
+          localStorage.getItem("scacchi-uno-pocket-v1"),
+        ),
+      ).toBeNull();
+      const progress = await page.evaluate(() =>
+        JSON.parse(localStorage.getItem("check-happens-academy-v1")!),
+      );
+      expect(progress).toHaveLength(total);
+    });
+test("a different legal move needs a retry; goals persist without touching a saved match", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() =>
+    localStorage.setItem("scacchi-uno-pocket-v1", "owner-save-marker"),
+  );
+  await page.getByRole("button", { name: "Tutorial", exact: true }).click();
+  await page.locator('[data-course-link="chess"]').click();
+  await page.getByRole("button", { name: "Try move", exact: true }).click();
+  await square(page, "a2").click();
+  await square(page, "a3").click();
+  await page.getByRole("button", { name: "Next →", exact: true }).click();
+  await page.getByRole("button", { name: "Try move", exact: true }).click();
+  await square(page, "d2").click();
+  await square(page, "d3").click();
+  await expect(
+    page.getByRole("button", { name: "Next →", exact: true }),
+  ).toBeDisabled();
+  await expect(page.locator(".academy-copy p")).toContainText(
+    "missed the goal",
+  );
+  await page.getByRole("button", { name: "Retry", exact: true }).click();
+  await page.getByRole("button", { name: "Try move", exact: true }).click();
+  await square(page, "d2").click();
+  await square(page, "e3").click();
+  await expect(
+    page.getByRole("button", { name: "Next →", exact: true }),
+  ).toBeEnabled();
+  await page.reload();
+  await page.getByRole("button", { name: "Tutorial", exact: true }).click();
+  await page.locator('[data-course-link="chess"]').click();
+  await expect(page.locator("main")).toHaveAttribute("data-mission", "rook");
+  expect(
+    await page.evaluate(() => localStorage.getItem("scacchi-uno-pocket-v1")),
+  ).toBe("owner-save-marker");
+});
+
+test("jumping to the last lesson does not complete the skipped course", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Tutorial", exact: true }).click();
+  await page.locator('[data-course-link="chess"]').click();
+  await page
+    .getByRole("combobox", { name: "Choose a lesson" })
+    .selectOption("12");
+  await expect(page.getByRole("progressbar")).toHaveAttribute(
+    "aria-valuenow",
+    "0",
+  );
+  await page.getByRole("button", { name: "Try move", exact: true }).click();
+  await square(page, "g5").click();
+  await square(page, "g6").click();
+  await expect(page.getByRole("progressbar")).toHaveAttribute(
+    "aria-valuenow",
+    "1",
+  );
+  await page.getByRole("button", { name: "Next →", exact: true }).click();
+  await expect(page.locator("main")).toHaveAttribute("data-mission", "board");
+  await expect(page.locator(".academy-finish")).toHaveCount(0);
+});

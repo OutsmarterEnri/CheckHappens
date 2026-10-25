@@ -1,5 +1,34 @@
 /** Presentation-only translations. Rules, commands and exported logs stay stable. */
 export const italian: Record<string, string> = {
+  "Learn by playing.": "Impara giocando.",
+  "Two short paths. A real board. No ticking clock.":
+    "Due percorsi. Una vera scacchiera. Nessuna fretta.",
+  lessons: "lezioni",
+  "Explore freely": "Esplora liberamente",
+  "Free practice": "Pratica libera",
+  "Start with chess, or jump straight to the cards.":
+    "Parti dagli scacchi o passa subito alle carte.",
+  "Choose a lesson": "Scegli una lezione",
+  Lesson: "Lezione",
+  "Your goal": "Il tuo obiettivo",
+  "Lesson complete": "Lezione completata",
+  "Continue when you are ready.": "Prosegui quando vuoi.",
+  "Try move": "Prova la mossa",
+  "Show lesson": "Mostra lezione",
+  "That move was legal, but it missed the goal. Tap Retry to try again.":
+    "La mossa era legale, ma non raggiunge l’obiettivo. Tocca Riprova per ritentare.",
+  "The board makes sense now.": "Ora la scacchiera ha senso.",
+  "Ready for a little chaos.": "Pronto per un po’ di caos.",
+  "You have moved every piece, escaped check and tried the special moves. Next, discover what the cards change.":
+    "Hai mosso ogni pezzo, difeso lo scacco e provato le mosse speciali. Ora scopri cosa cambiano le carte.",
+  "You have tried the cards, colors, risk and king rescues. Your first match does not need to be perfect.":
+    "Hai provato carte, colori, rischio e salvataggi del re. La tua prima partita non deve essere perfetta.",
+  "Next: Check Happens": "Ora: Check Happens",
+  "Choose a match": "Scegli una partita",
+  "Replay this course": "Ripeti il percorso",
+  "Back to learning": "Torna ai percorsi",
+  "Your saved match is untouched.": "La tua partita salvata è al sicuro.",
+
   "Each piece needs a different home square. Clear pieces to rebuild the position.":
     "Ogni pezzo deve avere una casella iniziale diversa. Svuota la scacchiera per ricreare la posizione.",
   "CHESS + CARDS": "SCACCHI + CARTE",

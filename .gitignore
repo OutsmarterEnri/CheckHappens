@@ -16,3 +16,5 @@ Thumbs.db
 dist-server/
 .room-data/
 .room-data-e2e/
+
+dist-beta/

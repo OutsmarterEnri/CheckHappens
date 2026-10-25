@@ -12,9 +12,11 @@ export type MenuSymbol =
   | "back"
   | "check"
   | "globe"
-  | "moon";
+  | "moon"
+  | "plus";
 export function MenuIcon({ kind }: { kind: MenuSymbol }) {
   const paths: Record<MenuSymbol, ReactNode> = {
+    plus: <path d="M16 6v20M6 16h20" />,
     play: (
       <>
         <path d="M8 25h16l-2-11H10Z M10 14 7 7h5v4h4V6h4v5h4V7h3l-4 7M7 28h18" />

@@ -118,8 +118,11 @@ for (const [width, height, lang, top, bottom] of [
       await page.locator(".back-menu").click();
       await page.locator(".home-menu > button").nth(1).click();
       await contained(page, top, bottom);
-      for (const index of [1, 2, 0]) {
-        await page.locator(".learn-hub-options button").nth(index).click();
+      for (const index of [0, 1, 2, 3]) {
+        await page
+          .locator(".academy-courses button,.academy-tools button")
+          .nth(index)
+          .click();
         await contained(page, top, bottom);
         await page.locator(".learn-page > header button").first().click();
       }
@@ -143,8 +146,11 @@ test("edge swipe follows menu, invitation and tutorial hierarchy and closes game
   await swipe(page);
   await expect(page.locator(".menu-home")).toBeVisible();
   await page.getByRole("button", { name: "Tutorial", exact: true }).click();
-  for (const index of [0, 1, 2]) {
-    await page.locator(".learn-hub-options button").nth(index).click();
+  for (const index of [0, 1, 2, 3]) {
+    await page
+      .locator(".academy-courses button,.academy-tools button")
+      .nth(index)
+      .click();
     await swipe(page);
     await expect(page.locator(".learn-hub")).toBeVisible();
   }

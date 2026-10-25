@@ -1,68 +1,86 @@
 import { describe, it, expect } from "vitest";
-import { tutorialMissions } from "../src/domain/tutorial";
-import { practiceSetup, beginPractice } from "../src/domain/practice";
+import {
+  chessLessons,
+  variantLessons,
+  type TutorialLesson,
+} from "../src/domain/tutorial";
+import { beginPractice } from "../src/domain/practice";
 import { dispatch } from "../src/domain/turnResolver";
-import type { Command, State } from "../src/domain/types";
-const move = (from: number, to: number): Command => ({
+import { square, type Command } from "../src/domain/types";
+import { verifyMatch, exportMatch } from "../src/domain/audit";
+const move = (from: string, to: string, promotion?: "q"): Command => ({
   type: "SubmitMove",
-  from,
-  to,
+  from: square(from),
+  to: square(to),
+  ...(promotion ? { promotion } : {}),
 });
-export function solveMission(index: number): State {
-  const m = tutorialMissions[index];
-  let s = beginPractice(
-    practiceSetup(m.card, m.color, m.scenario ?? "card"),
-    m.card === 1,
-  );
-  const actions: Record<string, Command[]> = {
-    turn: [move(8, 16), move(9, 17)],
-    green: [move(8, 16)],
-    red: [move(8, 16)],
-    pass: [{ type: "EndOptionalMoves" }],
-    blue: [move(8, 16)],
-    yellow: [move(1, 17), move(20, 37)],
-    skip: [{ type: "ChooseSkipTarget", pieceId: "b-48" }],
-    revive2: [{ type: "ChooseResurrections", pieceIds: ["w-0", "w-1"] }],
-    revive4: [
-      { type: "ChooseUnoColor", color: "blue" },
-      { type: "ChooseResurrections", pieceIds: ["w-0", "w-1", "w-2", "w-8"] },
-    ],
-    wild: [
-      { type: "ChooseUnoColor", color: "green" },
-      { type: "ChooseEvolution", pieceId: "w-8", pieceType: "r" },
-    ],
-    defense: [move(4, 3)],
-    check: [move(1, 57)],
-    classic: [move(8, 16), move(9, 17)],
-  };
-  for (const cmd of actions[m.id] ?? []) {
-    const r = dispatch(s, cmd, 0);
-    expect(r.ok, `${m.id}: ${cmd.type}`).toBe(true);
-    s = r.state;
+export const lessonSolutions: Record<string, Command[]> = {
+  board: [move("a2", "a3")],
+  pawn: [move("d2", "e3")],
+  rook: [move("d4", "d6")],
+  bishop: [move("c1", "f4")],
+  knight: [move("e4", "g5")],
+  queen: [move("d1", "g4")],
+  king: [move("e1", "d1")],
+  "chess-check": [move("e1", "d1")],
+  "chess-mate": [move("g6", "g7")],
+  castle: [move("e1", "g1")],
+  "en-passant": [move("e5", "d6")],
+  promotion: [move("a7", "a8", "q")],
+  stalemate: [move("g5", "g6")],
+  number: [move("a2", "a3"), move("b2", "b3")],
+  clocks: [move("a2", "a3")],
+  risk: [{ type: "EndOptionalMoves" }],
+  blue: [move("a2", "a3")],
+  yellow: [move("b1", "b3"), move("e3", "f5")],
+  skip: [{ type: "ChooseSkipTarget", pieceId: "b-48" }],
+  revive2: [{ type: "ChooseResurrections", pieceIds: ["w-0", "w-1"] }],
+  revive4: [
+    { type: "ChooseUnoColor", color: "blue" },
+    { type: "ChooseResurrections", pieceIds: ["w-0", "w-1", "w-2", "w-8"] },
+  ],
+  wild: [
+    { type: "ChooseUnoColor", color: "green" },
+    { type: "ChooseEvolution", pieceId: "w-8", pieceType: "r" },
+  ],
+  reverse: [],
+  reset: [],
+  defense: [move("e1", "d1")],
+  emergency: [],
+  last: [move("a2", "a3"), move("b2", "b3")],
+};
+export function solveLesson(lesson: TutorialLesson) {
+  let state = beginPractice(lesson.create(), lesson.startAtRisk);
+  for (const command of lessonSolutions[lesson.id]) {
+    const r = dispatch(state, command, 0, "human");
+    expect(r.ok, lesson.id + " " + command.type).toBe(true);
+    state = r.state;
   }
-  return s;
+  return state;
 }
-describe("new tutorial missions", () => {
-  it.each(tutorialMissions.map((m, i) => [m.id, i] as const))(
-    "%s requires the real effect and can be solved",
-    (_, index) => {
-      const m = tutorialMissions[index],
-        initial = practiceSetup(m.card, m.color, m.scenario ?? "card");
-      expect(m.complete(initial)).toBe(false);
-      expect(m.complete(solveMission(index))).toBe(true);
+describe("academy lessons use real chess and variant rules", () => {
+  it.each([...chessLessons, ...variantLessons].map((l) => [l.id, l] as const))(
+    "%s is solvable, not pre-completed, and replays exactly",
+    (_, lesson) => {
+      expect(lesson.complete(lesson.create())).toBe(false);
+      const s = solveLesson(lesson);
+      expect(lesson.complete(s)).toBe(true);
+      expect(verifyMatch(exportMatch(s))).toMatchObject({ valid: true });
     },
   );
-  it("does not confuse drawing with performing a required move", () => {
-    for (const i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15]) {
-      const m = tutorialMissions[i];
-      expect(
-        m.complete(
-          beginPractice(
-            practiceSetup(m.card, m.color, m.scenario ?? "card"),
-            m.card === 1,
-          ),
-        ),
-      ).toBe(false);
+  it("keeps foundation lessons classical, with no drawn cards or color bonuses", () => {
+    for (const l of chessLessons) {
+      const s = solveLesson(l);
+      expect(s.mode).toBe("classical");
+      expect(s.events.some((e) => e.type === "CardDrawn")).toBe(false);
+      expect(s.clock.remaining).toEqual({ P1: 420000, P2: 420000 });
     }
+  });
+  it("a legal but different pawn move does not satisfy the capture goal", () => {
+    const l = chessLessons.find((l) => l.id === "pawn")!,
+      s = beginPractice(l.create());
+    const next = dispatch(s, move("d2", "d3"), 0);
+    expect(next.ok).toBe(true);
+    expect(l.complete(next.state)).toBe(false);
   });
 });

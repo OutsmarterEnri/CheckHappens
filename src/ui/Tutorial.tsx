@@ -1,6 +1,12 @@
 import { MenuIcon } from "./MenuUI";
 import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
+import {
+  tutorialCourses,
+  LEARNING_PROGRESS_KEY,
+  validLearningProgress,
+} from "../domain/tutorial";
+import { readPreference } from "./preferences";
 import { GuidedTutorial } from "./GuidedTutorial";
 import { useState } from "react";
 import { Localized, useLanguage, translate } from "./locale";
@@ -17,57 +23,94 @@ export function Tutorial({
   onPlay?: () => void;
 }) {
   const { language } = useLanguage();
-  const [page, setPage] = useState<"hub" | "cards" | "guided" | "sandbox">(
-    "hub",
-  );
+  const [page, setPage] = useState<
+    "hub" | "cards" | "chess" | "variant" | "sandbox"
+  >("hub");
   const [index, setIndex] = useState(0),
     [info, setInfo] = useState(0),
     [color, setColor] = useState<UnoColor>("green"),
     [revision, setRevision] = useState(0);
   const [draft, setDraft] = useState(() => practiceSetup().pieces);
   const back = () => setPage("hub");
-  useEdgeBack(page === "hub" ? onHome : back, page !== "guided");
-  if (page === "guided")
-    return <GuidedTutorial onBack={back} onPlay={onPlay} />;
-  if (page === "hub")
+  useEdgeBack(
+    page === "hub" ? onHome : back,
+    page !== "chess" && page !== "variant",
+  );
+  if (page === "chess" || page === "variant")
+    return (
+      <GuidedTutorial
+        key={page}
+        courseId={page}
+        onBack={back}
+        onPlay={onPlay}
+        onCourse={setPage}
+      />
+    );
+  if (page === "hub") {
+    const done = validLearningProgress(
+      readPreference(LEARNING_PROGRESS_KEY, []),
+    );
     return (
       <Localized>
-        <main className="learn-page learn-hub menu-v3">
+        <main className="learn-page learn-hub menu-v3 academy-hub">
           <header>
             <button className="quiet" onClick={onHome}>
               <BrandMark />← Home
             </button>
-            <h1>Learn the chaos.</h1>
+            <h1>Learn by playing.</h1>
           </header>
-          <section className="learn-hub-options">
-            <button className="primary" onClick={() => setPage("guided")}>
-              <span className="hub-choice-icon">
-                <MenuIcon kind="play" />
-              </span>
-              <strong>Guided tutorial</strong>
-              <span>One challenge at a time. You play, we guide.</span>
-            </button>
-            <button onClick={() => setPage("cards")}>
-              <span className="hub-choice-icon">
-                <MenuIcon kind="cards" />
-              </span>
-              <strong>Card lab</strong>
-              <span>See every card. Try every effect.</span>
-            </button>
-            <button onClick={() => setPage("sandbox")}>
-              <span className="hub-choice-icon">
-                <MenuIcon kind="settings" />
-              </span>
-              <strong>Sandbox</strong>
-              <span>Place pieces. Change cards. Experiment.</span>
-            </button>
+          <div className="academy-welcome">
+            <BrandMark />
+            <p>Two short paths. A real board. No ticking clock.</p>
+          </div>
+          <section className="learn-hub-options academy-courses">
+            {(["chess", "variant"] as const).map((id, i) => {
+              const course = tutorialCourses[id],
+                count = course.lessons.filter((l) =>
+                  done.includes(l.id),
+                ).length;
+              return (
+                <button
+                  key={id}
+                  className={id === "chess" ? "primary" : ""}
+                  data-course-link={id}
+                  onClick={() => setPage(id)}
+                >
+                  <span className="hub-choice-icon">
+                    <MenuIcon kind={id === "chess" ? "play" : "cards"} />
+                  </span>
+                  <strong>{course.title[language]}</strong>
+                  <span>{course.description[language]}</span>
+                  <small className="academy-course-progress">
+                    <span>
+                      {i + 1} · {course.lessons.length} <span>lessons</span>
+                    </span>
+                    <span>
+                      {count}/{course.lessons.length}
+                    </span>
+                  </small>
+                </button>
+              );
+            })}
           </section>
-          <footer>
-            Practice without a clock. Your saved match is unchanged.
-          </footer>
+          <section className="academy-tools" aria-label="Free practice">
+            <span>Explore freely</span>
+            <div>
+              <button onClick={() => setPage("cards")}>
+                <MenuIcon kind="cards" />
+                Card lab
+              </button>
+              <button onClick={() => setPage("sandbox")}>
+                <MenuIcon kind="settings" />
+                Sandbox
+              </button>
+            </div>
+          </section>
+          <footer>Start with chess, or jump straight to the cards.</footer>
         </main>
       </Localized>
     );
+  }
   const card = practiceCards[index];
   const sentences = translate(card.text, language).match(
     /[^.!?]+[.!?]+|[^.!?]+$/g,

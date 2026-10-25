@@ -33,6 +33,7 @@ export function PracticeTable({
   scenario = "card",
   sandbox = false,
   initialPieces,
+  initialState,
   onPositionChange,
   onSnapshot,
   guided = false,
@@ -46,6 +47,7 @@ export function PracticeTable({
   locked?: boolean;
   focusSquares?: number[];
   initialPieces?: Piece[];
+  initialState?: State;
   onPositionChange?: (pieces: Piece[]) => void;
   cardIndex?: number;
   color?: UnoColor;
@@ -54,7 +56,9 @@ export function PracticeTable({
 }) {
   const { language } = useLanguage();
   const [s, setS] = useState(() => {
-    const state = practiceSetup(cardIndex, color, scenario);
+    const state = initialState
+      ? structuredClone(initialState)
+      : practiceSetup(cardIndex, color, scenario);
     if (initialPieces) state.pieces = structuredClone(initialPieces);
     return state;
   });
@@ -84,6 +88,8 @@ export function PracticeTable({
       ["draw2", "draw4"].includes(s.current?.kind ?? "")
         ? availableResurrections(s)
         : [];
+  const activeColor =
+    s.mode === "classical" ? null : (s.color ?? (initialState ? null : color));
   const chance =
     s.phase === "RESOLVE_MOVES"
       ? Math.round(risk(s.moveIndex + 1, s.color) * 100)
@@ -209,10 +215,10 @@ export function PracticeTable({
         </div>
         <div className="practice-board-slot">
           <div
-            className={`board-frame practice-board color-${s.color ?? color} ${s.orientation === "b" ? "practice-flipped" : ""}`}
+            className={`board-frame practice-board color-${activeColor ?? "neutral"} ${s.orientation === "b" ? "practice-flipped" : ""}`}
           >
             <span className="frame-color-label">
-              {colorNames[s.color ?? color]}
+              {activeColor ? colorNames[activeColor] : "Neutral"}
             </span>
             <div className="board">
               {squares.map((sq) => {
@@ -359,9 +365,11 @@ export function PracticeTable({
                 >
                   {scenario === "defense" || scenario === "emergency"
                     ? "Begin turn"
-                    : guided
-                      ? "Draw card"
-                      : "Try card"}
+                    : scenario === "chess"
+                      ? "Try move"
+                      : guided
+                        ? "Draw card"
+                        : "Try card"}
                 </button>
               ) : (
                 <button onClick={reset}>Retry</button>
@@ -414,7 +422,7 @@ export function PracticeTable({
           <div className="practice-metrics">
             <span>{`P1 ${Math.round(s.clock.remaining.P1 / 1000)}s · P2 ${Math.round(s.clock.remaining.P2 / 1000)}s`}</span>
             <span>
-              {cardLabel(s.current)} ·{" "}
+              {!initialState && <>{cardLabel(s.current)} · </>}
               {s.budget + s.yellow + (s.optionalSpecial ? 1 : 0)}{" "}
               <span>moves left</span> · {chance}%
             </span>

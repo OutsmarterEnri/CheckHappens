@@ -23,10 +23,12 @@ test("language preference translates menus, tutorial and game and survives reloa
   await page.reload();
   await page.getByRole("button", { name: "Tutorial" }).click();
   await expect(
-    page.getByRole("heading", { name: "Impara il caos." }),
+    page.getByRole("heading", { name: "Impara giocando." }),
   ).toBeVisible();
-  await page.getByRole("button", { name: /Tutorial guidato/ }).click();
-  await page.getByRole("button", { name: "Pesca carta", exact: true }).click();
+  await page.getByRole("button", { name: /Scacchi di base/ }).click();
+  await page
+    .getByRole("button", { name: "Prova la mossa", exact: true })
+    .click();
   await page.getByRole("button", { name: "← Tutorial", exact: true }).click();
   await page.getByRole("button", { name: "← Home", exact: true }).click();
   await page.getByRole("button", { name: "Gioca", exact: false }).click();

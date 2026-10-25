@@ -35,8 +35,7 @@ export function BrandWordmark() {
   );
 }
 export function Rooki({ theme }: { theme: Theme }) {
-  const [mood, setMood] = useState(0),
-    [bouncing, setBouncing] = useState(false);
+  const [bouncing, setBouncing] = useState(false);
   useEffect(() => {
     if (!bouncing) return;
     const timer = setTimeout(() => setBouncing(false), 600);
@@ -49,7 +48,6 @@ export function Rooki({ theme }: { theme: Theme }) {
           className={`rooki-button ${bouncing ? "rooki-cheer" : ""}`}
           aria-label="Say hello to Rooki"
           onClick={() => {
-            setMood((m) => (m + 1) % 3);
             setBouncing(true);
           }}
         >
@@ -63,11 +61,6 @@ export function Rooki({ theme }: { theme: Theme }) {
             />
           </span>
         </button>
-        {mood > 0 && (
-          <span className="rooki-speech" role="status">
-            {["", "Trust the cards.", "Check happens!"][mood]}
-          </span>
-        )}
       </div>
     </Localized>
   );

@@ -5,8 +5,11 @@ import { fileURLToPath } from "node:url";
 import { resolve, extname, sep } from "node:path";
 import { networkInterfaces } from "node:os";
 import { spawn } from "node:child_process";
-const root = fileURLToPath(new URL("../dist/", import.meta.url));
-const port = 4173;
+const beta = process.argv.includes("--beta");
+const root = fileURLToPath(
+  new URL(beta ? "../dist-beta/" : "../dist/", import.meta.url),
+);
+const port = beta ? 4189 : 4173;
 const lan = process.argv.includes("--lan");
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -36,6 +39,7 @@ const server = createServer(async (req, res) => {
       "Content-Type": types[extname(target)] ?? "application/octet-stream",
       "Cache-Control": "no-cache",
       "X-Content-Type-Options": "nosniff",
+      ...(beta ? { "X-Robots-Tag": "noindex, nofollow" } : {}),
     });
     res.end(data);
   } catch {
@@ -50,7 +54,7 @@ server.on("error", (error) => {
 server.listen(port, lan ? "0.0.0.0" : "127.0.0.1", () => {
   const url = `http://127.0.0.1:${port}`;
   console.log(
-    `Check Happens.\nOpen ${url}\nKeep this terminal open. Ctrl+C stops the table.`,
+    `Check Happens.${beta ? " — UI BETA (local preview)" : ""}\nOpen ${url}\nKeep this terminal open. Ctrl+C stops the table.`,
   );
   if (lan) {
     console.log("\nOn iPhone, connect to the same Wi-Fi and open in Safari:");

@@ -12,8 +12,8 @@ test("English homepage, interactive tutorial and persistent motion preference", 
   ).toHaveCount(3);
   await page.screenshot({ path: "docs/v2-home.png" });
   await page.getByRole("button", { name: /Tutorial/ }).click();
-  await page.getByRole("button", { name: /Guided tutorial/ }).click();
-  await page.getByRole("button", { name: "Draw card", exact: true }).click();
+  await page.getByRole("button", { name: /Chess basics/ }).click();
+  await page.getByRole("button", { name: "Try move", exact: true }).click();
   await page.getByRole("button", { name: "← Tutorial", exact: true }).click();
   await page.getByRole("button", { name: "← Home", exact: true }).click();
   await page.getByRole("button", { name: /Settings/ }).click();

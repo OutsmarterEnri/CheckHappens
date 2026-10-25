@@ -41,7 +41,8 @@ for (const theme of themes)
       pattern: getComputedStyle(e).backgroundImage,
       bg: getComputedStyle(e).backgroundColor,
     }));
-    expect(home.pattern).not.toBe("none");
+    expect(home.pattern).toBe("none");
+    expect(home.bg).toBe(canvas);
     await page.setViewportSize({ width: 320, height: 568 });
     await page.getByRole("button", { name: "Settings", exact: false }).click();
     const settingsBounds = await page.locator(".settings-panel").boundingBox();
@@ -108,7 +109,7 @@ test("Rooki reacts without layout shift and respects reduced motion", async ({
   });
   const box = await mascot.boundingBox();
   await mascot.click();
-  await expect(page.locator(".rooki-speech")).toHaveText("Trust the cards.");
+  await expect(page.locator(".rooki-speech")).toHaveCount(0);
   await expect(page.locator(".rooki-art")).toHaveCSS("animation-name", "none");
   expect(await mascot.boundingBox()).toEqual(box);
   expect(
@@ -144,7 +145,7 @@ test("framed mascot turns halfway every 3.5 seconds without moving menu controls
   await page.goto("/");
   const frame = page.locator(".rooki-orbit");
   await expect(frame).toHaveCSS("animation-name", "rooki-idle-turn");
-  await expect(frame).toHaveCSS("border-top-width", "3px");
+  await expect(frame).toHaveCSS("border-top-width", "2px");
   const menu = await page
     .getByRole("navigation", { name: "Main menu" })
     .boundingBox();

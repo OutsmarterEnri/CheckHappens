@@ -1,3 +1,4 @@
+import { MenuIcon } from "./MenuUI";
 import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
 import type { RemoteGame } from "../online/protocol";
@@ -578,10 +579,10 @@ export function App({
             aria-label="New match"
             onClick={() => setConfirmNew(true)}
           >
-            ＋
+            <MenuIcon kind="plus" />
           </button>
           <button aria-label="Game options" onClick={() => setDrawer("more")}>
-            ···
+            <MenuIcon kind="settings" />
           </button>
         </header>
         <div

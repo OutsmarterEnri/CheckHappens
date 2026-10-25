@@ -6,6 +6,9 @@ import { LanguageProvider } from "./ui/locale";
 import { Shell } from "./ui/Shell";
 import "./ui/styles.css";
 import "./ui/menus.css";
+import "./ui/refresh.css";
+if (import.meta.env.MODE === "ui-beta")
+  document.title = "Check Happens. — UI beta";
 document.documentElement.dataset.theme = validTheme(
   readPreference(THEME_KEY, "candy"),
 );

@@ -105,7 +105,9 @@ export function Shell() {
   };
   return (
     <Localized>
-      <div className={prefs.reduceMotion ? "reduce-motion" : ""}>
+      <div
+        className={`ui-refresh${prefs.reduceMotion ? " reduce-motion" : ""}`}
+      >
         {screen === "private" ? (
           <PrivateRoom
             minutes={minutes}

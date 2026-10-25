@@ -56,13 +56,13 @@ for (const language of ["en", "it"] as const)
     await page.getByRole("button", { name: "← Tutorial", exact: true }).click();
     await page
       .getByRole("button", {
-        name: language === "en" ? /Guided tutorial/ : /Tutorial guidato/,
+        name: language === "en" ? /Chess basics/ : /Scacchi di base/,
       })
       .click();
     await fits(page);
     await page
       .getByRole("button", {
-        name: language === "en" ? "Draw card" : "Pesca carta",
+        name: language === "en" ? "Try move" : "Prova la mossa",
         exact: true,
       })
       .click();

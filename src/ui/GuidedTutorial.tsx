@@ -1,74 +1,105 @@
 import { useEdgeBack } from "./useEdgeBack";
 import { BrandMark } from "./Brand";
-import { useCallback, useMemo, useState } from "react";
-import { tutorialMissions, tutorialCardView } from "../domain/tutorial";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  tutorialCourses,
+  tutorialCardView,
+  LEARNING_PROGRESS_KEY,
+  validLearningProgress,
+  type CourseId,
+} from "../domain/tutorial";
 import type { State } from "../domain/types";
-import { practiceSetup } from "../domain/practice";
 import { cardLabel } from "../domain/cards";
 import { PracticeTable } from "./PracticeTable";
-import { Localized } from "./locale";
+import { PieceIcon } from "./PieceIcon";
+import { Localized, useLanguage } from "./locale";
+import { readPreference, writePreference } from "./preferences";
 export function GuidedTutorial({
+  courseId,
   onBack,
   onPlay,
+  onCourse,
 }: {
+  courseId: CourseId;
   onBack: () => void;
   onPlay: () => void;
+  onCourse: (course: CourseId) => void;
 }) {
-  useEdgeBack(onBack);
-  const [index, setIndex] = useState(0),
-    [complete, setComplete] = useState(false),
+  const { language } = useLanguage(),
+    course = tutorialCourses[courseId];
+  const [index, setIndex] = useState(() => {
+    const done = validLearningProgress(
+      readPreference(LEARNING_PROGRESS_KEY, []),
+    );
+    const next = course.lessons.findIndex((l) => !done.includes(l.id));
+    return next < 0 ? 0 : next;
+  });
+  const [observed, setObserved] = useState<State | null>(null),
     [hint, setHint] = useState(false),
-    [finished, setFinished] = useState(false),
-    [needsRetry, setNeedsRetry] = useState(false),
-    [observed, setObserved] = useState<State | null>(null);
-  const mission = tutorialMissions[index];
-  const initial = useMemo(
-    () => practiceSetup(mission.card, mission.color, mission.scenario),
-    [index],
+    [finished, setFinished] = useState(false);
+  const [done, setDone] = useState(() =>
+    validLearningProgress(readPreference(LEARNING_PROGRESS_KEY, [])),
   );
-  const view = tutorialCardView(
-    observed ?? initial,
-    mission.scenario === "defense",
-  );
-  const observe = useCallback(
-    (state: State) => {
-      setObserved(state);
-      const done = tutorialMissions[index].complete(state);
-      setComplete(done);
-      setNeedsRetry(
-        !done &&
-          (!!state.outcome || state.events.some((e) => e.type === "TurnEnded")),
-      );
-    },
-    [index],
-  );
+  const lesson = course.lessons[index];
+  const lastStep = index === course.lessons.length - 1;
+  const canFinish =
+    lastStep &&
+    course.lessons.every((l) => l.id === lesson.id || done.includes(l.id));
+  const initial = useMemo(() => lesson.create(), [lesson]);
+  const complete = observed !== null && lesson.complete(observed);
+  const needsRetry =
+    !complete &&
+    !!observed &&
+    (!!observed.outcome || observed.events.some((e) => e.type === "TurnEnded"));
+  const observe = useCallback((state: State) => setObserved(state), [lesson]);
+  const view = tutorialCardView(observed ?? initial, lesson.id === "defense");
+  useEdgeBack(onBack);
+  useEffect(() => {
+    if (!complete) return;
+    const persisted = validLearningProgress(
+      readPreference(LEARNING_PROGRESS_KEY, []),
+    );
+    if (!persisted.includes(lesson.id)) {
+      const next = [...persisted, lesson.id];
+      writePreference(LEARNING_PROGRESS_KEY, next);
+      setDone(next);
+    }
+  }, [complete, lesson.id]);
   const go = (next: number) => {
-    setComplete(false);
-    setHint(false);
-    setNeedsRetry(false);
     setObserved(null);
+    setHint(false);
     setIndex(next);
   };
   if (finished)
     return (
       <Localized>
-        <main className="learn-page coach-finish">
+        <main className="learn-page coach-finish academy-finish">
           <header>
             <button onClick={onBack}>
               <BrandMark />← Tutorial
             </button>
           </header>
           <section>
-            <div className="coach-trophy" aria-hidden="true">
-              ♔
+            <div className="academy-award">
+              <PieceIcon type="k" army="w" />
             </div>
-            <h1>You know the chaos.</h1>
+            <h1>
+              {courseId === "chess"
+                ? "The board makes sense now."
+                : "Ready for a little chaos."}
+            </h1>
             <p>
-              You played through cards, colors, break risk and king emergencies.
-              Your first match can begin.
+              {courseId === "chess"
+                ? "You have moved every piece, escaped check and tried the special moves. Next, discover what the cards change."
+                : "You have tried the cards, colors, risk and king rescues. Your first match does not need to be perfect."}
             </p>
-            <button className="primary" onClick={onPlay}>
-              Ready to play →
+            <button
+              className="primary"
+              onClick={() =>
+                courseId === "chess" ? onCourse("variant") : onPlay()
+              }
+            >
+              {courseId === "chess" ? "Next: Check Happens" : "Choose a match"}
             </button>
             <button
               onClick={() => {
@@ -76,24 +107,41 @@ export function GuidedTutorial({
                 go(0);
               }}
             >
-              Play the lessons again
+              Replay this course
             </button>
-            <button onClick={onBack}>Explore cards and Sandbox</button>
+            <button onClick={onBack}>Back to learning</button>
           </section>
-          <footer>No clock. No penalties. Your saved match is safe.</footer>
+          <footer>Your saved match is untouched.</footer>
         </main>
       </Localized>
     );
   return (
     <Localized>
-      <main className="learn-page coach-page" data-mission={mission.id}>
+      <main
+        className={`learn-page coach-page academy-lesson ${courseId === "chess" ? "academy-chess" : "academy-variant"}`}
+        data-mission={lesson.id}
+        data-course={courseId}
+      >
         <header>
           <button className="quiet" onClick={onBack}>
             <BrandMark />← Tutorial
           </button>
-          <span className="coach-stage">{mission.group}</span>
+          <label className="academy-jump">
+            <span className="sr-only">Lesson</span>
+            <select
+              aria-label="Choose a lesson"
+              value={index}
+              onChange={(e) => go(Number(e.target.value))}
+            >
+              {course.lessons.map((l, i) => (
+                <option key={l.id} value={i}>
+                  {i + 1}. {l.title[language]}
+                </option>
+              ))}
+            </select>
+          </label>
           <span>
-            {index + 1}/{tutorialMissions.length}
+            {index + 1}/{course.lessons.length}
           </span>
         </header>
         <div
@@ -101,63 +149,74 @@ export function GuidedTutorial({
           role="progressbar"
           aria-label="Tutorial progress"
           aria-valuemin={0}
-          aria-valuemax={tutorialMissions.length}
-          aria-valuenow={index + (complete ? 1 : 0)}
+          aria-valuemax={course.lessons.length}
+          aria-valuenow={
+            course.lessons.filter((l) => done.includes(l.id)).length
+          }
         >
-          {tutorialMissions.map((m, i) => (
+          {course.lessons.map((l, i) => (
             <span
-              key={m.id}
-              className={i < index || (i === index && complete) ? "done" : ""}
+              key={l.id}
+              className={`${done.includes(l.id) ? "done" : ""} ${i === index ? "current" : ""}`}
             />
           ))}
         </div>
         <section
-          className={`coach-brief ${complete ? "coach-success" : ""}`}
+          className={`coach-brief academy-copy ${complete ? "coach-success" : ""}`}
           aria-live="polite"
         >
-          <div
-            className={`mini-card ${view.card?.color ?? "neutral"}`}
-            role="img"
-            data-card-kind={view.card?.kind ?? "hidden"}
-            data-card-value={view.card?.value}
-            aria-label={
-              view.card
-                ? `${cardLabel(view.card)} · ${view.drawn ? "Card drawn" : "Next card"}`
-                : "Card not drawn yet"
-            }
-          >
-            <strong>{view.card ? cardLabel(view.card) : "?"}</strong>
-            <small className="coach-card-caption">
-              {view.drawn
-                ? "Card drawn"
-                : view.card
-                  ? "Next card"
-                  : "Defend first"}
-            </small>
-          </div>
+          {courseId === "chess" ? (
+            <div className="academy-piece" aria-hidden="true">
+              <PieceIcon type={lesson.piece ?? "k"} army="w" />
+            </div>
+          ) : (
+            <div
+              className={`mini-card ${view.card?.color ?? "neutral"}`}
+              role="img"
+              data-card-kind={view.card?.kind ?? "hidden"}
+              data-card-value={view.card?.value}
+              aria-label={
+                view.card
+                  ? `${cardLabel(view.card)} · ${view.drawn ? "Card drawn" : "Next card"}`
+                  : "Card not drawn yet"
+              }
+            >
+              <strong>{view.card ? cardLabel(view.card) : "?"}</strong>
+            </div>
+          )}
           <div>
-            <h1>{complete ? "You did it!" : mission.title}</h1>
+            <h1>{complete ? "You did it!" : lesson.title[language]}</h1>
             <p>
               {complete
-                ? mission.learned
+                ? lesson.learned[language]
                 : needsRetry
-                  ? "That turn ended before the goal. Tap Retry for a fresh attempt."
+                  ? "That move was legal, but it missed the goal. Tap Retry to try again."
                   : hint
-                    ? mission.hint
-                    : mission.task}
+                    ? lesson.hint[language]
+                    : lesson.explanation[language]}
             </p>
           </div>
         </section>
+        <p className="academy-task">
+          <span>{complete ? "Lesson complete" : "Your goal"}</span>
+          {complete ? "Continue when you are ready." : lesson.task[language]}
+        </p>
         <PracticeTable
-          key={mission.id}
-          cardIndex={mission.card}
-          color={mission.color}
-          scenario={mission.scenario ?? "card"}
+          key={lesson.id}
+          initialState={initial}
+          color="green"
+          scenario={
+            courseId === "chess"
+              ? "chess"
+              : lesson.id === "defense" || lesson.id === "emergency"
+                ? lesson.id
+                : "card"
+          }
           guided
-          startAtRisk={mission.id === "pass" || mission.id === "blue"}
+          startAtRisk={lesson.startAtRisk}
           onSnapshot={observe}
-          locked={complete}
-          focusSquares={mission.focus}
+          locked={complete || needsRetry}
+          focusSquares={lesson.focus}
         />
         <footer>
           <button disabled={index === 0} onClick={() => go(index - 1)}>
@@ -165,21 +224,23 @@ export function GuidedTutorial({
           </button>
           <button
             aria-pressed={hint}
-            disabled={complete}
+            disabled={complete || needsRetry}
             onClick={() => setHint(!hint)}
           >
-            {hint ? "Show task" : "Hint"}
+            {hint ? "Show lesson" : "Hint"}
           </button>
           <button
             className="primary"
             disabled={!complete}
             onClick={() =>
-              index === tutorialMissions.length - 1
-                ? setFinished(true)
+              lastStep
+                ? canFinish
+                  ? setFinished(true)
+                  : go(course.lessons.findIndex((l) => !done.includes(l.id)))
                 : go(index + 1)
             }
           >
-            {index === tutorialMissions.length - 1 ? "Finish" : "Next →"}
+            {canFinish ? "Finish" : "Next →"}
           </button>
         </footer>
       </main>

@@ -13,7 +13,9 @@
     "analyze:match": "node scripts/analyze-match.mjs",
     "check": "npm run typecheck && npm test && npm run build",
     "build:server": "tsc --noEmit && vite build --ssr server/index.ts --outDir dist-server",
-    "start:server": "node dist-server/index.js"
+    "start:server": "node dist-server/index.js",
+    "build:beta": "tsc -b && vite build --mode ui-beta --outDir dist-beta",
+    "beta": "npm run build:beta && node scripts/serve.mjs --beta --lan"
   },
   "dependencies": {
     "react": "^19.0.0",

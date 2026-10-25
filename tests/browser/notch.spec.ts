@@ -66,8 +66,11 @@ for (const [width, height, inset] of [
     await page.locator(".back-menu").click();
     await page.locator(".home-menu > button").nth(1).click();
     await verify();
-    for (const i of [1, 2, 0]) {
-      await page.locator(".learn-hub-options button").nth(i).click();
+    for (const i of [0, 1, 2, 3]) {
+      await page
+        .locator(".academy-courses button,.academy-tools button")
+        .nth(i)
+        .click();
       await verify();
       await page.locator(".learn-page > header button").first().click();
     }
