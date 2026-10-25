@@ -990,3 +990,24 @@
 .ui-refresh .coach-progress .current:not(.done) {
   box-shadow: inset 0 0 0 1px var(--purple);
 }
+
+/* Allow for wider fallback-font metrics on compact phones. Header titles must
+   fit the fixed 44px row, including when the safe-area inset moves into it. */
+@media (max-width: 360px) {
+  .ui-refresh .learn-page > header h1 {
+    font-size: 18px;
+  }
+  .ui-refresh .menu-home.menu-v3 .home-shortcut {
+    grid-template-columns: 20px minmax(0, 1fr);
+    column-gap: 6px;
+    padding-inline: 8px;
+  }
+  .ui-refresh .home-shortcut > .menu-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .ui-refresh .learn-cards > footer button {
+    white-space: normal;
+    padding-inline: 4px;
+  }
+}
